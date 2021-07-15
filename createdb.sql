@@ -63,7 +63,7 @@ CREATE TABLE producto (
 -- al usuario para realizar las operaciones necesarias para el proyecto.
 -- Las tablas son creadas en el esquema público por defecto.
 GRANT USAGE ON SCHEMA public TO your_db_user;
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO practyour_db_user;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO your_db_user;
 
 -- Creamos las categorías. No habrá cambios en esta tabla.
 INSERT INTO categoria (nombre)
