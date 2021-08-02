@@ -8,7 +8,7 @@ class Producto(db.Model):
     disponible = db.Column(db.Integer)
     precio = db.Column(db.Float)
     imagen = db.Column(db.Unicode)
-    categoria = db.Column(db.Integer, nullable=False)
+    categoria = db.Column(db.Unicode, nullable=False)
     id_vendedor = db.Column(db.Integer, nullable=False)
     
     def __init__(self, nombre, descripcion, disponible, precio, 

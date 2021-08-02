@@ -7,7 +7,7 @@ app = Flask(__name__)
 db.init_app(app)
 ma.init_app(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://ispulga:postpass20212@localhost/PulgaOnline'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://your_db_user:your_password@localhost/PulgaOnline'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 producto_esquema = ProductoEsquema()
