@@ -14,11 +14,15 @@ class Usuario(db.Model):
     estado = db.Column(db.Unicode, nullable=True)
 
     def tiene_direccion(user,db):
-         id = user['id_usuario']
-         try:
+        '''
+        Verifica si el usuario tiene direccion
+        regresa un boolean
+        '''
+        id = user['id_usuario']
+        try:
             consulta = db.session.query(Usuario).get(id)
             return True
-         except:
+        except:
             return False
 
 class UsuarioEsquema(ma.Schema):

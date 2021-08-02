@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from modelo.conexion_bd import db, ma
 from modelo.producto import Producto, ProductoEsquema
 
-#agrega el blueprint a app
+#agrega el blueprint de comprar a app
 from modelo.comprar import views
 
 app = Flask(__name__)

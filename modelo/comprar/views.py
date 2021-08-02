@@ -24,7 +24,7 @@ def hola():
 
 #Solo envia los datos del producto
 @bp.route('/VistaProducto', methods= ['POST'])
-def ver_producto():
+def VistaProducto():
     params = request.get_json(force=True,silent=False)
     
     session['producto'] = params['producto']
@@ -32,26 +32,25 @@ def ver_producto():
     print(session['producto'])
     print(session['user'])
 
-    response =  make_response(redirect(url_for('comprar.existencia'))) #verificar por que hay que usar url_for
+    response =  make_response(redirect(url_for('comprar.existe_producto'))) #verificar por que hay que usar url_for
    
     return response
 
-@bp.route('/exitstencia', methods=['GET','POST'])
-def existencia():
-    print('estoy en existencia')
+@bp.route('/existe_producto', methods=['GET','POST'])
+def existe_producto():
     producto = session.get('producto')
-    print('Estamos en comprar')
+    print('Estamos existe')
     print(producto)
     flag = Producto.esta_disponible(producto,db)
     if flag:
-        response =  make_response(redirect('/direccion'))
+        response =  make_response(redirect(url_for('comprar.direccion')))
         return response
     else:
         return 'Error producto no disponible'
 
 
 @bp.route('/direccion', methods = ['GET','POST'])
-def agregar_direccion():
+def direccion():
     print('Estamos en direccion')
     user = session.get('user')
     flag = Usuario.tiene_direccion(user,db)
@@ -59,25 +58,28 @@ def agregar_direccion():
         
         return 'Tiene dirreccion'
     else:
-        return make_response(redirect('/ingresa_direccion'))
+        return make_response(redirect(url_for('comprar.ingresa_direccion')))
 
 @bp.route('/ingresa_direccion', methods = ['POST'])
 def ingresa_direccion():
     params = request.get_json(force=True,silent=False)
     #user = session.get('user')
     #id_usuario = user['id_usuario']
-    id_usuario = params['id_usuario']
-    record = db.session.query(Usuario).get(id_usuario)
-    record.calle = params['calle']
-    record.numext = params['numeroExt']
-    record.colonia = params['colonia']
-    record.ciudad = params['ciudad']
-    record.estado = params['estado']
+    try:
+        id_usuario = params['id_usuario']
+        record = db.session.query(Usuario).get(id_usuario)
+        record.calle = params['calle']
+        record.numext = params['numeroExt']
+        record.colonia = params['colonia']
+        record.ciudad = params['ciudad']
+        record.estado = params['estado']
+    except:
+        return 'Database connection failed', 500
 
     db.session.commit()
     return 'pues checa le bd'
 
-@bp.route('/pago', methods = ['GET','POST'])
+@bp.route('/agregar_pago', methods = ['GET','POST'])
 def agregar_pago():
     params = request.get_json(force=True)
     tarjeta  = params['tarjeta']
