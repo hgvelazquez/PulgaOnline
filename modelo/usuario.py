@@ -13,6 +13,13 @@ class Usuario(db.Model):
     ciudad = db.Column(db.Unicode, nullable=True)
     estado = db.Column(db.Unicode, nullable=True)
 
+    def tiene_direccion(user,db):
+         id = user['id_usuario']
+         try:
+            consulta = db.session.query(Usuario).get(id)
+            return True
+         except:
+            return False
 
 class UsuarioEsquema(ma.Schema):
     class Meta:
