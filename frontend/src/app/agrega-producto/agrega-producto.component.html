@@ -1,0 +1,28 @@
+<div>
+    <div>
+      <label for="prod-nombre">Nombre: </label>
+      <input id="prod-name" #nombreProd>
+    </div>
+    <div>
+        <label for="prod-descripcion">Descripción: </label>
+        <input id="prod-descripcion" #descrProd>
+    </div>
+    <div>
+        <label for="prod-precio">Precio: </label>
+        <input type="number" id="prod-precio" #precioProd>
+    </div>
+    <div>
+        <label for="prod-disponible">Disponibles: </label>
+        <input type="number" id="prod-disponibles" #dispProd>
+    </div>
+    <div>
+        <label for="prod-categoria">Categoría: </label>
+        <input id="prod-categoria" #catProd>
+    </div>
+  
+    <!-- (click) passes input value to add() and then clears the input -->
+    <button class="add-button" (click)="add(nombreProd.value, descrProd.value, 
+      dispProd.value, precioProd.value, catProd.value)">
+      Agregar Producto
+    </button>
+</div>

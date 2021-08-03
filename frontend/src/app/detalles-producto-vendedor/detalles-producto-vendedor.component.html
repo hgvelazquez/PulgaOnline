@@ -1,0 +1,29 @@
+<div *ngIf="producto">
+    
+    <h2>{{producto.nombre | uppercase}} Detalles</h2>
+    <div><span>id: </span>{{producto.id_producto}}</div>
+    <div><span>nombre: </span>{{producto.nombre}}</div>
+    <div><span>descripcion: </span>{{producto.descripcion}}</div>
+    <div><span>precio: </span>{{producto.precio}}</div>
+    <div><span>disponibles: </span>{{producto.disponible}}</div>
+    <div><span>categoria: </span>{{producto.categoria}}</div>
+
+    <button>
+        <a href="/actualizar-producto/{{producto.id_producto}}">
+        Actualizar Producto
+        </a>
+    </button>
+    
+    <button>
+        <a href="/eliminar-producto/{{producto.id_producto}}">
+        Eliminar Producto
+        </a>
+    </button>
+    
+</div>
+
+<button>
+    <a href="/mis-productos">
+    Regresar
+    </a>
+</button>

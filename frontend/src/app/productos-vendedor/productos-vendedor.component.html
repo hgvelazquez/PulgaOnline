@@ -1,0 +1,13 @@
+<h2>Mis Productos</h2>
+<button class="style_button"> 
+  <a routerLink="/agregar-producto">
+  Agregar Producto
+</a>
+</button>
+<ul class="productos">
+  <li *ngFor="let producto of productos" >
+    <a routerLink="/detail/{{producto.id_producto}}">
+      <span class="badge">{{producto.id_producto}}</span> {{producto.nombre}}
+    </a>
+  </li>
+</ul>

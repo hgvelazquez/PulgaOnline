@@ -1,0 +1,38 @@
+<div>
+    <div *ngIf="producto">
+        
+        <div>
+            <label for="prod-nombre">Nombre del Producto: </label>
+            <input id="prod-name" [(ngModel)]="producto.nombre" 
+            placeholder="nombre" disabled>
+        </div>
+        <div>
+            <label for="prod-descripcion">Descripción: </label>
+        producto<input id="prod-descripcion" [(ngModel)]="producto.descripcion" 
+        placeholder="descripcion" #desc>
+        </div>
+        <div>
+            <label for="prod-precio">Precio: </label>
+            <input id="prod-precio" [(ngModel)]="producto.precio" 
+            placeholder="precio" #precio>
+        </div>
+        <div>
+            <label for="prod-disponible">Disponibles: </label>
+            <input id="prod-disponibles" [(ngModel)]="producto.disponible" 
+            placeholder="disponible" #disp>
+        </div>
+        <div>
+            <label for="prod-categoria">Categoría: </label>
+            <input id="prod-categoria" [(ngModel)]="producto.categoria" 
+            placeholder="categoria" disabled>
+        </div>
+    
+        <button (click)="update(desc.value, precio.value, disp.value);">
+            Actualizar Producto
+        </button>
+    </div>
+
+    <button (click)="goBack()">
+        Cancelar
+    </button>
+</div>
