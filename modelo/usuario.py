@@ -8,7 +8,7 @@ class Usuario(db.Model):
     contrasena = db.Column(db.Unicode, nullable=False)
     tipo_usuario = db.Column(db.Boolean, nullable=False)
     calle = db.Column(db.Unicode, nullable=True)
-    numeroExt = db.Column(db.Unicode, nullable=True)
+    numext = db.Column(db.Unicode, nullable=True)
     colonia = db.Column(db.Unicode, nullable=True)
     ciudad = db.Column(db.Unicode, nullable=True)
     estado = db.Column(db.Unicode, nullable=True)
@@ -16,7 +16,7 @@ class Usuario(db.Model):
     def tiene_direccion(user,db):
         '''
         Verifica si el usuario tiene direccion
-        regresa un boolean
+        regresa un boolean s
         '''
         id = user['id_usuario']
         try:
@@ -29,4 +29,4 @@ class UsuarioEsquema(ma.Schema):
     class Meta:
         fields = ('id_usuario', 'nombre', 'correo', 
                 'contrasena', 'tipo_usuario', 'calle', 
-                'numExt', 'colonia', 'ciudad' ,'estado')
+                'numext', 'colonia', 'ciudad' ,'estado')
