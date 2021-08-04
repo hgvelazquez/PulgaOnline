@@ -3,6 +3,7 @@ from flask_cors import CORS
 
 from modelo.conexion_bd import db, ma
 from modelo.producto import Producto, ProductoEsquema
+from modelo.categoria import Categoria
 
 app = Flask(__name__)
 CORS(app)
@@ -80,6 +81,12 @@ def actualizar_producto(id_prod):
 
     return jsonify(producto.to_dict())
 
+@app.route('/get-cats')
+def get_cats(): 
+
+    cats = Categoria.query.all()
+    # serializing as JSON
+    return jsonify([c.nombre for c in cats])
 
 if __name__ == '__main__':
     app.run(debug=True)

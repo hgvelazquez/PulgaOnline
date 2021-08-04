@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="cats.length !== 0">
   <form [formGroup]="productForm" (ngSubmit)="logSubmitted()">
   <div>
     <label for="prod-nombre">Nombre: </label>
@@ -63,7 +63,12 @@
     </small>
     <div>
         <label for="prod-categoria">Categoría: </label>
-        <input id="prod-categoria" #catProd formControlName="categoria">
+        <select id="prod-categoria" class="form-input" #catProd 
+        formControlName="categoria">
+              <option value="" disabled> Seleccione una categoria </option>
+              <option *ngFor="let cat of cats" [ngValue]="cat"> {{cat}} </option>
+        </select>
+              
     </div>
 
     <div>

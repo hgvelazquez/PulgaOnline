@@ -58,6 +58,12 @@ export class ProductoVendedorService {
     );
   }
 
+  getCats(): Observable<string[]> {
+    return this.http.get<string[]>(API_URL+'/get-cats').pipe(
+      catchError(this.handleError<string[]>('getProductos', []))
+    );
+  }
+
 
   private handleError<T>(operation = 'operation', result?: T) {
   return (error: any): Observable<T> => {

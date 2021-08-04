@@ -17,6 +17,7 @@ import { FormsValidatorService } from '../forms-validator.service';
 export class AgregaProductoComponent implements OnInit {
 
   addedProd?: Producto;
+  cats: string[] = [];
   
   productForm = new FormGroup({
     nombre: new FormControl('', [
@@ -31,10 +32,7 @@ export class AgregaProductoComponent implements OnInit {
       Validators.required, 
       this.formService.validateIntegerString()
     ]),
-    precio: new FormControl('', [
-      Validators.required,
-      //this.formService.validateNumberString(),
-    ]),
+    precio: new FormControl('', [Validators.required]),
     categoria: new FormControl('', [Validators.required])
   });
 
@@ -45,6 +43,7 @@ export class AgregaProductoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.prodService.getCats().subscribe(cs => this.cats =cs);
   }
 
   add(name: string, descripcion: string, disponible: string, 
