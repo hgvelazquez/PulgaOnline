@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+
 import { Producto } from '../models/producto';
 import { ProductoVendedorService } from '../producto-vendedor.service';
 
@@ -15,8 +17,8 @@ export class ActualizaProductoComponent implements OnInit {
   producto: Producto | undefined;
 
   constructor(
-    private router: Router,
     private aroute: ActivatedRoute,
+    private location: Location,
     private prodService: ProductoVendedorService,
   ) { }
 
@@ -50,14 +52,16 @@ export class ActualizaProductoComponent implements OnInit {
     } 
     
     console.log("Producto listo para intentar");
-    this.prodService.actualizaProducto(nuevoProducto as Producto).subscribe();
-
-    console.log(nuevoProducto);
-    this.goBack();
+    this.prodService.actualizaProducto(nuevoProducto as Producto)
+    .subscribe(
+      _ => { 
+        this.goBack();
+      } 
+    );
   }
 
   goBack(): void {
-    this.router.navigateByUrl('/detail/'+this.id);
+    this.location.back();
   }
 
 }

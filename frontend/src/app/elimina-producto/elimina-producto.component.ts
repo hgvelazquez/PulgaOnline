@@ -36,9 +36,11 @@ export class EliminaProductoComponent implements OnInit {
 
   delete(): void {
     
-    this.prodServ.eliminaProducto(this.prodID).subscribe()
-    this.router.navigateByUrl('/mis-productos').then(()=>
-    this.router.navigate(['/mis-productos']));
+    this.prodServ.eliminaProducto(this.prodID).subscribe(
+    _ =>  {
+        this.router.navigate(['/mensaje/eliminar/si']);
+      }  
+    )
   }
 
 }

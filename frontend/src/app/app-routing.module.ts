@@ -7,13 +7,15 @@ import { DetallesProductoVendedorComponent } from './detalles-producto-vendedor/
 import { AgregaProductoComponent } from './agrega-producto/agrega-producto.component';
 import { EliminaProductoComponent } from './elimina-producto/elimina-producto.component';
 import { ActualizaProductoComponent } from './actualiza-producto/actualiza-producto.component';
+import { MensajeComponent } from './mensaje/mensaje.component';
 
 const routes: Routes = [
   { path: 'mis-productos', component: ProductosVendedorComponent },
   { path: 'detail/:id_producto', component: DetallesProductoVendedorComponent },
   { path: 'agregar-producto', component: AgregaProductoComponent },
   { path: 'eliminar-producto/:id_producto', component: EliminaProductoComponent },
-  { path: 'actualizar-producto/:id_producto', component: ActualizaProductoComponent }
+  { path: 'actualizar-producto/:id_producto', component: ActualizaProductoComponent },
+  { path: 'mensaje/:operation/:success', component: MensajeComponent }
 ];
 
 @NgModule({

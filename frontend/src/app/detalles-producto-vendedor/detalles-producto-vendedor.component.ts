@@ -1,6 +1,5 @@
 import { Component, OnInit, Input} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { Producto } from '../models/producto';
 import { ProductoVendedorService } from '../producto-vendedor.service';
@@ -15,9 +14,9 @@ export class DetallesProductoVendedorComponent implements OnInit {
   producto: Producto | undefined;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private prodService: ProductoVendedorService,
-    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -27,6 +26,15 @@ export class DetallesProductoVendedorComponent implements OnInit {
   getProd(): void {
     const id = Number(this.route.snapshot.paramMap.get('id_producto'));
     this.prodService.getProducto(id)
-      .subscribe(prod => this.producto = prod);
+      .subscribe(
+        (prod) => {this.producto = prod},
+        (error) => {
+          if (error.status === 404) {
+            /* TODO: Replace with 404 page*/
+            this.router.navigateByUrl('/mensaje/error/no');
+          } else {
+            this.router.navigateByUrl('/mensaje/error/no');
+          }
+        });
   }
 }

@@ -1,27 +1,33 @@
 <div>
+    <form [formGroup]="productForm" (ngSubmit)="logSubmitted()">
     <div>
       <label for="prod-nombre">Nombre: </label>
-      <input id="prod-name" #nombreProd>
+      <input id="prod-name" #nombreProd formControlName="nombre">
     </div>
     <div>
         <label for="prod-descripcion">Descripción: </label>
-        <input id="prod-descripcion" #descrProd>
+        <input id="prod-descripcion" #descrProd formControlName="descripcion">
     </div>
     <div>
         <label for="prod-precio">Precio: </label>
-        <input type="number" id="prod-precio" #precioProd>
+        <input type="number" id="prod-precio" #precioProd formControlName="precio">
     </div>
     <div>
         <label for="prod-disponible">Disponibles: </label>
-        <input type="number" id="prod-disponibles" #dispProd>
+        <input type="number" id="prod-disponibles" #dispProd formControlName="disponible">
     </div>
     <div>
         <label for="prod-categoria">Categoría: </label>
-        <input id="prod-categoria" #catProd>
+        <input id="prod-categoria" #catProd formControlName="categoria">
     </div>
+
+    <div>
+        <button type="submit" [disabled]="!productForm.valid">Agregar Producto Plis</button>
+    </div>
+    </form>
   
     <!-- (click) passes input value to add() and then clears the input -->
-    <button class="add-button" (click)="add(nombreProd.value, descrProd.value, 
+    <button class="add-button" (click)="validate(nombreProd.value, descrProd.value, 
       dispProd.value, precioProd.value, catProd.value)">
       Agregar Producto
     </button>
