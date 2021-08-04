@@ -14,7 +14,7 @@ export class PrincipalProductoComponent implements OnInit {
   
   id: string ="-1";
   producto : Producto | undefined;
-  
+  disponible = -1;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -31,8 +31,19 @@ export class PrincipalProductoComponent implements OnInit {
         this.id = id;
     this.comprarService.getProducto(id)
       .subscribe(data =>{console.log(data)
-        this.producto = data;},
+        this.producto = data
+        this.disponible = data.disponible;},
         error =>console.log(error));
-        /*(producto) => {this.producto = producto});*/
+  }
+
+  existe(): void{
+    const id = String(this.route.snapshot.paramMap.get('id_producto'));
+    if (id)
+        this.id = id;
+    this.comprarService.existe(id)
+    .subscribe(data =>{console.log(data)
+      this.producto = data;},
+      error =>console.log(error));
+
   }
 }

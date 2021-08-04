@@ -22,14 +22,14 @@ def producto_id(id):
     nombre = consulta.nombre
     descripcion = consulta.descripcion
     categoria = consulta.categoria
+    print(consulta.disponible)
     disponible = consulta.disponible
     precio = consulta.precio
     imagen = consulta.imagen
     id_vendedor = consulta.id_vendedor
     id_producto = int(id)
-    producto_nuevo = Producto(nombre, descripcion, precio, disponible, 
+    producto_nuevo = Producto(nombre, descripcion, disponible, precio,
                                 imagen, categoria, id_vendedor)
-    
     return producto_esquema.jsonify(producto_nuevo)
 
 
@@ -43,22 +43,15 @@ def VistaProducto():
     session['user'] = params['usuario'] #session.get('user')
     print(session['producto'])
     print(session['user'])
-
     response =  make_response(redirect(url_for('comprar.existe_producto'))) #verificar por que hay que usar url_for
-   
     return response
 
-@bp.route('/existe_producto', methods=['GET','POST'])
-def existe_producto():
-    producto = session.get('producto')
-    print('Estamos existe')
-    print(producto)
-    flag = Producto.esta_disponible(producto,db)
-    if flag:
-        response =  make_response(redirect(url_for('comprar.direccion')))
-        return response
-    else:
-        return 'Error producto no disponible'
+@bp.route('/existe_producto-<id>', methods=['GET','POST'])
+def existe_producto(id):
+    producto = id
+    consulta = db.session.query(Producto).get(id)
+    response = True if (consulta.disponible) == 1 else False
+    return '{}'.format(response)
 
 
 @bp.route('/direccion', methods = ['GET','POST'])

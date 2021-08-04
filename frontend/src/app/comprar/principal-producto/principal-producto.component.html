@@ -1,22 +1,7 @@
 <p>principal-producto works!</p>
-<div *ngIf="producto">
 
 
-    <div>
-        <img [src]="producto.imagen" alt="">
-    </div>
-    <div>
-        <ul>
-        <li>Nombre: {{ producto.nombre }}</li>
-        <li>Precio: {{ producto.precio | currency }}</li>
-        </ul>
-        <p>{{ producto.descripcion }}</p>
-    </div>
-  
-</div>
-<button> comprar</button>
 
-<!--- 
 <div>
     <div *ngIf="producto">
         
@@ -46,13 +31,23 @@
             placeholder="categoria" disabled>
         </div>
     
-        <button (click)="update(desc.value, precio.value, disp.value);">
-            Actualizar Producto
-        </button>
     </div>
+    <!--No se por que en disponible es igual a 0 cuando deberia de ser 1    -->
+    <div *ngIf="disponible === 1; then thenBlock else elseBlock"></div>
+    <ng-template #thenBlock>
+        <button>
+            <a href="/direccion">
+            Comprar
+            </a>
+        </button>
 
-    <button (click)="goBack()">
-        Cancelar
-    </button>
+    </ng-template>
+    <ng-template #elseBlock>
+            <label>No existen productos por el momento</label>
+    </ng-template>
 </div>
--->
+<button>
+    <a href="/">
+    Regresar
+    </a>
+</button>

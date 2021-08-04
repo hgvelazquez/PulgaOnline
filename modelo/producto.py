@@ -21,15 +21,6 @@ class Producto(db.Model):
         self.categoria = categoria
         self.id_vendedor = id_vendedor
 
-    def esta_disponible(producto,db ):
-        '''
-        Verifica que el producto este disponible en la Base de Datos
-        regresa un boolean
-        '''
-        id = producto['id_producto']
-        consulta = db.session.query(Producto).get(id)
-        return True if (consulta.disponible) == 1 else False
-
         
 class ProductoEsquema(ma.Schema):
     class Meta:
