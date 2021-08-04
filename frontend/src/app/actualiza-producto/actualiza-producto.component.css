@@ -1,23 +1,37 @@
 label {
-    color: #435960;
-    font-weight: bold;
-  }
-  input {
-    font-size: 1em;
-    padding: .5rem;
-  }
-  button {
-    margin-top: 20px;
-    background-color: #eee;
-    padding: 1rem;
-    border-radius: 4px;
-    font-size: 1rem;
-  }
-  button:hover {
-    background-color: #cfd8dc;
-  }
-  button:disabled {
-    background-color: #eee;
-    color: #ccc;
-    cursor: auto;
-  }
+  color: #435960;
+  font-weight: bold;
+}
+input {
+  font-size: 1em;
+  padding: .5rem;
+}
+button {
+  margin-top: 20px;
+  background-color: #eee;
+  padding: 1rem;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+button:hover {
+  background-color: #cfd8dc;
+}
+button:disabled {
+  background-color: #eee;
+  color: #ccc;
+  cursor: auto;
+}
+.form-input.valid{
+  border-color: #44dd99;
+}
+
+.form-input.invalid{
+  border-color: #dd4499;
+}
+
+.error-text{
+  display:inline;
+  color: #dd3366;
+  font-weight: bold;
+  font-style: italic;
+}

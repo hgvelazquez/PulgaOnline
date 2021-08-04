@@ -1,21 +1,66 @@
 <div>
-    <form [formGroup]="productForm" (ngSubmit)="logSubmitted()">
-    <div>
-      <label for="prod-nombre">Nombre: </label>
-      <input id="prod-name" #nombreProd formControlName="nombre">
-    </div>
-    <div>
-        <label for="prod-descripcion">Descripción: </label>
-        <input id="prod-descripcion" #descrProd formControlName="descripcion">
-    </div>
-    <div>
-        <label for="prod-precio">Precio: </label>
-        <input type="number" id="prod-precio" #precioProd formControlName="precio">
-    </div>
-    <div>
+  <form [formGroup]="productForm" (ngSubmit)="logSubmitted()">
+  <div>
+    <label for="prod-nombre">Nombre: </label>
+    <input 
+        id="prod-name"
+        class="form-input"
+        #nombreProd 
+        formControlName="nombre"
+        [class.valid]="valid('nombre')"
+        [class.invalid]="invalid('nombre')"
+    >
+    <small class="error-text" *ngIf="invalid('nombre')">
+        El nombre no puede ser vacío, debe tener al menos 5 caracteres
+    </small>
+  </div>
+  <div>
+    <label for="prod-descripcion">Descripción: </label>
+    <input 
+        id="prod-descripcion"
+        class="form-input" 
+        #descrProd 
+        formControlName="descripcion"
+        [class.valid]="valid('descripcion')"
+        [class.invalid]="invalid('descripcion')"
+    >
+    <small class="error-text" *ngIf="invalid('descripcion')">
+        La descripción no puede estar vacía, debe tener al menos 5 caracteres
+    </small>
+  </div>
+  <div>
+    <label for="prod-precio">Precio: </label>
+    $&nbsp;
+    <input 
+        id="prod-precio" 
+        class="form-input"
+        type="number"
+        step="0.01" 
+        min="0.01"
+        #precioProd 
+        formControlName="precio"
+        [class.valid]="valid('precio')"
+        [class.invalid]="invalid('precio')"
+    >&nbsp;MXN
+    <small class="error-text" *ngIf="invalid('precio')">
+        El precio debe ser un número y debe ser al menos 1 centavo (0.01 MXN)
+    </small>
+  </div>
+  <div>
         <label for="prod-disponible">Disponibles: </label>
-        <input type="number" id="prod-disponibles" #dispProd formControlName="disponible">
+        <input 
+            id="prod-disponibles" 
+            class="form-input"
+            type="number"
+            min="1"
+            #dispProd
+            formControlName="disponible"
+            [class.valid]="valid('disponible')"
+            [class.invalid]="invalid('disponible')">
     </div>
+    <small class="error-text" *ngIf="invalid('disponible')">
+        El número de productos disponibles debe ser un entero mayor o igual a cero.
+    </small>
     <div>
         <label for="prod-categoria">Categoría: </label>
         <input id="prod-categoria" #catProd formControlName="categoria">
@@ -27,8 +72,12 @@
     </form>
   
     <!-- (click) passes input value to add() and then clears the input -->
-    <button class="add-button" (click)="validate(nombreProd.value, descrProd.value, 
+    <button class="add-button" (click)="add(nombreProd.value, descrProd.value, 
       dispProd.value, precioProd.value, catProd.value)">
       Agregar Producto
+    </button>
+
+    <button class="add-button" (click)="goBack()">
+      Regresar
     </button>
 </div>

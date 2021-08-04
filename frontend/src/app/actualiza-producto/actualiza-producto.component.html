@@ -1,36 +1,74 @@
 <div>
-    <div *ngIf="producto">
-        
-        <div>
-            <label for="prod-nombre">Nombre del Producto: </label>
-            <input id="prod-name" [(ngModel)]="producto.nombre" 
-            placeholder="nombre" disabled>
-        </div>
-        <div>
-            <label for="prod-descripcion">Descripción: </label>
-        producto<input id="prod-descripcion" [(ngModel)]="producto.descripcion" 
-        placeholder="descripcion" #desc>
-        </div>
-        <div>
-            <label for="prod-precio">Precio: </label>
-            <input id="prod-precio" [(ngModel)]="producto.precio" 
-            placeholder="precio" #precio>
-        </div>
-        <div>
-            <label for="prod-disponible">Disponibles: </label>
-            <input id="prod-disponibles" [(ngModel)]="producto.disponible" 
-            placeholder="disponible" #disp>
-        </div>
-        <div>
-            <label for="prod-categoria">Categoría: </label>
-            <input id="prod-categoria" [(ngModel)]="producto.categoria" 
-            placeholder="categoria" disabled>
-        </div>
-    
-        <button (click)="update(desc.value, precio.value, disp.value);">
-            Actualizar Producto
-        </button>
+  <div *ngIf="producto">
+      <h5>{{producto.nombre}}{{producto.precio}}</h5>
+  <form [formGroup]="productForm" (ngSubmit)="logSubmitted()">
+    <div>
+      <label for="prod-nombre">Nombre: </label>
+      <input id="prod-name" class="form-input" formControlName="nombre">
     </div>
+    <div>
+      <label for="prod-descripcion">Descripción: </label>
+      <input 
+          id="prod-descripcion"
+          class="form-input" 
+          #desc
+          formControlName="descripcion"
+          [class.valid]="valid('descripcion')"
+          [class.invalid]="invalid('descripcion')"
+      >
+      <small class="error-text" *ngIf="invalid('descripcion')">
+           La descripción no puede ser vacía. Además, debe tener al menos 5 caracteres.
+      </small>
+    </div>
+    <div>
+      <label for="prod-precio">Precio: </label>
+      $&nbsp;
+      <input 
+          id="prod-precio" 
+          class="form-input"
+          type="number"
+          step="0.01" 
+          min="0.01"
+          #precio
+          formControlName="precio"
+          [class.valid]="valid('precio')"
+          [class.invalid]="invalid('precio')"
+      >&nbsp;MXN
+      <small class="error-text" *ngIf="invalid('precio')">
+           El precio debe ser un número y debe ser al menos 1 centavo (0.01 MXN)
+      </small>
+    </div>
+    <div>
+      <label for="prod-disponible">Disponibles: </label>
+      <input 
+          id="prod-disponibles" 
+          class="form-input"
+          type="number"
+          min="0"
+          #disp
+          formControlName="disponible"
+          [class.valid]="valid('disponible')"
+          [class.invalid]="invalid('disponible')"
+      >
+
+    <small class="error-text" *ngIf="invalid('disponible')">
+        El número de productos disponibles debe ser un entero mayor o igual a cero.
+    </small>
+    </div>
+    <div>
+      <label for="prod-categoria">Categoría: </label>
+      <input id="prod-categoria" #catProd formControlName="categoria">
+    </div>
+
+    <div>
+        <button type="submit" [disabled]="!productForm.valid">Actualizar Producto Plis</button>
+    </div>
+        
+    <button (click)="update(desc.value, precio.value, disp.value);">
+        Actualizar Producto
+    </button>
+  </form>
+  </div>
 
     <button (click)="goBack()">
         Cancelar

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Producto } from '../models/producto';
 import { ProductoVendedorService } from '../producto-vendedor.service';
@@ -19,10 +19,22 @@ export class AgregaProductoComponent implements OnInit {
   addedProd?: Producto;
   
   productForm = new FormGroup({
-    nombre: new FormControl('', [Validators.required]),
-    descripcion: new FormControl('', [Validators.required]),
-    disponible: new FormControl('', [Validators.required]),
-    precio: new FormControl('', [Validators.required]),
+    nombre: new FormControl('', [
+      Validators.required, 
+      this.formService.validateNonEmptyString()
+    ]),
+    descripcion: new FormControl('', [
+      Validators.required, 
+      this.formService.validateNonEmptyString()
+    ]),
+    disponible: new FormControl('', [
+      Validators.required, 
+      this.formService.validateIntegerString()
+    ]),
+    precio: new FormControl('', [
+      Validators.required,
+      //this.formService.validateNumberString(),
+    ]),
     categoria: new FormControl('', [Validators.required])
   });
 
@@ -33,37 +45,6 @@ export class AgregaProductoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-  }
-
-  validate(name: string, descripcion: string, disponible: string, 
-    precio: string, cat: string): void {
-    
-    name = name.trim();
-    descripcion = descripcion.trim();
-    disponible = disponible.trim();
-    precio = precio.trim();
-    cat = cat.trim();
-    
-    var allValid = true;
-
-    if (!this.formService.validateNonEmptyString(name)){
-      allValid = false;
-    }
-    if (!this.formService.validateNonEmptyString(descripcion)) {
-      allValid = false;
-    } 
-    if (!this.formService.validateIntegerString(disponible)) {
-      allValid = false;
-    }
-    if (!this.formService.validateNumberString(precio)) {
-      allValid = false;
-    }
-    if (allValid) {
-      this.add(name, descripcion, disponible, precio, cat);
-    } else {
-      console.log("Incorrect form");
-    }
-
   }
 
   add(name: string, descripcion: string, disponible: string, 
@@ -95,6 +76,26 @@ export class AgregaProductoComponent implements OnInit {
 
   logSubmitted() {
     console.log("Form Submitted");
+  }
+
+  goBack(): void {
+    this.router.navigateByUrl('mis-productos');
+  }
+
+  valid(field: string): boolean {
+    var x = this.productForm.get(field)
+    if (x)
+      return (x.valid && (x.dirty || x.touched));
+    else
+      return false;
+  }
+
+  invalid(field: string): boolean {
+    var x = this.productForm.get(field)
+    if (x)
+      return (x.invalid && (x.dirty || x.touched));
+    else
+      return false;
   }
 
 }
