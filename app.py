@@ -4,8 +4,10 @@ from modelo.producto import Producto, ProductoEsquema
 
 #agrega el blueprint de comprar a app
 from modelo.comprar import views
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 db.init_app(app)
 ma.init_app(app)

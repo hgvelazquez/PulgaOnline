@@ -17,9 +17,9 @@ export class ComprarService {
     private http: HttpClient
       ) {}
 
-  getProducto(id: string): Observable<Producto> {
+  getProducto(id: string): Observable<any> {
       const url = `${this.BASE_URL}${id}`;
-      return this.http.get<Producto>(url);
+      return this.http.get<any>(url);
   }
 
 }

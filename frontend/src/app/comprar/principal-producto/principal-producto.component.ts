@@ -30,7 +30,9 @@ export class PrincipalProductoComponent implements OnInit {
     if (id)
         this.id = id;
     this.comprarService.getProducto(id)
-      .subscribe(
-        (producto) => {this.producto = producto});
+      .subscribe(data =>{console.log(data)
+        this.producto = data;},
+        error =>console.log(error));
+        /*(producto) => {this.producto = producto});*/
   }
 }

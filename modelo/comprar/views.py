@@ -27,7 +27,7 @@ def producto_id(id):
     imagen = consulta.imagen
     id_vendedor = consulta.id_vendedor
     id_producto = int(id)
-    producto_nuevo = Producto(id_producto,nombre, descripcion, precio, disponible, 
+    producto_nuevo = Producto(nombre, descripcion, precio, disponible, 
                                 imagen, categoria, id_vendedor)
     
     return producto_esquema.jsonify(producto_nuevo)
