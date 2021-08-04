@@ -15,10 +15,22 @@ producto_esquema = ProductoEsquema()
 productos_esquema = ProductoEsquema(many=True)
 usuario_esquema = Usuario()
 
-@bp.route('/hola')
-def hola():
-    return 'hola'
-
+@bp.route('/<id>')
+def producto_id(id):
+    consulta = db.session.query(Producto).get(id)
+    
+    nombre = consulta.nombre
+    descripcion = consulta.descripcion
+    categoria = consulta.categoria
+    disponible = consulta.disponible
+    precio = consulta.precio
+    imagen = consulta.imagen
+    id_vendedor = consulta.id_vendedor
+    id_producto = int(id)
+    producto_nuevo = Producto(id_producto,nombre, descripcion, precio, disponible, 
+                                imagen, categoria, id_vendedor)
+    
+    return producto_esquema.jsonify(producto_nuevo)
 
 
 

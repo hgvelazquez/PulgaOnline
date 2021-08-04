@@ -8,7 +8,7 @@ import { PrincipalProductoComponent} from './comprar/principal-producto/principa
 
 const routes: Routes = [
   {
-    path: 'producto',
+    path: 'producto/:id_producto',
     component: PrincipalProductoComponent
   },
   {
