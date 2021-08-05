@@ -1,5 +1,9 @@
-from flask import Flask, request, jsonify, abort
+from flask import Flask, request, jsonify, abort, send_file
 from flask_cors import CORS
+
+from os.path import splitext
+from datetime import datetime
+import json
 
 from modelo.conexion_bd import db, ma
 from modelo.producto import Producto, ProductoEsquema
@@ -17,16 +21,34 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 producto_esquema = ProductoEsquema()
 productos_esquema = ProductoEsquema(many=True)
 
+@app.route('/static/<fileName>')
+def _get_image(fileName):
+    fileToSend = "data/imagenesProducto/" + fileName
+    return send_file(fileToSend, mimetype='image/jpg')
 
 @app.route('/agregar-producto', methods=['POST'])
 def agrega_producto():
-    nombre = request.json['nombre']
-    descripcion = request.json['descripcion']
-    categoria = request.json['categoria']
-    disponible = request.json['disponible']
-    precio = request.json['precio']
-    imagen = request.json['imagen']
-    id_vendedor = request.json['id_vendedor']
+
+    imFile = request.files['imageUpload']
+    prodFile = request.files['producto']
+    
+    # Parse json from file to dict
+    prod_json = json.load(prodFile)
+    prod_json = json.loads(prod_json)
+    
+    nombre = prod_json['nombre']
+    descripcion = prod_json['descripcion']
+    categoria = prod_json['categoria']
+    disponible = prod_json['disponible']
+    precio = prod_json['precio']
+    id_vendedor = prod_json['id_vendedor']
+
+    imagen = datetime.now().strftime("%Y_%b_%d_%H_%M_%S")
+    _, img_type = splitext(imFile.filename)
+    imagen = f"data/imagenesProducto/{imagen}_{id_vendedor}{img_type}"
+
+    imFile.save(imagen)
+
     
     producto_nuevo = Producto(nombre, descripcion, precio, disponible, 
                                 imagen, categoria, id_vendedor)

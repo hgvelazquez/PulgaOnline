@@ -31,9 +31,9 @@ export class DetallesProductoVendedorComponent implements OnInit {
         (error) => {
           if (error.status === 404) {
             /* TODO: Replace with 404 page*/
-            this.router.navigateByUrl('/mensaje/error/no');
+            this.router.navigateByUrl('/mensaje/error');
           } else {
-            this.router.navigateByUrl('/mensaje/error/no');
+            this.router.navigateByUrl('/mensaje/error');
           }
         });
   }

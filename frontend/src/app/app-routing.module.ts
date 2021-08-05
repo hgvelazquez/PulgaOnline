@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'agregar-producto', component: AgregaProductoComponent },
   { path: 'eliminar-producto/:id_producto', component: EliminaProductoComponent },
   { path: 'actualizar-producto/:id_producto', component: ActualizaProductoComponent },
-  { path: 'mensaje/:operation/:success', component: MensajeComponent }
+  { path: 'mensaje/:operation', component: MensajeComponent }
 ];
 
 @NgModule({

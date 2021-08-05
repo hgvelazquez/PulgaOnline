@@ -38,7 +38,7 @@ export class EliminaProductoComponent implements OnInit {
     
     this.prodServ.eliminaProducto(this.prodID).subscribe(
     _ =>  {
-        this.router.navigate(['/mensaje/eliminar/si']);
+        this.router.navigate(['/mensaje/eliminar']);
       }  
     )
   }

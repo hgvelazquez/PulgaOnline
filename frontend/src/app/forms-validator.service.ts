@@ -62,7 +62,24 @@ export class FormsValidatorService {
     return false;
   }
 
-  validateImage(): boolean {
-    return false;
+  private validateFileImage(file: File): boolean {
+    if (!file) {
+      return false;
+    }  
+
+    var mimeType = file.type;
+    if (mimeType.match(/image\/*/) == null) {
+      return false;
+    }
+
+    return true;
+  }
+
+  validateImage() : ValidatorFn {
+    return (control: AbstractControl) : ValidationErrors | null => {
+      const file = control.value;
+      const ok = this.validateFileImage(file);
+      return ok ? null : {FileValidator: {'notImage': ok}};
+    }
   }
 }

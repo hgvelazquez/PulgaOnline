@@ -37,10 +37,15 @@ export class ProductoVendedorService {
     return this.http.get<Producto>(url);
   }
 
-  agregaProducto(prod: Producto): Observable<Producto> {
-    return this.http.post<Producto>(this.agregaUrl, prod, this.httpOptions).pipe(
-        catchError(this.handleError<Producto>('agregaProducto'))
-    );
+  agregaProducto(prod: Producto, img: File): Observable<Producto> {
+    const prdjson = JSON.stringify(prod);
+    const upLoadData = new FormData();
+    const blobOverrides = new Blob([JSON.stringify(prdjson)], {
+      type: 'application/json',
+    });
+    upLoadData.append('producto', blobOverrides);
+    upLoadData.append('imageUpload', img, img.name);
+    return this.http.post<Producto>(this.agregaUrl, upLoadData);
   }
 
   eliminaProducto(idProd: number): Observable<Producto> {
@@ -52,16 +57,13 @@ export class ProductoVendedorService {
 
   actualizaProducto(prod: Producto): Observable<Producto> {
     const url = `${this.actualizaUrl}/${prod.id_producto}`;
-    console.log("Ok");
     return this.http.post<Producto>(url, prod, this.httpOptions).pipe(
       catchError(this.handleError<Producto>('actualizaProducto'))
     );
   }
 
   getCats(): Observable<string[]> {
-    return this.http.get<string[]>(API_URL+'/get-cats').pipe(
-      catchError(this.handleError<string[]>('getProductos', []))
-    );
+    return this.http.get<string[]>(API_URL+'/get-cats');
   }
 
 

@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
+
+import { HttpClient } from '@angular/common/http';
+
 
 import { Producto } from '../models/producto';
 import { ProductoVendedorService } from '../producto-vendedor.service';
 
 import { FormsValidatorService } from '../forms-validator.service';
-
 
 @Component({
   selector: 'app-agrega-producto',
@@ -18,6 +21,8 @@ export class AgregaProductoComponent implements OnInit {
 
   addedProd?: Producto;
   cats: string[] = [];
+  imageUrl: any;
+  file: File | null = null;
   
   productForm = new FormGroup({
     nombre: new FormControl('', [
@@ -33,26 +38,36 @@ export class AgregaProductoComponent implements OnInit {
       this.formService.validateIntegerString()
     ]),
     precio: new FormControl('', [Validators.required]),
-    categoria: new FormControl('', [Validators.required])
+    categoria: new FormControl('', [Validators.required]),
+    imagen: new FormControl('', [
+      Validators.required
+    ])
   });
 
   constructor(
     private router: Router,
     private prodService: ProductoVendedorService,
-    private formService: FormsValidatorService
+    private formService: FormsValidatorService,
+    private http: HttpClient
   ) { }
 
   ngOnInit(): void {
-    this.prodService.getCats().subscribe(cs => this.cats =cs);
+    this.prodService.getCats().subscribe(
+      (cs) => {this.cats =cs;},
+      (_error) => {this.router.navigateByUrl('mensaje/error');}
+      );
   }
 
   add(name: string, descripcion: string, disponible: string, 
       precio: string, cat: string): void {
     
+    
     name = name.trim();
-    if (!name) { return; }
+    cat = cat.split(':')[1].trim();
+    
     var disp = Number(disponible);
     var prec = Number(precio);
+    
     var nuevoProducto = {
       id_producto: -1,
       nombre: name, 
@@ -60,21 +75,23 @@ export class AgregaProductoComponent implements OnInit {
       disponible: disp, 
       precio: prec, 
       categoria: cat, 
-      imagen: 'mock/path/to/image.png', 
+      imagen: '', 
       id_vendedor: 1
     } 
     
-    this.prodService.agregaProducto(nuevoProducto as Producto)
-      .subscribe(prod => {
-        this.addedProd = prod;
-        this.router.navigateByUrl('mensaje/agregar/si');
-      });
-    
-    
-  }
-
-  logSubmitted() {
-    console.log("Form Submitted");
+    if(this.file) {
+      this.prodService.agregaProducto(nuevoProducto as Producto, this.file)
+        .subscribe(
+        (prod) => {
+          this.addedProd = prod;
+          this.router.navigateByUrl('mensaje/agregar');
+        }, 
+        (_error) => {
+          this.router.navigateByUrl('mensaje/error'); 
+        });
+    } else {
+      this.router.navigateByUrl('mensaje/error');
+    }
   }
 
   goBack(): void {
@@ -96,5 +113,31 @@ export class AgregaProductoComponent implements OnInit {
     else
       return false;
   }
+
+  onFileChanged(event: any) {
+    if (!event.target.files[0] || event.target.files[0].length == 0) {
+      this.productForm.controls['imagen'].setValue(null);
+      this.productForm.controls['imagen'].markAsDirty();
+      this.productForm.controls['imagen'].markAsTouched();
+      return;
+    }  
+    const file= event.target.files[0]
+    
+    var mimeType = file.type;
+    if (mimeType.match(/image\/*/) == null) {
+      this.productForm.controls['imagen'].setValue(null);
+      this.productForm.controls['imagen'].markAsDirty();
+      this.productForm.controls['imagen'].markAsTouched();
+      return;
+    }
+
+    this.file = file;
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = (_event) => this.imageUrl = reader.result;
+  }
+
+  @HostListener('change', ['$event.target.files']) emitFiles (_event: FileList) { }
 
 }

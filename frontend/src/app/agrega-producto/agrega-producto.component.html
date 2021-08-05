@@ -1,5 +1,8 @@
 <div *ngIf="cats.length !== 0">
-  <form [formGroup]="productForm" (ngSubmit)="logSubmitted()">
+  <form 
+    [formGroup]="productForm" 
+    (ngSubmit)="add(nombreProd.value, descrProd.value, 
+      dispProd.value, precioProd.value, catProd.value)">
   <div>
     <label for="prod-nombre">Nombre: </label>
     <input 
@@ -64,23 +67,37 @@
     <div>
         <label for="prod-categoria">Categoría: </label>
         <select id="prod-categoria" class="form-input" #catProd 
-        formControlName="categoria">
+        formControlName="categoria"
+        [class.valid]="valid('categoria')"
+        [class.invalid]="invalid('categoria')">
               <option value="" disabled> Seleccione una categoria </option>
               <option *ngFor="let cat of cats" [ngValue]="cat"> {{cat}} </option>
         </select>
+        <small class="error-text" *ngIf="invalid('categoria')">
+          Debe seleccionar una categoría.
+      </small>
               
     </div>
+    <div>
+      <label for="prod-imagen">Sube una imagen: </label>
+      <input 
+        formControlName="imagen"
+        id="prod-imagen" 
+        class="form-input" 
+        type="file"
+        (change)="onFileChanged($event)">
+      <br>
+      <div><img [src]="imageUrl" *ngIf="imageUrl"></div>
+      <br>
+      <small class="error-text" *ngIf="invalid('imagen')">
+          Debe subir un archivo de imagen.
+      </small>
+    </div>        
 
     <div>
-        <button type="submit" [disabled]="!productForm.valid">Agregar Producto Plis</button>
+        <button type="submit" [disabled]="!productForm.valid">Agregar Producto</button>
     </div>
     </form>
-  
-    <!-- (click) passes input value to add() and then clears the input -->
-    <button class="add-button" (click)="add(nombreProd.value, descrProd.value, 
-      dispProd.value, precioProd.value, catProd.value)">
-      Agregar Producto
-    </button>
 
     <button class="add-button" (click)="goBack()">
       Regresar
