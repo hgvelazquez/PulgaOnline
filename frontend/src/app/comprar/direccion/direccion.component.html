@@ -1,1 +1,48 @@
-<p>direccion works!</p>
+<h3>Direccion</h3>
+<div [formGroup]="myGroup">
+    <div formGroupName="direccion">
+        <label for="calle">calle</label>
+        <input 
+              formControlName = "calle"
+              type="text" 
+              id="calle" 
+              placeholder="calle">
+
+        <label for="numero">numero exterior</label>
+        <input
+              formControlName = "numext" 
+              type="text" 
+              id="numext" 
+              placeholder="numext">
+        <label for="colonia">Colonia</label>
+        <input
+              formControlName = "colonia"
+              type="text" 
+              id="colonia" 
+              placeholder="Colonia">
+        <label for="ciudad">ciudad</label>
+        <input
+              formControlName = "ciudad"
+              type="text" 
+               id="ciudad" 
+               placeholder="ciudad">
+        <label for="estado">Estado</label>
+        <input 
+              formControlName = "estado"
+              type="text" 
+               id="estado" 
+               placeholder="Estado">
+
+
+            <button *ngIf="myGroup.valid" (click)="enviar_direccion()">
+                Enviar
+            </button>
+            <button *ngIf="envio">
+                  <a href="/pago">
+                Pago
+                </a>
+            </button>
+            
+      </div>
+</div>
+

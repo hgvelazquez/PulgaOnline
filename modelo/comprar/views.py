@@ -16,21 +16,23 @@ productos_esquema = ProductoEsquema(many=True)
 usuario_esquema = Usuario()
 
 @bp.route('/<id>')
-def producto_id(id):
-    consulta = db.session.query(Producto).get(id)
+def producto_id(id):    
+    try:
+        consulta = db.session.query(Producto).get(id)
+        nombre = consulta.nombre
+        descripcion = consulta.descripcion
+        categoria = consulta.categoria
+        disponible = consulta.disponible
+        precio = consulta.precio
+        imagen = consulta.imagen
+        id_vendedor = consulta.id_vendedor
+        id_producto = int(id)
+        producto_nuevo = Producto(nombre, descripcion, disponible, precio,
+                                    imagen, categoria, id_vendedor)
+        return producto_esquema.jsonify(producto_nuevo)
+    except:
+        return 'error',503
     
-    nombre = consulta.nombre
-    descripcion = consulta.descripcion
-    categoria = consulta.categoria
-    print(consulta.disponible)
-    disponible = consulta.disponible
-    precio = consulta.precio
-    imagen = consulta.imagen
-    id_vendedor = consulta.id_vendedor
-    id_producto = int(id)
-    producto_nuevo = Producto(nombre, descripcion, disponible, precio,
-                                imagen, categoria, id_vendedor)
-    return producto_esquema.jsonify(producto_nuevo)
 
 
 
@@ -46,6 +48,8 @@ def VistaProducto():
     response =  make_response(redirect(url_for('comprar.existe_producto'))) #verificar por que hay que usar url_for
     return response
 
+
+#eliminar
 @bp.route('/existe_producto-<id>', methods=['GET','POST'])
 def existe_producto(id):
     producto = id
@@ -69,20 +73,28 @@ def direccion():
 def ingresa_direccion():
     params = request.get_json(force=True,silent=False)
     #user = session.get('user')
-    #id_usuario = user['id_usuario']
+    id_usuario = 1 #user['id_usuario']
     try:
-        id_usuario = params['id_usuario']
-        record = db.session.query(Usuario).get(id_usuario)
+        #id_usuario = params['id_usuario']
+        record = db.session.query(Usuario).get(1)
         record.calle = params['calle']
         record.numext = params['numeroExt']
         record.colonia = params['colonia']
         record.ciudad = params['ciudad']
         record.estado = params['estado']
     except:
-        return 'Database connection failed', 500
+        return jsonify(
+                    message="Error en la bases de datos.",
+                    category="error",
+                    status=500
+                )
 
     db.session.commit()
-    return 'pues checa le bd'
+    return jsonify(
+                message='Se a cambiado la direccion',
+                category="success",
+                status=200
+            )
 
 @bp.route('/agregar_pago', methods = ['GET','POST'])
 def agregar_pago():

@@ -27,7 +27,10 @@ export class ComprarService {
     return this.http.get<any>(url);
   }
 
-
+  ingresa_direccion(direccion:any){
+    const url = `${this.BASE_URL}/ingresa_direccion`;
+    return this.http.post(url, direccion)
+  }
 
 
 }

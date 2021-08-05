@@ -9,6 +9,7 @@ import { PagoComponent } from './comprar/pago/pago.component';
 
 
 import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
+import { ReactiveFormsModule } from '@angular/forms';
 /*Para recibir del back*/
 import { HttpClientModule } from '@angular/common/http';
 
@@ -25,7 +26,8 @@ import { HttpClientModule } from '@angular/common/http';
 
     HttpClientModule,
     BrowserModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

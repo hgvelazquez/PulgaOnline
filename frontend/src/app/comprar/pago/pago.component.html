@@ -1,1 +1,35 @@
-<p>pago works!</p>
+<h3>Pago</h3>
+<div [formGroup]="myGroup">
+    <div formGroupName="direccion">
+        <label for="numero_tarjeta">numero_tarjeta</label>
+        <input 
+              formControlName = "numero_tarjeta"
+              type="text" 
+              id="numero_tarjeta" 
+              placeholder="numero_tarjeta">
+
+        <label for="codigo">codigo</label>
+        <input
+              formControlName = "codigo" 
+              type="text" 
+              id="codigo" 
+              placeholder="codigo">
+        <label for="nombre_titular">nombre_titular</label>
+        <input
+              formControlName = "nombre_titular"
+              type="text" 
+              id="nombre_titular" 
+              placeholder="nombre_titular">
+        <label for="fecha">fecha</label>
+        <input
+              formControlName = "fecha"
+              type="text" 
+               id="fecha" 
+               placeholder="fecha">
+            <button *ngIf="myGroup.valid">
+                Comprar
+            </button>
+            
+      </div>
+</div>
+
