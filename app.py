@@ -24,7 +24,8 @@ productos_esquema = ProductoEsquema(many=True)
 @app.route('/static/<fileName>')
 def _get_image(fileName):
     fileToSend = "data/imagenesProducto/" + fileName
-    return send_file(fileToSend, mimetype='image/jpg')
+    _, img_type = splitext(fileName)
+    return send_file(fileToSend, mimetype=f"image/{img_type[1:]}")
 
 @app.route('/agregar-producto', methods=['POST'])
 def agrega_producto():
@@ -45,7 +46,7 @@ def agrega_producto():
 
     imagen = datetime.now().strftime("%Y_%b_%d_%H_%M_%S")
     _, img_type = splitext(imFile.filename)
-    imagen = f"data/imagenesProducto/{imagen}_{id_vendedor}{img_type}"
+    imagen = f"{imagen}_{id_vendedor}{img_type}"
 
     imFile.save(imagen)
 
@@ -96,11 +97,24 @@ def actualizar_producto(id_prod):
     if producto is None:
         abort(404)
     else:
-        producto.descripcion = request.json['descripcion']
-        producto.disponible = request.json['disponible']
-        producto.precio = request.json['precio']
-        db.session.commit()
+        # Puede no ser enviada
+        imFile = request.files.get('imageUpload')
+        # Siempre es enviado
+        prodFile = request.files['producto']
+        
+        # Parse json from file to dict
+        prod_json = json.load(prodFile)
+        prod_json = json.loads(prod_json)
+    
+        producto.descripcion = prod_json['descripcion']
+        producto.disponible = prod_json['disponible']
+        producto.precio = prod_json['precio']
+    
+        if not (imFile is None):
+            imagen = producto.imagen
+            imFile.save(f"data/imagenesProducto/{imagen}")
 
+    db.session.commit()
     return jsonify(producto.to_dict())
 
 @app.route('/get-cats')

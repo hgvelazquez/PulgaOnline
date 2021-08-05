@@ -55,11 +55,17 @@ export class ProductoVendedorService {
     );
   }
 
-  actualizaProducto(prod: Producto): Observable<Producto> {
+  actualizaProducto(prod: Producto, img: File | null): Observable<Producto> {
+    const prdjson = JSON.stringify(prod);
+    const upLoadData = new FormData();
+    const blobOverrides = new Blob([JSON.stringify(prdjson)], {
+      type: 'application/json',
+    });
+    upLoadData.append('producto', blobOverrides);
+    if (img)
+      upLoadData.append('imageUpload', img, img.name);
     const url = `${this.actualizaUrl}/${prod.id_producto}`;
-    return this.http.post<Producto>(url, prod, this.httpOptions).pipe(
-      catchError(this.handleError<Producto>('actualizaProducto'))
-    );
+    return this.http.post<Producto>(url, upLoadData);
   }
 
   getCats(): Observable<string[]> {

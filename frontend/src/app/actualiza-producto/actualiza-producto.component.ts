@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 import { Location } from '@angular/common';
 
 import { Producto } from '../models/producto';
@@ -16,6 +16,8 @@ export class ActualizaProductoComponent implements OnInit {
   
   id : string = "-1";
   producto: Producto | undefined;
+  imageUrl: any;
+  file: File | null = null;
 
   productForm = new FormGroup({
     nombre: new FormControl(''),
@@ -29,14 +31,17 @@ export class ActualizaProductoComponent implements OnInit {
     ]),
     precio: new FormControl('', [
       Validators.required,
-      //this.formService.validateNumberString(),
     ]),
-    categoria: new FormControl('')
+    categoria: new FormControl(''),
+    imagen: new FormControl('mockvalid', [
+      Validators.required,
+    ])
   });
 
   constructor(
     private aroute: ActivatedRoute,
     private location: Location,
+    private router: Router,
     private prodService: ProductoVendedorService,
     private formService: FormsValidatorService
   ) { }
@@ -58,10 +63,12 @@ export class ActualizaProductoComponent implements OnInit {
           descripcion: prod.descripcion,
           disponible: prod.disponible,
           precio: prod.precio,
-          categoria: prod.categoria 
+          categoria: prod.categoria,
+          imagen: 'mockvalid'
         });
         this.productForm.controls['nombre'].disable();
         this.productForm.controls['categoria'].disable();
+        this.imageUrl = 'http://localhost:5000/static/' + this.producto.imagen;
       });
   }
 
@@ -77,25 +84,30 @@ export class ActualizaProductoComponent implements OnInit {
       disponible: disp, 
       precio: prec, 
       categoria: 'dummy', 
-      imagen: 'mock/path/to/image.png', 
+      imagen: (this.producto) ? this.producto.imagen : '', 
       id_vendedor: 1
     } 
     
-    console.log("Producto listo para intentar");
-    this.prodService.actualizaProducto(nuevoProducto as Producto)
+    this.prodService.actualizaProducto(nuevoProducto as Producto, this.file)
     .subscribe(
       _ => { 
-        this.goBack();
-      } 
+        this.goBack(true);
+      },
+      _error => {
+        this.router.navigateByUrl('/mensaje/error');
+      }
     );
   }
 
-  goBack(): void {
-    this.location.back();
-  }
-
-  logSubmitted() {
-    console.log("Form Submitted");
+  goBack(reload: boolean): void {
+    if (reload) {
+      const url = (this.producto) ? `/detail/${this.producto.id_producto}` : '/mis-productos';
+      this.router.navigateByUrl(url).then(() => {
+        window.location.reload();
+      });
+    } else {
+      this.location.back();
+    }
   }
 
   valid(field: string): boolean {
@@ -113,5 +125,38 @@ export class ActualizaProductoComponent implements OnInit {
     else
       return false;
   }
+
+  invalidFile(): boolean {
+    var x = this.productForm.get('imagen');
+    return (x)? (this.file===null && (x.dirty || x.touched)): false;
+  }
+
+  onFileChanged(event: any) {
+    const im = (this.producto) ? this.producto.imagen : '';
+    if (!event.target.files[0] || event.target.files[0].length == 0) {
+      this.imageUrl = '';
+      this.productForm.controls['imagen'].markAsTouched();
+      return;
+    }  
+    const file= event.target.files[0]
+    
+    var mimeType = file.type;
+    if (mimeType.match(/image\/*/) == null) {
+      this.imageUrl = '';
+      this.productForm.controls['imagen'].markAsTouched();
+      return;
+    }
+
+    this.file = file;
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = (_event) => {
+      this.imageUrl = reader.result;
+      this.productForm.controls['imagen'].setValue('mockvalid');
+    }
+  }
+
+  @HostListener('change', ['$event.target.files']) emitFiles (_event: FileList) { }
 
 }

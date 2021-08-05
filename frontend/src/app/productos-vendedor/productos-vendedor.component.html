@@ -7,7 +7,10 @@
 <ul class="productos">
   <li *ngFor="let producto of productos" >
     <a routerLink="/detail/{{producto.id_producto}}">
-      <span class="badge">{{producto.id_producto}}</span> {{producto.nombre}}
+      <span class="badge">
+        <img class="thumbnail" src="http://localhost:5000/static/{{producto.imagen}}">
+      </span> 
+      {{producto.nombre}}
     </a>
   </li>
 </ul>

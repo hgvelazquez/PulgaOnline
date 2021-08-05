@@ -1,7 +1,12 @@
 <div>
   <div *ngIf="producto">
-      <h5>{{producto.nombre}}{{producto.precio}}</h5>
-  <form [formGroup]="productForm" (ngSubmit)="logSubmitted()">
+    <div>
+      <img [src]="imageUrl"
+       class="originalImage">
+    </div>
+  <br>
+  <form [formGroup]="productForm" 
+    (ngSubmit)="update(desc.value, precio.value, disp.value);">
     <div>
       <label for="prod-nombre">Nombre: </label>
       <input id="prod-name" class="form-input" formControlName="nombre">
@@ -59,18 +64,29 @@
       <label for="prod-categoria">Categoría: </label>
       <input id="prod-categoria" #catProd formControlName="categoria">
     </div>
+    <div>
+      <label for="prod-imagen">Reemplazar la imagen: </label>
+      <input 
+        formControlName="imagen"
+        id="prod-imagen" 
+        class="form-input" 
+        type="file"
+        (change)="onFileChanged($event)">
+      <br>
+      <small class="error-text" *ngIf="invalidFile()">
+        El archivo debe ser una imagen. En caso contrario permanecerá
+        la imagen actual.
+      </small>
+    </div>
 
     <div>
-        <button type="submit" [disabled]="!productForm.valid">Actualizar Producto Plis</button>
+        <button type="submit" [disabled]="!productForm.valid">Actualizar Producto</button>
     </div>
         
-    <button (click)="update(desc.value, precio.value, disp.value);">
-        Actualizar Producto
-    </button>
   </form>
   </div>
 
-    <button (click)="goBack()">
+    <button (click)="goBack(false)">
         Cancelar
     </button>
 </div>

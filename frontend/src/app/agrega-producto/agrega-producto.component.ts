@@ -1,10 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
-
-import { HttpClient } from '@angular/common/http';
-
 
 import { Producto } from '../models/producto';
 import { ProductoVendedorService } from '../producto-vendedor.service';
@@ -47,8 +43,7 @@ export class AgregaProductoComponent implements OnInit {
   constructor(
     private router: Router,
     private prodService: ProductoVendedorService,
-    private formService: FormsValidatorService,
-    private http: HttpClient
+    private formService: FormsValidatorService
   ) { }
 
   ngOnInit(): void {
@@ -116,6 +111,7 @@ export class AgregaProductoComponent implements OnInit {
 
   onFileChanged(event: any) {
     if (!event.target.files[0] || event.target.files[0].length == 0) {
+      this.imageUrl = '';
       this.productForm.controls['imagen'].setValue(null);
       this.productForm.controls['imagen'].markAsDirty();
       this.productForm.controls['imagen'].markAsTouched();
@@ -125,6 +121,7 @@ export class AgregaProductoComponent implements OnInit {
     
     var mimeType = file.type;
     if (mimeType.match(/image\/*/) == null) {
+      this.imageUrl = '';
       this.productForm.controls['imagen'].setValue(null);
       this.productForm.controls['imagen'].markAsDirty();
       this.productForm.controls['imagen'].markAsTouched();
