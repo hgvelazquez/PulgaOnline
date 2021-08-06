@@ -26,10 +26,14 @@
               type="text" 
                id="fecha" 
                placeholder="fecha">
-            <button *ngIf="myGroup.valid">
+            <button *ngIf="myGroup.valid" (click)="validad_compra()">
                 Comprar
             </button>
             
       </div>
+</div>
+<div *ngIf="validar === 0"> Ohh hay un error en la compra </div>
+<div *ngIf="validar === 1" >
+    "Compra exitosa"
 </div>
 

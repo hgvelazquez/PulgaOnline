@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
 /** Importacion para recibir del back */
-import { Observable } from 'rxjs';
-import {  HttpClient, HttpHeaders  } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable ,of, throwError} from 'rxjs';
+import {  HttpClient, HttpHeaders,HttpErrorResponse  } from '@angular/common/http';
+import { retry, catchError, map, tap } from 'rxjs/operators';
 
 import {Producto} from '../producto';
 @Injectable({
@@ -32,5 +32,16 @@ export class ComprarService {
     return this.http.post(url, direccion)
   }
 
+  validar_compra():Observable<any>{
+    const url = `${this.BASE_URL}/validar_compra`;
+    return this.http.get<any>(url).pipe(
+      catchError(this.handleError)
+    )
+  }
 
-}
+
+  private handleError(error =HttpErrorResponse) {
+    console.log(error);
+    return throwError("algo salio mal")
+  }
+} 

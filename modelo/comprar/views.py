@@ -2,6 +2,9 @@ from flask import Blueprint, request, jsonify,  session ,make_response,redirect,
 
 bp = Blueprint('comprar', __name__, url_prefix='/comprar')
 
+from flask_mail import Mail, Message
+
+mail= Mail(__name__)
 from modelo.producto import Producto, ProductoEsquema
 from modelo.usuario import Usuario, UsuarioEsquema
 
@@ -9,14 +12,28 @@ from modelo.comprar.pago import Pago
 
 
 from modelo.conexion_bd import db, ma
-
+bp.config['MAIL_SERVER']='smtp.gmail.com'
+bp.config['MAIL_PORT'] = 465
+bp.config['MAIL_USERNAME'] = 'yourId@gmail.com'
+bp.config['MAIL_PASSWORD'] = '*****'
+bp.config['MAIL_USE_TLS'] = False
+bp.config['MAIL_USE_SSL'] = True
+mail = Mail(bp)
 
 producto_esquema = ProductoEsquema()
 productos_esquema = ProductoEsquema(many=True)
 usuario_esquema = Usuario()
+@bp.route("/correo")
+def correo():
+   msg = Message('Hello', sender = 'ramon@gmail.com', recipients = ['ramon.jcp1@gmail.com'])
+   msg.body = "Hello Flask message sent from Flask-Mail"
+   mail.send(msg)
+   return "Sent"
+
 
 @bp.route('/<id>')
-def producto_id(id):    
+def producto_id(id):
+    session['id_producto'] = int(id)
     try:
         consulta = db.session.query(Producto).get(id)
         nombre = consulta.nombre
@@ -76,12 +93,12 @@ def ingresa_direccion():
     id_usuario = 1 #user['id_usuario']
     try:
         #id_usuario = params['id_usuario']
-        record = db.session.query(Usuario).get(1)
-        record.calle = params['calle']
-        record.numext = params['numeroExt']
-        record.colonia = params['colonia']
-        record.ciudad = params['ciudad']
-        record.estado = params['estado']
+        consulta = db.session.query(Usuario).get(1)
+        consulta.calle = params['calle']
+        consulta.numext = params['numeroExt']
+        consulta.colonia = params['colonia']
+        consulta.ciudad = params['ciudad']
+        consulta.estado = params['estado']
     except:
         return jsonify(
                     message="Error en la bases de datos.",
@@ -110,3 +127,32 @@ def agregar_pago():
         return flag[0]
     print(flag[0])
     return flag[0]
+
+@bp.route('/validar_compra')
+def validar_compra():
+    id_producto = 4
+    #id_producto = session.get('id_producto')
+    try:
+        consulta = db.session.query(Producto).get(id_producto)
+        if(int(consulta.disponible) == 0 ):
+            return jsonify(
+                    message="Producto sin existencias",
+                    category="error",
+                    status=500
+                )
+        consulta.disponible = int(consulta.disponible) - 1 
+    except:
+        return jsonify(
+                    message="Error en la bases de datos.",
+                    category="error",
+                    status=500
+                )
+
+    db.session.commit()
+    return jsonify(
+                message='Compra valida',
+                category="success",
+                status=200
+            )
+
+        

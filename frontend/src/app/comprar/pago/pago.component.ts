@@ -11,7 +11,7 @@ import { Router , ActivatedRoute } from '@angular/router';
 })
 export class PagoComponent implements OnInit {
 
-
+  validar = 2;  
   myGroup = new FormGroup({ /* con my group resolvi el error formgroup */
     direccion : new FormGroup({
       numero_tarjeta : new FormControl('',[
@@ -44,21 +44,26 @@ export class PagoComponent implements OnInit {
   }
 
 
-  validad_compra(): void{
+  validad_compra():void{
     const d = this.myGroup.controls["direccion"].value
     const direc={
-    "calle":d["calle"],
-    "numeroExt":d["numext"], /* error con el nombre en la bases de datos*/
-    "colonia": d["colonia"],
-    "ciudad": d["ciudad"],
-    "estado":d["estado"]
+    "numero_tarjeta":d["numero_tarjeta"],
+    "codigo":d["codigo"], 
+    "nombre_titular": d["nombre_titular"],
+    "fecha": d["fecha"]
    };
     
-    this.comprarService.ingresa_direccion(direc)
-    .subscribe(direc =>{
-      console.log(direc)},
-      err => {
-        console.log(err);
-        });
+    this.comprarService.validar_compra()
+    .subscribe(
+      compra =>{
+        if(compra.category == "error"){
+          this.validar = 0;
+          console.log(compra.message)
+        }
+        if(compra.category == "success"){
+          this.validar = 1;
+          console.log(compra)
+        }
+      });
   }
 }
