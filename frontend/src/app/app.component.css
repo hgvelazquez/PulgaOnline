@@ -1,0 +1,21 @@
+.top-bar{
+    background-color: #7d4231;
+    position: absolute;
+    top: 0;
+    margin-left: 0;
+    width: 100%;
+    left: 0;
+    display: flex;
+    margin-bottom: 20px;
+    z-index: -1;
+}
+
+.title-container h1 {
+    font-weight: bold;
+    color: white;
+}
+
+.title-container {
+    margin-left: 2em;
+    margin-right: 2em;
+}
