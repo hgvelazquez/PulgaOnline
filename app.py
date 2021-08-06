@@ -5,9 +5,26 @@ from modelo.producto import Producto, ProductoEsquema
 #agrega el blueprint de comprar a app
 from modelo.comprar import views
 from flask_cors import CORS
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
 CORS(app)
+
+
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'yourId@gmail.com'
+app.config['MAIL_PASSWORD'] = '*****'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
+
+@app.route("/")
+def index():
+   msg = Message('Hello', sender = 'yourId@gmail.com', recipients = ['someone1@gmail.com'])
+   msg.body = "Hello Flask message sent from Flask-Mail"
+   mail.send(msg)
+   return "Sent"
 
 db.init_app(app)
 ma.init_app(app)

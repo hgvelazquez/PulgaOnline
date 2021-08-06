@@ -2,9 +2,7 @@ from flask import Blueprint, request, jsonify,  session ,make_response,redirect,
 
 bp = Blueprint('comprar', __name__, url_prefix='/comprar')
 
-from flask_mail import Mail, Message
 
-mail= Mail(__name__)
 from modelo.producto import Producto, ProductoEsquema
 from modelo.usuario import Usuario, UsuarioEsquema
 
@@ -12,23 +10,11 @@ from modelo.comprar.pago import Pago
 
 
 from modelo.conexion_bd import db, ma
-bp.config['MAIL_SERVER']='smtp.gmail.com'
-bp.config['MAIL_PORT'] = 465
-bp.config['MAIL_USERNAME'] = 'yourId@gmail.com'
-bp.config['MAIL_PASSWORD'] = '*****'
-bp.config['MAIL_USE_TLS'] = False
-bp.config['MAIL_USE_SSL'] = True
-mail = Mail(bp)
+
 
 producto_esquema = ProductoEsquema()
 productos_esquema = ProductoEsquema(many=True)
 usuario_esquema = Usuario()
-@bp.route("/correo")
-def correo():
-   msg = Message('Hello', sender = 'ramon@gmail.com', recipients = ['ramon.jcp1@gmail.com'])
-   msg.body = "Hello Flask message sent from Flask-Mail"
-   mail.send(msg)
-   return "Sent"
 
 
 @bp.route('/<id>')
