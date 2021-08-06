@@ -1,105 +1,107 @@
-<div *ngIf="cats.length !== 0">
-  <form 
-    [formGroup]="productForm" 
-    (ngSubmit)="add(nombreProd.value, descrProd.value, 
-      dispProd.value, precioProd.value, catProd.value)">
-  <div>
-    <label for="prod-nombre">Nombre: </label>
-    <input 
-        id="prod-name"
-        class="form-input"
-        #nombreProd 
-        formControlName="nombre"
-        [class.valid]="valid('nombre')"
-        [class.invalid]="invalid('nombre')"
-    >
-    <small class="error-text" *ngIf="invalid('nombre')">
-        El nombre no puede ser vacío, debe tener al menos 5 caracteres
-    </small>
-  </div>
-  <div>
-    <label for="prod-descripcion">Descripción: </label>
-    <input 
-        id="prod-descripcion"
-        class="form-input" 
-        #descrProd 
-        formControlName="descripcion"
-        [class.valid]="valid('descripcion')"
-        [class.invalid]="invalid('descripcion')"
-    >
-    <small class="error-text" *ngIf="invalid('descripcion')">
-        La descripción no puede estar vacía, debe tener al menos 5 caracteres
-    </small>
-  </div>
-  <div>
-    <label for="prod-precio">Precio: </label>
-    $&nbsp;
-    <input 
-        id="prod-precio" 
-        class="form-input"
-        type="number"
-        step="0.01" 
-        min="0.01"
-        #precioProd 
-        formControlName="precio"
-        [class.valid]="valid('precio')"
-        [class.invalid]="invalid('precio')"
-    >&nbsp;MXN
-    <small class="error-text" *ngIf="invalid('precio')">
-        El precio debe ser un número y debe ser al menos 1 centavo (0.01 MXN)
-    </small>
-  </div>
-  <div>
-        <label for="prod-disponible">Disponibles: </label>
-        <input 
-            id="prod-disponibles" 
-            class="form-input"
-            type="number"
-            min="1"
-            #dispProd
-            formControlName="disponible"
-            [class.valid]="valid('disponible')"
-            [class.invalid]="invalid('disponible')">
-    </div>
-    <small class="error-text" *ngIf="invalid('disponible')">
-        El número de productos disponibles debe ser un entero mayor o igual a cero.
-    </small>
-    <div>
-        <label for="prod-categoria">Categoría: </label>
-        <select id="prod-categoria" class="form-input" #catProd 
-        formControlName="categoria"
-        [class.valid]="valid('categoria')"
-        [class.invalid]="invalid('categoria')">
-              <option value="" disabled> Seleccione una categoria </option>
-              <option *ngFor="let cat of cats" [ngValue]="cat"> {{cat}} </option>
-        </select>
-        <small class="error-text" *ngIf="invalid('categoria')">
-          Debe seleccionar una categoría.
-      </small>
-              
-    </div>
-    <div>
-      <label for="prod-imagen">Sube una imagen: </label>
-      <input 
-        formControlName="imagen"
-        id="prod-imagen" 
-        class="form-input" 
-        type="file"
-        (change)="onFileChanged($event)">
-      <br>
-      <div><img [src]="imageUrl" *ngIf="imageUrl"></div>
-      <br>
-      <small class="error-text" *ngIf="invalid('imagen')">
-          Debe subir un archivo de imagen.
-      </small>
-    </div>        
+<div class="component-container">
+  <div class="form-container" *ngIf="cats.length !== 0">
+    <form [formGroup]="productForm" (ngSubmit)="add(nombreProd.value, descrProd.value, 
+        dispProd.value, precioProd.value, catProd.value)">
+      <div class="maker-cols">
+        <div class="colu">
+          <div class="fields-container">
+            <div class="one-field">
+              <div class="label-cont">
+                <label for="prod-nombre">Nombre: </label>
+              </div>
+              <input id="prod-name" class="form-input-name" #nombreProd formControlName="nombre"
+                [class.valid]="valid('nombre')" [class.invalid]="invalid('nombre')">
+              <div class="warn-cont">
+                <small class="error-text" *ngIf="invalid('nombre')">
+                  El nombre no puede ser vacío, debe tener al menos 5 caracteres
+                </small>
+              </div>
+            </div>
+            <div class="one-field">
+              <div class="label-cont">
+                <label for="prod-descripcion">Descripción: </label>
+              </div>
+              <textarea rows="4" cols="100" id="prod-descripcion" class="form-input-desc" #descrProd
+                formControlName="descripcion" [class.valid]="valid('descripcion')"
+                [class.invalid]="invalid('descripcion')"> </textarea>
+              <div class="warn-cont">
+                <small class="error-text" *ngIf="invalid('descripcion')">
+                  La descripción no puede estar vacía, debe tener al menos 5 caracteres
+                </small>
+              </div>
+            </div>
+            <div class="one-field">
+              <div class="label-cont">
+                <label for="prod-precio">Precio: </label>
+              </div>
+              $&nbsp;
+              <input id="prod-precio" class="form-input-num" type="number" step="0.01" min="0.01" #precioProd
+                formControlName="precio" [class.valid]="valid('precio')" [class.invalid]="invalid('precio')">&nbsp;MXN
+              <div class="warn-cont">
+                <small class="error-text" *ngIf="invalid('precio')">
+                  El precio debe ser un número y debe ser al menos 1 centavo (0.01 MXN)
+                </small>
+              </div>
+            </div>
+            <div class="one-field">
+              <div class="label-cont">
+                <label for="prod-disponible">Disponibles: </label>
+              </div>
+              <input id="prod-disponibles" class="form-input-num" type="number" min="1" #dispProd
+                formControlName="disponible" [class.valid]="valid('disponible')"
+                [class.invalid]="invalid('disponible')">
+            </div>
+            <div class="warn-cont">
+              <small class="error-text" *ngIf="invalid('disponible')">
+                El número de productos disponibles debe ser un entero mayor o igual a cero.
+              </small>
+            </div>
+            <div class="one-field">
+              <div class="label-cont">
+                <label for="prod-categoria">Categoría: </label>
+              </div>
+              <select id="prod-categoria" class="form-input" #catProd formControlName="categoria"
+                [class.valid]="valid('categoria')" [class.invalid]="invalid('categoria')">
+                <option value="" disabled> Seleccione una categoria </option>
+                <option *ngFor="let cat of cats" [ngValue]="cat"> {{cat}} </option>
+              </select>
+              <div class="warn-cont">
+                <small class="error-text" *ngIf="invalid('categoria')">
+                  Debe seleccionar una categoría.
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="colu2">
+          <div class="im-container">
+            <div class="label-cont">
+              <label for="prod-imagen">Sube una imagen: </label>
+            </div>
+            <input formControlName="imagen" id="prod-imagen" class="form-input" type="file"
+              (change)="onFileChanged($event)">
+            <br>
+            <div class="img-cont">
+              <img class="contained" [src]="imageUrl" *ngIf="imageUrl">
+            </div>
+            <div class="warn-cont">
+              <small class="error-text" *ngIf="invalid('imagen')">
+                Debe subir un archivo de imagen.
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    <div>
-        <button type="submit" [disabled]="!productForm.valid">Agregar Producto</button>
-    </div>
+      <div class="buttons-div">
+        <div class="button-div">
+          <button class="act" type="submit" [disabled]="!productForm.valid">Agregar Producto</button>
+        </div>
+        <div class="button-div">
+          <button (click)="goBack()">Regresar</button>
+        </div>
+      </div>
+
     </form>
-
-    <button class="add-button" (click)="goBack()">
-      Regresar
-    </button>
+  </div>
 </div>

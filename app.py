@@ -48,7 +48,7 @@ def agrega_producto():
     _, img_type = splitext(imFile.filename)
     imagen = f"{imagen}_{id_vendedor}{img_type}"
 
-    imFile.save(imagen)
+    imFile.save(f"data/imagenesProducto/{imagen}")
 
     
     producto_nuevo = Producto(nombre, descripcion, precio, disponible, 

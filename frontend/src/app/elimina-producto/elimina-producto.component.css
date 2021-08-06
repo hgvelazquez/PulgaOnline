@@ -7,6 +7,7 @@ button {
   font-size: 1rem;
   font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
 }
 
 button:hover {
@@ -37,11 +38,11 @@ button.delete:hover {
   border: 1px solid #4a000c;
   box-shadow: -2px 2px 2px #30000c;
   border-radius: 10px;
-  background-color: #ffe2f4;
+  background-color: #fdebf6;
   font-style: italic;
   padding: 1rem;
   margin: 0 auto;
-  margin-top: max(10vh, 60px);
+  margin-top: max(10vh, 100px);
   text-align:center;
   color: #222;
   position: inherit;

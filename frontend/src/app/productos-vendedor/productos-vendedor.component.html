@@ -1,16 +1,42 @@
-<h2>Mis Productos</h2>
-<button class="style_button"> 
-  <a routerLink="/agregar-producto">
-  Agregar Producto
-</a>
-</button>
-<ul class="productos">
-  <li *ngFor="let producto of productos" >
-    <a routerLink="/detail/{{producto.id_producto}}">
-      <span class="badge">
-        <img class="thumbnail" src="http://localhost:5000/static/{{producto.imagen}}">
-      </span> 
-      {{producto.nombre}}
-    </a>
-  </li>
-</ul>
+<div class="component-container">
+
+  <div class="title-container">
+    <h2>Mis Productos</h2>
+  </div>
+  <div class="button-container">
+    <button class="style_button" (click)="goAgregar()">
+      Agregar Producto
+    </button>
+  </div>
+
+  <ul class="productos">
+    <li *ngFor="let producto of productos; let even=even">
+      <a routerLink="/detail/{{producto.id_producto}}" *ngIf="even">
+        <div class="gray-l">
+          <div class="badge1">
+            <img class="thumbnail" src="http://localhost:5000/static/{{producto.imagen}}">
+          </div>
+          <div class="text-prod">
+            <p class="text-title">{{producto.nombre}}</p>
+            <p class="text-desc">{{producto.descripcion}}</p>
+            <p class="text-price">$ {{producto.precio}} MXN</p>
+            <p class="text-desc">Haga clic en el recuadro para ver los detalles.</p>
+          </div>
+        </div>
+      </a>
+      <a routerLink="/detail/{{producto.id_producto}}" *ngIf="!even">
+        <div class="pink-l">
+          <div class="badge1">
+            <img class="thumbnail" src="http://localhost:5000/static/{{producto.imagen}}">
+          </div>
+          <div class="text-prod">
+            <p class="text-title">{{producto.nombre}}</p>
+            <p class="text-desc">{{producto.descripcion}}</p>
+            <p class="text-price">$ {{producto.precio}} MXN</p>
+            <p class="text-desc">Haga clic en el recuadro para ver los detalles.</p>
+          </div>
+        </div>
+      </a>
+    </li>
+  </ul>
+</div>

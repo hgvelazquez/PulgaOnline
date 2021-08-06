@@ -1,29 +1,50 @@
-<div *ngIf="producto">
-    
-    <h2>{{producto.nombre | uppercase}} Detalles</h2>
-    <div><span>id: </span>{{producto.id_producto}}</div>
-    <div><span>nombre: </span>{{producto.nombre}}</div>
-    <div><span>descripcion: </span>{{producto.descripcion}}</div>
-    <div><span>precio: </span>{{producto.precio}}</div>
-    <div><span>disponibles: </span>{{producto.disponible}}</div>
-    <div><span>categoria: </span>{{producto.categoria}}</div>
-    <img src='http://localhost:5000/static/{{producto.imagen}}'>
-    <button>
-        <a href="/actualizar-producto/{{producto.id_producto}}">
-        Actualizar Producto
-        </a>
-    </button>
-    
-    <button>
-        <a href="/eliminar-producto/{{producto.id_producto}}">
-        Eliminar Producto
-        </a>
-    </button>
-    
-</div>
+<div class="component-container">
+  <div *ngIf="producto">
 
-<button>
-    <a href="/mis-productos">
-    Regresar
-    </a>
-</button>
+    <h2>{{producto.nombre}}</h2>
+
+    <div class="detail-container">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="img-cont">
+            <img class="contained" src='http://localhost:5000/static/{{producto.imagen}}'>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="desc">
+            {{producto.descripcion}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="descmin">$ {{producto.precio}} MXN</div>
+      </div>
+      <div class="col-md-4">
+        <div class="descmin">Disponibles: {{producto.disponible}}</div>
+      </div>
+      <div class="col-md-4">
+        <div class="descmin">Categoría: {{producto.categoria}}</div>
+      </div>
+    </div>
+
+    <div class="buttonsdiv">
+      <button class="up" (click)="navigate('actualizar')">
+        Actualizar Producto
+      </button>
+
+      <button class="del" (click)="navigate('eliminar')">
+        Eliminar Producto
+      </button>
+    </div>
+
+  </div>
+
+  <div class="single-button">
+    <button (click)="goBack()">
+      Regresar
+    </button>
+  </div>
+</div>

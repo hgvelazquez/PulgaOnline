@@ -55,8 +55,8 @@ export class ActualizaProductoComponent implements OnInit {
 
   getProd(): void {
     const id = Number(this.id);
-    this.prodService.getProducto(id)
-      .subscribe(prod => {
+    this.prodService.getProducto(id).subscribe(
+      prod => {
         this.producto = prod;
         this.productForm.setValue({
           nombre: prod.nombre,
@@ -69,7 +69,9 @@ export class ActualizaProductoComponent implements OnInit {
         this.productForm.controls['nombre'].disable();
         this.productForm.controls['categoria'].disable();
         this.imageUrl = 'http://localhost:5000/static/' + this.producto.imagen;
-      });
+      }, 
+      _error => {this.router.navigateByUrl('/mensaje/error');}
+    );
   }
 
   update(desc: string, precio: string, dispo: string) {

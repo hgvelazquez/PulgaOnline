@@ -30,17 +30,15 @@ export class EliminaProductoComponent implements OnInit {
   }
 
   goBack(): void {
-    console.log("E");
     this.location.back();
   }
 
   delete(): void {
     
     this.prodServ.eliminaProducto(this.prodID).subscribe(
-    _ =>  {
-        this.router.navigate(['/mensaje/eliminar']);
-      }  
-    )
+      _ =>  {this.router.navigate(['/mensaje/eliminar']);}, 
+      _error => {this.router.navigate(['/mensaje/error']);}
+    );
   }
 
 }

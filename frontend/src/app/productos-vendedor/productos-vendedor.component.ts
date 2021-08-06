@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Producto } from '../models/producto';
 import { ProductoVendedorService } from '../producto-vendedor.service';
@@ -14,7 +15,8 @@ export class ProductosVendedorComponent implements OnInit {
   productos: Producto[] = [];
 
   constructor(
-    private prodService: ProductoVendedorService
+    private prodService: ProductoVendedorService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -26,4 +28,7 @@ export class ProductosVendedorComponent implements OnInit {
       .subscribe(prods => this.productos = prods);
   }
 
+  goAgregar() {
+    this.router.navigateByUrl('/agregar-producto');
+  }
 }

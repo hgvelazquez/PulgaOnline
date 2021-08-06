@@ -50,9 +50,7 @@ export class ProductoVendedorService {
 
   eliminaProducto(idProd: number): Observable<Producto> {
     const url = `${this.eliminaUrl}/${idProd}`;
-    return this.http.delete<Producto>(url, this.httpOptions).pipe(
-      catchError(this.handleError<Producto>('eliminaProducto'))
-    );
+    return this.http.delete<Producto>(url, this.httpOptions);
   }
 
   actualizaProducto(prod: Producto, img: File | null): Observable<Producto> {
