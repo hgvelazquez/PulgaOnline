@@ -19,6 +19,9 @@ usuario_esquema = Usuario()
 
 @bp.route('/<id>')
 def producto_id(id):
+    '''
+    Obtiene los campos del producto mediante su id
+    '''
     session['id_producto'] = int(id)
     try:
         consulta = db.session.query(Producto).get(id)
@@ -39,41 +42,21 @@ def producto_id(id):
 
 
 
-#Solo envia los datos del producto
-@bp.route('/VistaProducto', methods= ['POST'])
-def VistaProducto():
-    params = request.get_json(force=True,silent=False)
-    
-    session['producto'] = params['producto']
-    session['user'] = params['usuario'] #session.get('user')
-    print(session['producto'])
-    print(session['user'])
-    response =  make_response(redirect(url_for('comprar.existe_producto'))) #verificar por que hay que usar url_for
-    return response
-
-
-#eliminar
 @bp.route('/existe_producto-<id>', methods=['GET','POST'])
 def existe_producto(id):
+    '''
+    Verifica la existencia del producto in la Base de datos
+    '''
     producto = id
     consulta = db.session.query(Producto).get(id)
     response = True if (consulta.disponible) == 1 else False
     return '{}'.format(response)
 
-
-@bp.route('/direccion', methods = ['GET','POST'])
-def direccion():
-    print('Estamos en direccion')
-    user = session.get('user')
-    flag = Usuario.tiene_direccion(user,db)
-    if flag:
-        
-        return 'Tiene dirreccion'
-    else:
-        return make_response(redirect(url_for('comprar.ingresa_direccion')))
-
 @bp.route('/ingresa_direccion', methods = ['POST'])
 def ingresa_direccion():
+    '''
+    Obtiene el id del usuario en session y modifica la direccionen la Base de Datos
+    '''
     params = request.get_json(force=True,silent=False)
     #user = session.get('user')
     id_usuario = 1 #user['id_usuario']
@@ -99,23 +82,11 @@ def ingresa_direccion():
                 status=200
             )
 
-@bp.route('/agregar_pago', methods = ['GET','POST'])
-def agregar_pago():
-    params = request.get_json(force=True)
-    tarjeta  = params['tarjeta']
-    num_cuenta = params['num_cuenta']
-    codigo = params['codigo']
-    nombre_titular = params['nombre_titular']
-    pago = Pago(tarjeta, num_cuenta, codigo, nombre_titular)
-    flag = pago.validar_pago()
-    if flag[1]:
-        print(flag[0])
-        return flag[0]
-    print(flag[0])
-    return flag[0]
-
 @bp.route('/validar_compra')
 def validar_compra():
+    '''
+    Valida que de elimine el producto en la Base de datos obtiene el id de session
+    '''
     id_producto = 4
     #id_producto = session.get('id_producto')
     try:
@@ -141,4 +112,27 @@ def validar_compra():
                 status=200
             )
 
-        
+
+@bp.route('/add')
+def add():
+    '''
+    add producto a la base datos, solo es de prueba
+    '''
+    id_producto = 4
+
+    try:
+        consulta = db.session.query(Producto).get(id_producto)
+        consulta.disponible = 1
+    except:
+        return jsonify(
+                    message="Error en la bases de datos.",
+                    category="error",
+                    status=500
+                )
+
+    db.session.commit()
+    return jsonify(
+                message='Compra valida',
+                category="success",
+                status=200
+            )

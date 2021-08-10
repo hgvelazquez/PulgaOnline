@@ -11,14 +11,14 @@ import { Router , ActivatedRoute } from '@angular/router';
 })
 export class PagoComponent implements OnInit {
 
-  validar = 2;  
-  myGroup = new FormGroup({ /* con my group resolvi el error formgroup */
-    direccion : new FormGroup({
+  validar = 0;  
+  //myGroup = new FormGroup({ /* con my group resolvi el error formgroup */
+    pago = new FormGroup({
       numero_tarjeta : new FormControl('',[
         Validators.required,
         Validators.pattern("^[0-9]*$"),
         Validators.minLength(15),
-        Validators.maxLength(17)]),
+        Validators.maxLength(16)]),
       codigo : new FormControl('',[
         Validators.required,
         Validators.pattern("^[0-9]*$"),
@@ -27,13 +27,9 @@ export class PagoComponent implements OnInit {
       nombre_titular : new FormControl('',[
         Validators.required,
         Validators.minLength(3),
-        Validators.maxLength(20)]),
-      fecha : new FormControl('',[
-        Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(5)])
-      })
-  });
+        Validators.maxLength(20)])
+      });
+  // });
 
   constructor(
     private router: Router,
@@ -42,22 +38,18 @@ export class PagoComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-
-  validad_compra():void{
-    const d = this.myGroup.controls["direccion"].value
-    const direc={
-    "numero_tarjeta":d["numero_tarjeta"],
-    "codigo":d["codigo"], 
-    "nombre_titular": d["nombre_titular"],
-    "fecha": d["fecha"]
-   };
-    
+  goBack(): void {
+    this.router.navigateByUrl('direccion');
+  }
+  goBegin(): void {
+    this.router.navigateByUrl('');
+  }
+  validad_compra():void{    
     this.comprarService.validar_compra()
     .subscribe(
       compra =>{
         if(compra.category == "error"){
-          this.validar = 0;
+          this.validar = 2;
           console.log(compra.message)
         }
         if(compra.category == "success"){
@@ -65,5 +57,25 @@ export class PagoComponent implements OnInit {
           console.log(compra)
         }
       });
+  }
+
+  onSubmit() {
+    // TODO: Use EventEmitter with form value
+    console.warn(this.pago.value);
+  }
+  valid(field: string): boolean {
+    var x = this.pago.get(field)
+    if (x)
+      return (x.valid && (x.dirty || x.touched));
+    else
+      return false;
+  }
+
+  invalid(field: string): boolean {
+    var x = this.pago.get(field)
+    if (x)
+      return (x.invalid && (x.dirty || x.touched));
+    else
+      return false;
   }
 }

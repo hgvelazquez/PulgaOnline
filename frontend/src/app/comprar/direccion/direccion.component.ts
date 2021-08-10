@@ -14,8 +14,8 @@ export class DireccionComponent implements OnInit {
 
   envio= false;
   user_id : string | undefined;
-  myGroup = new FormGroup({ /* con my group resolvi el error formgroup */
-    direccion : new FormGroup({
+  //myGroup = new FormGroup({ /* con my group resolvi el error formgroup */
+    direccion = new FormGroup({
       calle : new FormControl('',[
         Validators.required,
         Validators.minLength(1),
@@ -37,8 +37,8 @@ export class DireccionComponent implements OnInit {
         Validators.required,
         Validators.minLength(4),
         Validators.maxLength(20)])
-      })
-  });
+      });
+  //})
 
   
 
@@ -52,13 +52,12 @@ export class DireccionComponent implements OnInit {
   ngOnInit(): void {
   }
   enviar_direccion(): void{
-    const d = this.myGroup.controls["direccion"].value
     const direc={
-    "calle":d["calle"],
-    "numeroExt":d["numext"], /* error con el nombre en la bases de datos*/
-    "colonia": d["colonia"],
-    "ciudad": d["ciudad"],
-    "estado":d["estado"]
+    "calle":this.direccion.controls["calle"].value,
+    "numeroExt":this.direccion.controls["numext"].value, /* error con el nombre en la bases de datos*/
+    "colonia": this.direccion.controls["colonia"].value,
+    "ciudad": this.direccion.controls["ciudad"].value,
+    "estado":this.direccion.controls["estado"].value
    };
     
     this.comprarService.ingresa_direccion(direc)
@@ -69,5 +68,30 @@ export class DireccionComponent implements OnInit {
         this.envio = false;
         console.log(err);
         });
+  }
+  onSubmit() {
+    // TODO: Use EventEmitter with form value
+    console.warn(this.direccion.value);
+  }
+  valid(field: string): boolean {
+    var x = this.direccion.get(field)
+    if (x)
+      return (x.valid && (x.dirty || x.touched));
+    else
+      return false;
+  }
+
+  invalid(field: string): boolean {
+    var x = this.direccion.get(field)
+    if (x)
+      return (x.invalid && (x.dirty || x.touched));
+    else
+      return false;
+  }
+  goBack(): void {
+    this.router.navigateByUrl('/');
+  }
+  goPago(): void {
+    this.router.navigateByUrl('pago');
   }
 }
