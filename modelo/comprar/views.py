@@ -116,7 +116,7 @@ def validar_compra():
 @bp.route('/add')
 def add():
     '''
-    add producto a la base datos, solo es de prueba
+    add producto a la base datos, SOLO ES DE PRUEBA
     '''
     id_producto = 4
 
