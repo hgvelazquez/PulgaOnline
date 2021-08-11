@@ -1,53 +1,48 @@
-<p>principal-producto works!</p>
-
-
-
-<div>
+<div class="component-container">
+    <h2>Producto</h2>
     <div *ngIf="producto">
-        
-        <div>
-            <label for="prod-nombre">Nombre del Producto: </label>
-            <input id="prod-name" [(ngModel)]="producto.nombre" 
-            placeholder="nombre" disabled>
-        </div>
-        <div>
-            <label for="prod-descripcion">Descripción: </label>
-        producto<input id="prod-descripcion" [(ngModel)]="producto.descripcion" 
-        placeholder="descripcion" #desc>
-        </div>
-        <div>
-            <label for="prod-precio">Precio: </label>
-            <input id="prod-precio" [(ngModel)]="producto.precio" 
-            placeholder="precio" #precio>
-        </div>
-        <div>
-            <label for="prod-disponible">Disponibles: </label>
-            <input id="prod-disponibles" [(ngModel)]="producto.disponible" 
-            placeholder="disponible" #disp>
-        </div>
-        <div>
-            <label for="prod-categoria">Categoría: </label>
-            <input id="prod-categoria" [(ngModel)]="producto.categoria" 
-            placeholder="categoria" disabled>
+  
+        <h2>{{producto.nombre}}</h2>
+    
+        <div class="detail-container">
+            <div class="row">
+            <div class="col-lg-6">
+                <div class="img-cont">
+                <img class="contained" src='http://localhost:5000/static/{{producto.imagen}}'>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="desc">
+                {{producto.descripcion}}
+                </div>
+            </div>
+            </div>
         </div>
     
-    </div>
-    <!--No se por que en disponible es igual a 0 cuando deberia de ser 1    -->
-    <div *ngIf="disponible === 1; then thenBlock else elseBlock"></div>
-    <ng-template #thenBlock>
-        <button>
-            <a href="/direccion">
+        <div class="row">
+            <div class="col-md-4">
+            <div class="descmin">$ {{producto.precio}} MXN</div>
+            </div>
+            <div class="col-md-4">
+            <div class="descmin">Disponibles: {{producto.disponible}}</div>
+            </div>
+            <div class="col-md-4">
+            <div class="descmin">Categoría: {{producto.categoria}}</div>
+            </div>
+        </div>
+    
+        <div class="buttonsdiv">
+            <button *ngIf="disponible > 0" class="up" (click)="goDireccion()">
             Comprar
-            </a>
-        </button>
-
-    </ng-template>
-    <ng-template #elseBlock>
-            <label>No existen productos por el momento</label>
-    </ng-template>
+            </button>
+    
+        </div>
+  
+    </div>
+  
+    <div class="single-button">
+      <button (click)="goBack()">
+        Regresar
+      </button>
+    </div>
 </div>
-<button>
-    <a href="/">
-    Regresar
-    </a>
-</button>

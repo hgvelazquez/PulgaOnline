@@ -69,7 +69,7 @@ def ingresa_direccion():
         consulta.ciudad = params['ciudad']
         consulta.estado = params['estado']
     except:
-        return jsonify(
+        return  jsonify(
                     message="Error en la bases de datos.",
                     category="error",
                     status=500

@@ -46,4 +46,10 @@ export class PrincipalProductoComponent implements OnInit {
       error =>console.log(error));
 
   }
+  goBack(): void {
+    this.router.navigateByUrl('');
+  }
+  goDireccion(): void {
+    this.router.navigateByUrl('Direccion');
+  }
 }
