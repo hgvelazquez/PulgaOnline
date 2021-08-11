@@ -27,9 +27,11 @@ export class ComprarService {
     return this.http.get<any>(url);
   }
 
-  ingresa_direccion(direccion:any){
+  ingresa_direccion(Observable:any){
     const url = `${this.BASE_URL}/ingresa_direccion`;
-    return this.http.post(url, direccion)
+    return this.http.post<any>(url,Observable).pipe(
+      catchError(this.handleError)
+    )
   }
 
   validar_compra():Observable<any>{

@@ -52,17 +52,17 @@ def existe_producto(id):
     response = True if (consulta.disponible) == 1 else False
     return '{}'.format(response)
 
-@bp.route('/ingresa_direccion', methods = ['POST'])
+@bp.route('/ingresa_direccion', methods = ['GET','POST'])
 def ingresa_direccion():
     '''
     Obtiene el id del usuario en session y modifica la direccionen la Base de Datos
     '''
     params = request.get_json(force=True,silent=False)
     #user = session.get('user')
-    id_usuario = 1 #user['id_usuario']
+    id_usuario = 4 #user['id_usuario']
     try:
         #id_usuario = params['id_usuario']
-        consulta = db.session.query(Usuario).get(1)
+        consulta = db.session.query(Usuario).get(id_usuario)
         consulta.calle = params['calle']
         consulta.numext = params['numeroExt']
         consulta.colonia = params['colonia']

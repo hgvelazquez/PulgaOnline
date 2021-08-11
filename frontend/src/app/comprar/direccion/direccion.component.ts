@@ -12,9 +12,8 @@ import { Router , ActivatedRoute } from '@angular/router';
 })
 export class DireccionComponent implements OnInit {
 
-  envio= false;
+  envio= 0;
   user_id : string | undefined;
-  //myGroup = new FormGroup({ /* con my group resolvi el error formgroup */
     direccion = new FormGroup({
       calle : new FormControl('',[
         Validators.required,
@@ -33,14 +32,44 @@ export class DireccionComponent implements OnInit {
         Validators.required,
         Validators.minLength(4),
         Validators.maxLength(20)]),
-      estado : new FormControl('',[
-        Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(20)])
+      estado : new FormControl('',
+        [Validators.required])
       });
-  //})
 
-  
+  estados = [
+    "Distrito Federal",
+    "Aguascalientes",
+    "Baja California",
+    "Baja California Sur",
+    "Campeche",
+    "Chiapas",
+    "Chihuahua",
+    "Coahuila",
+    "Colima",
+   "Durango",
+   "Guanajuato",
+   "Guerrero",
+   "Hidalgo",
+   "Jalisco",
+   "Mexico",
+   "Michoacan",
+   "Morelos",
+   "Nayarit",
+   "Nuevo Leon",
+   "Oaxaca",
+   "Puebla",
+   "Queretaro",
+   "Quintana Roo",
+   "San Luis Potosil;",
+   "Sinaloa",
+   "Sonora",
+   "Tabasco",
+   "Tamaulipas",
+   "Tlaxcala",
+   "Veracruz",
+   "Yucatan",
+   "Zacatecas"
+  ]
 
 
   constructor(
@@ -51,6 +80,7 @@ export class DireccionComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
   enviar_direccion(): void{
     const direc={
     "calle":this.direccion.controls["calle"].value,
@@ -61,13 +91,17 @@ export class DireccionComponent implements OnInit {
    };
     
     this.comprarService.ingresa_direccion(direc)
-    .subscribe(direc =>{
-      this.envio = true;
-      console.log(direc)},
-      err => {
-        this.envio = false;
-        console.log(err);
-        });
+    .subscribe(
+         dir =>{
+        if(dir.category == "error"){
+          this.envio = 2;
+          console.log(dir.message)
+        }
+        if(dir.category == "success"){
+          this.envio = 1;
+          console.log(dir)
+        }
+      });
   }
   onSubmit() {
     // TODO: Use EventEmitter with form value

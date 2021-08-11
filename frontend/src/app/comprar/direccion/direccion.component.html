@@ -24,7 +24,7 @@
                                     [class.valid]="valid('numext')" [class.invalid]="invalid('numext')">
                                     <div class="warn-cont">
                                           <small class="error-text" *ngIf="invalid('numext')">
-                                          El numero no puede ser vacío.
+                                          El numero no puede ser vacío y debe ser numero.
                                           </small>
                                     </div>
                               </div>
@@ -56,21 +56,28 @@
                                     <div class="label-cont">
                                           <label for="estado">Estado: </label>
                                     </div>
-                                    <input id="estado" class="form-input-name"  formControlName="estado"  placeholder="estado"
-                                    [class.valid]="valid('estado')" [class.invalid]="invalid('estado')">
+                                    <select id="estado" class="form-input-name"  formControlName="estado">
+                                          <option *ngFor="let estado of estados" [ngValue]="estado"> {{estado}} </option>
+                                          
+                                    </select>		
+                                    <!-- <input id="estado" class="form-input-name"  formControlName="estado"  placeholder="estado"
+                                    [class.valid]="valid('estado')" [class.invalid]="invalid('estado')">-->
                                     <div class="warn-cont">
                                           <small class="error-text" *ngIf="invalid('estado')">
                                           El estado no puede ser vacío.
                                           </small>
                                     </div>
                               </div>
+                              <div *ngIf="envio == 2"><h3>Ohoh hay un error en al guardar la direccion. <br>Intente de nuevo.</h3></div>
                                     <div class="buttons-div">
                                           <div class="button-div">
-                                          <button class="act" type="submit" *ngIf="direccion.valid && !(envio)" (click)="enviar_direccion()">Enviar</button>
+                                          <button class="act" type="submit" *ngIf="direccion.valid" (click)="enviar_direccion()" >Pagar</button>
                                           </div>
+                                          <div  *ngIf="envio===1" >{{goPago()}}</div>
+                                          <!--
                                           <div class="button-div">
                                                 <button class="act" type="submit" *ngIf="envio" (click)="goPago()">Pagar</button>
-                                          </div>
+                                          </div>-->
                                           <div class="button-div">
                                           <button (click)="goBack()">Regresar</button>
                                           </div>

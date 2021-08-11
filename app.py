@@ -3,7 +3,7 @@ from modelo.conexion_bd import db, ma
 from modelo.producto import Producto, ProductoEsquema
 
 #agrega el blueprint de comprar a app
-from modelo.comprar import views
+from modelo.comprar import compra_rutas
 from flask_cors import CORS
 from flask_mail import Mail, Message
 
@@ -58,7 +58,7 @@ def agrega_producto():
     return producto_esquema.jsonify(producto_nuevo)
 
 #agrega las rutas de comprar
-app.register_blueprint(views.bp)
+app.register_blueprint(compra_rutas.bp)
 
 
 if __name__ == '__main__':
