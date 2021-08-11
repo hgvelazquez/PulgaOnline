@@ -50,6 +50,6 @@ export class PrincipalProductoComponent implements OnInit {
     this.router.navigateByUrl('');
   }
   goDireccion(): void {
-    this.router.navigateByUrl('Direccion');
+    this.router.navigateByUrl('direccion');
   }
 }
