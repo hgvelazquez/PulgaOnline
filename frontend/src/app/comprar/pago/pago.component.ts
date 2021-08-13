@@ -78,4 +78,10 @@ export class PagoComponent implements OnInit {
     else
       return false;
   }
+  enviar_correo():void{
+    this.comprarService.enviar_correo().subscribe(
+      exito=>{console.log(exito)},
+      err => {console.error(err)}
+    );
+  }
 }

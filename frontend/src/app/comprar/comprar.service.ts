@@ -40,10 +40,18 @@ export class ComprarService {
       catchError(this.handleError)
     )
   }
-
-
+  
+ 
   private handleError(error =HttpErrorResponse) {
     console.log(error);
     return throwError("algo salio mal")
   }
+  
+ 
+  enviar_correo():Observable<any>{    
+   return this.http.get<any>('http://localhost:5000/send').pipe(
+      catchError(this.handleError)
+    )
+  }
+
 } 

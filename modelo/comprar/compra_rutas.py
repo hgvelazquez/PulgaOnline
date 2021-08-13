@@ -1,11 +1,10 @@
 from flask import Blueprint, request, jsonify,  session ,make_response,redirect,url_for
-
 bp = Blueprint('comprar', __name__, url_prefix='/comprar')
 
 
 from modelo.producto import Producto, ProductoEsquema
 from modelo.usuario import Usuario, UsuarioEsquema
-
+from flask_mail import Mail, Message #para envio de email
 from modelo.comprar.pago import Pago
 
 
@@ -17,12 +16,14 @@ productos_esquema = ProductoEsquema(many=True)
 usuario_esquema = Usuario()
 
 
+user= {}
+producto ={}
+
 @bp.route('/<id>')
 def producto_id(id):
     '''
     Obtiene los campos del producto mediante su id
     '''
-    session['id_producto'] = int(id)
     try:
         consulta = db.session.query(Producto).get(id)
         nombre = consulta.nombre
@@ -35,6 +36,12 @@ def producto_id(id):
         id_producto = int(id)
         producto_nuevo = Producto(nombre, descripcion, disponible, precio,
                                     imagen, categoria, id_vendedor)
+        
+        user = {'id_usuario':1,
+                        'email': 'moncho.jcp1@gmail.com'}
+        producto = {'nombre':nombre,
+                                'id_producto': id}
+        
         return producto_esquema.jsonify(producto_nuevo)
     except:
         return 'error',503
@@ -59,7 +66,10 @@ def ingresa_direccion():
     '''
     params = request.get_json(force=True,silent=False)
     #user = session.get('user')
-    id_usuario = 4 #user['id_usuario']
+    print('*'*64)
+    print(user)
+    id_usuario = user['id_usuario']
+  
     try:
         #id_usuario = params['id_usuario']
         consulta = db.session.query(Usuario).get(id_usuario)
@@ -87,8 +97,8 @@ def validar_compra():
     '''
     Valida que de elimine el producto en la Base de datos obtiene el id de session
     '''
-    id_producto = 4
-    #id_producto = session.get('id_producto')
+   # producto = session.get('producto')
+    id_producto =  producto['id_producto']
     try:
         consulta = db.session.query(Producto).get(id_producto)
         if(int(consulta.disponible) == 0 ):

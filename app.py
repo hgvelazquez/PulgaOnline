@@ -1,3 +1,5 @@
+from flask.globals import session
+from modelo.usuario import Usuario
 from flask import Flask, request, jsonify
 from modelo.conexion_bd import db, ma
 from modelo.producto import Producto, ProductoEsquema
@@ -13,18 +15,14 @@ CORS(app)
 
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'yourId@gmail.com'
-app.config['MAIL_PASSWORD'] = '*****'
+app.config['MAIL_USERNAME'] = 'onlinepulga@gmail.com'
+app.config['MAIL_PASSWORD'] = 'pulgon123'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
+
 mail = Mail(app)
 
-@app.route("/")
-def index():
-   msg = Message('Hello', sender = 'yourId@gmail.com', recipients = ['someone1@gmail.com'])
-   msg.body = "Hello Flask message sent from Flask-Mail"
-   mail.send(msg)
-   return "Sent"
+
 
 db.init_app(app)
 ma.init_app(app)
@@ -56,6 +54,15 @@ def agrega_producto():
     db.session.commit()
     
     return producto_esquema.jsonify(producto_nuevo)
+
+@app.route("/send")
+def send():
+    user = session.get('user')
+    producto = session.get('producto')
+    msg = Message('Gracias por tu compra', sender = app.config.get('MAIL_USERNAME'), recipients = [user['email']])
+    msg.body = "Gracias por realizar la compra del producto {}".format(producto.nombre)
+    mail.send(msg)
+    return "Sent"
 
 #agrega las rutas de comprar
 app.register_blueprint(compra_rutas.bp)
