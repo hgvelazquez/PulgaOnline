@@ -1,0 +1,51 @@
+<div class="component-container">
+  <div *ngIf="producto">
+
+    <h2>{{producto.nombre}}</h2>
+
+    <div class="detail-container">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="img-cont">
+            <img class="contained" src='http://localhost:5000/static/{{producto.imagen}}'>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="desc">
+            {{producto.descripcion}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="descmin">$ {{producto.precio}} MXN</div>
+      </div>
+      <div class="col-md-4">
+        <div class="descmin">Disponibles: {{producto.disponible}}</div>
+      </div>
+      <div class="col-md-4">
+        <div class="descmin">Categoría: {{producto.categoria}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="single-button">
+    <div *ngIf="disponible > 0; then thenBlock else elseBlock"></div>
+    <ng-template #thenBlock>
+      <button class="buy" (click)="direccion()">
+        Comprar
+      </button>
+    </ng-template>
+    <ng-template #elseBlock>
+      <label>No existen productos por el momento</label>
+    </ng-template>
+  </div>
+</div>
+
+<div class="single-button">
+  <button (click)="goBack()">
+    Regresar
+  </button>
+</div>

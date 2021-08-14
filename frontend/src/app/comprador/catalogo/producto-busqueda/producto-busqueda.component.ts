@@ -5,8 +5,8 @@ import {
   debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
 
-import { Producto } from '../models/producto';
-import { ProductoService } from '../producto.service';
+import { Producto } from '../../../models/producto';
+import { ProductoService } from '../../producto.service';
 
 @Component({
   selector: 'app-producto-busqueda',

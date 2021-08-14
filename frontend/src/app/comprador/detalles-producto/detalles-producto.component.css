@@ -16,13 +16,13 @@ button {
     cursor: auto;
   }
   
-  button.del {
-    background-color: #f11;
+  button.buy {
+    background-color: #7d4231;
     color: #fff;
   }
   
-  button.del:hover {
-    background-color: #800;
+  button.buy:hover {
+    background-color: rgb(48, 31, 31);
   }
   
   button.up {

@@ -12,12 +12,11 @@ import { MensajeComponent } from './vendedor/mensaje/mensaje.component';
 /* Componentes de Comprar */
 import { DireccionComponent} from './comprador/comprar/direccion/direccion.component'
 import { PagoComponent} from './comprador/comprar/pago/pago.component'
-import { PrincipalProductoComponent} from './comprador/comprar/principal-producto/principal-producto.component'
 
 /* Componentes del Catalogo */
-import { ProductosComponent } from './productos/productos.component';
-import { DetallesProductoComponent } from './detalles-producto/detalles-producto.component';
-import { MensajeErrorComponent } from './mensaje-error/mensaje-error.component';
+import { ProductosComponent } from './comprador/catalogo/productos/productos.component';
+import { DetallesProductoComponent } from './comprador/detalles-producto/detalles-producto.component';
+import { MensajeErrorComponent } from './comprador/mensaje-error/mensaje-error.component';
 
 
 const routes: Routes = [
@@ -29,13 +28,12 @@ const routes: Routes = [
   { path: 'actualizar-producto/:id_producto', component: ActualizaProductoComponent },
   { path: 'mensaje/:operation', component: MensajeComponent },
   /* Rutas de Comprar*/
-  { path: 'producto/:id_producto', component: PrincipalProductoComponent},
   { path: 'pago', component: PagoComponent},
   { path: 'direccion', component: DireccionComponent},
   /* Rutas del Catalogo */
   { path: 'catalogo', component: ProductosComponent },
-  { path: 'details/:id_producto', component: DetallesProductoComponent },
-  { path: 'mensajes/:operation', component: MensajeErrorComponent }
+  { path: 'producto/:id_producto', component: DetallesProductoComponent },
+  { path: 'error', component: MensajeErrorComponent }
 ];
 
 @NgModule({

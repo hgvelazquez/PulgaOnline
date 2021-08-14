@@ -8,12 +8,11 @@ import { AppComponent } from './app.component';
 
 /* Comprador */
 /* Catalogo */
-import { ProductosComponent } from './productos/productos.component';
-import { DetallesProductoComponent } from './detalles-producto/detalles-producto.component';
-import { ProductoBusquedaComponent } from './producto-busqueda/producto-busqueda.component';
-import { MensajeErrorComponent } from './mensaje-error/mensaje-error.component';
+import { ProductosComponent } from './comprador/catalogo/productos/productos.component';
+import { DetallesProductoComponent } from './comprador/detalles-producto/detalles-producto.component';
+import { ProductoBusquedaComponent } from './comprador/catalogo/producto-busqueda/producto-busqueda.component';
+import { MensajeErrorComponent } from './comprador/mensaje-error/mensaje-error.component';
 /* Comprar*/
-import { PrincipalProductoComponent } from './comprador/comprar/principal-producto/principal-producto.component';
 import { DireccionComponent } from './comprador/comprar/direccion/direccion.component';
 import { PagoComponent } from './comprador/comprar/pago/pago.component';
 
@@ -36,7 +35,6 @@ import { MensajeComponent } from './vendedor/mensaje/mensaje.component';
     EliminaProductoComponent,
     MensajeComponent,
     /* Comprar */
-    PrincipalProductoComponent,
     DireccionComponent,
     PagoComponent,
     /* Catalogo*/

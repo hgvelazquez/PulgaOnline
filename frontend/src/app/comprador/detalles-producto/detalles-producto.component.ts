@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+/** importo servcio de comprar y el producto */
+import { ComprarService } from '../comprar.service'
 
-import { Producto } from '../models/producto';
+import { Producto } from '../../models/producto';
 import { ProductoService } from '../producto.service';
 
 @Component({
@@ -11,7 +13,9 @@ import { ProductoService } from '../producto.service';
 })
 export class DetallesProductoComponent implements OnInit {
 
+  id: number =-1;
   producto: Producto | undefined;
+  disponible = -1;
 
   constructor(
     private router: Router,
@@ -25,16 +29,24 @@ export class DetallesProductoComponent implements OnInit {
   }
 
   getProd(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id_producto'));
-    this.prodService.getProducto(id)
+    const id_url = Number(this.route.snapshot.paramMap.get('id_producto'));
+    if (!id_url)
+      this.router.navigateByUrl('/error');
+    
+    this.id = id_url;  
+    this.prodService.getProducto(this.id)
       .subscribe(
-        (prod) => {this.producto = prod},
+        (prod) => {
+          this.producto = prod;
+          this.disponible = prod.disponible;
+        },
         (error) => {
+          console.log(error);
           if (error.status === 404) {
             /* TODO: Replace with 404 page*/
-            this.router.navigateByUrl('/mensaje/error');
+            this.router.navigateByUrl('/error');
           } else {
-            this.router.navigateByUrl('/mensaje/error');
+            this.router.navigateByUrl('/error');
           }
         });
   }
@@ -49,6 +61,10 @@ export class DetallesProductoComponent implements OnInit {
 
   goBack(): void {
     this.router.navigateByUrl('/catalogo');
+  }
+
+  direccion(): void {
+    this.router.navigateByUrl('/direccion');
   }
 
 }
