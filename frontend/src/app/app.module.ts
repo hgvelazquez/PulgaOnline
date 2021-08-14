@@ -9,8 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { ProductosComponent } from './productos/productos.component';
 import { DetallesProductoComponent } from './detalles-producto/detalles-producto.component';
-import { MensajeComponent } from './mensaje/mensaje.component';
 import { ProductoBusquedaComponent } from './producto-busqueda/producto-busqueda.component';
+import { MensajeErrorComponent } from './mensaje-error/mensaje-error.component';
 
 
 @NgModule({
@@ -18,8 +18,8 @@ import { ProductoBusquedaComponent } from './producto-busqueda/producto-busqueda
     AppComponent,
     ProductosComponent,
     DetallesProductoComponent,
-    MensajeComponent,
-    ProductoBusquedaComponent
+    ProductoBusquedaComponent,
+    MensajeErrorComponent
   ],
   imports: [
     BrowserModule,

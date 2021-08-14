@@ -4,7 +4,7 @@ from flask_cors import CORS
 from modelo.conexion_bd import db, ma
 from modelo.producto import Producto, ProductoEsquema
 
-from modelo.controlador.crud_producto import crud_prod
+from modelo.controlador.catalogo import catalogo
 
 app = Flask(__name__)
 CORS(app)
@@ -15,7 +15,7 @@ ma.init_app(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://paolabarredo:Numpy#19@localhost/PulgaOnline'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-app.register_blueprint(crud_prod.bp)
+app.register_blueprint(catalogo.bp)
     
 if __name__ == '__main__':
     app.run(debug=True)

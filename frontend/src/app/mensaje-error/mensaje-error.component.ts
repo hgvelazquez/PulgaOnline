@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MensajeService } from '../mensaje.service';
-
+import { MensajeService } from '../mensaje.service'; 
 
 @Component({
-  selector: 'app-mensaje',
-  templateUrl: './mensaje.component.html',
-  styleUrls: ['./mensaje.component.css']
+  selector: 'app-mensaje-error',
+  templateUrl: './mensaje-error.component.html',
+  styleUrls: ['./mensaje-error.component.css']
 })
-export class MensajeComponent implements OnInit {
+export class MensajeErrorComponent implements OnInit {
 
   mensaje: string = '';
 
