@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 
 /** Importacion para recibir del back */
-import { Observable ,of, throwError} from 'rxjs';
-import {  HttpClient, HttpHeaders,HttpErrorResponse  } from '@angular/common/http';
-import { retry, catchError, map, tap } from 'rxjs/operators';
+import { Observable, throwError} from 'rxjs';
+import {  HttpClient, HttpErrorResponse  } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 
-import {Producto} from '../producto';
 @Injectable({
   providedIn: 'root'
 })

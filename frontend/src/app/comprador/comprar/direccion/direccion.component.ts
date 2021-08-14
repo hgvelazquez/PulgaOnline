@@ -94,7 +94,7 @@ export class DireccionComponent implements OnInit {
     
     this.comprarService.ingresa_direccion(direc)
     .subscribe(
-         dir =>{
+      dir =>{
         if(dir.category == "error"){
           this.envio = 2;
           console.log(dir.message)
