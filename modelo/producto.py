@@ -33,7 +33,6 @@ class Producto(db.Model):
         'id_vendedor': self.id_vendedor
         }
         return ret_dict
-
         
 class ProductoEsquema(ma.Schema):
     class Meta:
