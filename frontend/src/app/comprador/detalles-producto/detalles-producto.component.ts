@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 /** importo servcio de comprar y el producto */
-import { ComprarService } from '../comprar.service'
 
 import { Producto } from '../../models/producto';
 import { ProductoService } from '../producto.service';

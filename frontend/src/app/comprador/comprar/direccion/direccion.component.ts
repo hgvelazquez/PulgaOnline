@@ -2,7 +2,7 @@ import { Component, OnInit} from '@angular/core';
 
 import {FormControl,Validators, FormGroup} from '@angular/forms'
 
-import {ComprarService} from '../../comprar.service'
+import {ComprarService} from '../comprar.service'
 import { Router , ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 

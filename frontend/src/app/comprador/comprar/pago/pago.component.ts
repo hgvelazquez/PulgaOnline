@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl,Validators, FormGroup} from '@angular/forms' /**sirve para controlar los formularios, add in app.module.ts */
 
-import {ComprarService} from '../../comprar.service'
+import {ComprarService} from '../comprar.service'
 import { Router , ActivatedRoute } from '@angular/router';
 
 @Component({
