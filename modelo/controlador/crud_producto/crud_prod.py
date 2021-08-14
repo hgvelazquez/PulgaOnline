@@ -1,3 +1,4 @@
+from os import name
 from flask import Blueprint, request, jsonify, abort, send_file
 
 from os.path import splitext
@@ -29,9 +30,17 @@ def get_producto(id_prod):
         abort(404)
     return jsonify(producto.to_dict())
 
+#pao
+@bp.route('/productos/search/<nombre>')
+def busca_productos(nombre):
+    productos = Producto.query.filter(Producto.nombre.ilike(f"%{nombre}%")).all()
+    
+    # serializing as JSON
+
+    return jsonify([p.to_dict() for p in productos])
+
 @bp.route('/static/<fileName>')
 def _get_image(fileName):
-
     fileToSend = "data/imagenesProducto/" + fileName
     _, img_type = splitext(fileName)
     return send_file(fileToSend, mimetype=f"image/{img_type[1:]}")

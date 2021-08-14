@@ -33,21 +33,6 @@ export class ProductoService {
     );
   }
 
-  /** GET hero by id_producto. Return `undefined` when id_producto not found */
-  getProductoNo404<Data>(id_producto: number): Observable<Producto> {
-    const url = `${this.productosUrl}/?id_producto=${id_producto}`;
-    return this.http.get<Producto[]>(url)
-      .pipe(
-        map(productos => productos[0]), // returns a {0|1} element array
-        tap(h => {
-          const outcome = h ? `fetched` : `did not find`;
-          this.log(`${outcome} producto id_producto=${id_producto}`);
-        }),
-        catchError(this.handleError<Producto>(`getProducto id_producto=${id_producto}`))
-      );
-  }
-
-
 
   getProducto(id: number): Observable<Producto> {
     const url = `${this.productosUrl}/${id}`;
@@ -60,10 +45,7 @@ export class ProductoService {
       // if not search term, return empty hero array.
       return of([]);
     }
-    return this.http.get<Producto[]>(`${this.productosUrl}/?nombre=${term}`).pipe(
-      tap(x => x.length ?
-         this.log(`found heroes matching "${term}"`) :
-         this.log(`no heroes matching "${term}"`)),
+    return this.http.get<Producto[]>(`${this.productosUrl}/search/${term}`).pipe(
       catchError(this.handleError<Producto[]>('buscaProductos', []))
     );
   }
@@ -81,4 +63,23 @@ export class ProductoService {
   private log(mensaje: string) {
     this.mensajeService.add(`ProductoService: ${mensaje}`);
   }
+
+
+    /** GET hero by id_producto. Return `undefined` when id_producto not found 
+  getProductoNo404<Data>(id_producto: number): Observable<Producto> {
+    const url = `${this.productosUrl}/?id_producto=${id_producto}`;
+    return this.http.get<Producto[]>(url)
+      .pipe(
+        map(productos => productos[0]), // returns a {0|1} element array
+        tap(h => {
+          const outcome = h ? `fetched` : `did not find`;
+          this.log(`${outcome} producto id_producto=${id_producto}`);
+        }),
+        catchError(this.handleError<Producto>(`getProducto id_producto=${id_producto}`))
+      );
+  }**/
 }
+
+
+
+

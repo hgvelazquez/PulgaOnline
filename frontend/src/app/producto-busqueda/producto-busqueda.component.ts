@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
+
 import {
   debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
@@ -14,10 +15,14 @@ import { ProductoService } from '../producto.service';
   styleUrls: ['./producto-busqueda.component.css']
 })
 export class ProductoBusquedaComponent implements OnInit {
+
+  //productos: Producto[] = [];
   productos$!: Observable<Producto[]>;
   private searchTerms = new Subject<string>();
 
-  constructor(private prodService: ProductoService) {}
+  constructor(
+    private prodService: ProductoService
+  ) {}
 
   search(term: string): void {
     this.searchTerms.next(term);

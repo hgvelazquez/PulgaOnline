@@ -39,13 +39,7 @@ export class DetallesProductoComponent implements OnInit {
         });
   }
 
-  navigate(place: string): void {
-    const url = 
-      (this.producto)? 
-      `/${place}-producto/${this.producto.id_producto}`:
-      '/mensaje/error';
-    this.router.navigateByUrl(url);
-  }
+ 
 
   goBack(): void {
     this.router.navigateByUrl('/catalogo');
