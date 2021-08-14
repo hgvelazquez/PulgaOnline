@@ -6,6 +6,7 @@ from modelo.producto import Producto, ProductoEsquema
 
 #agrega el blueprint de comprar a app
 from modelo.comprar import compra_rutas
+from modelo.comprar import auth
 from flask_cors import CORS
 from flask_mail import Mail, Message
 
@@ -66,6 +67,7 @@ def send():
 
 #agrega las rutas de comprar
 app.register_blueprint(compra_rutas.bp)
+app.register_blueprint(auth.bp)
 
 
 if __name__ == '__main__':

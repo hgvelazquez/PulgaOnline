@@ -5,7 +5,7 @@ bp = Blueprint('comprar', __name__, url_prefix='/comprar')
 from modelo.producto import Producto, ProductoEsquema
 from modelo.usuario import Usuario, UsuarioEsquema
 from flask_mail import Mail, Message #para envio de email
-from modelo.comprar.pago import Pago
+
 
 
 from modelo.conexion_bd import db, ma
@@ -13,8 +13,6 @@ from modelo.conexion_bd import db, ma
 
 producto_esquema = ProductoEsquema()
 productos_esquema = ProductoEsquema(many=True)
-usuario_esquema = Usuario()
-
 
 user= {}
 producto ={}

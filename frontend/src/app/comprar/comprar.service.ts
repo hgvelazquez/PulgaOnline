@@ -13,9 +13,7 @@ export class ComprarService {
 
   private BASE_URL = 'http://localhost:5000/comprar'
 
-  constructor(
-    private http: HttpClient
-      ) {}
+  constructor(private http: HttpClient) {}
 
   getProducto(id: string): Observable<any> {
       const url = `${this.BASE_URL}/${id}`;

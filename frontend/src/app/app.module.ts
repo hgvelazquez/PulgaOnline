@@ -12,13 +12,17 @@ import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 import { ReactiveFormsModule } from '@angular/forms';
 /*Para recibir del back*/
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './auth/login/login.component';
+import { SigninComponent } from './auth/signin/signin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PrincipalProductoComponent,
     DireccionComponent,
-    PagoComponent
+    PagoComponent,
+    LoginComponent,
+    SigninComponent
   ],
   imports: [
     BrowserModule,
