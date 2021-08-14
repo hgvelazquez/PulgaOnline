@@ -17,6 +17,8 @@ import { PagoComponent} from './comprador/comprar/pago/pago.component'
 import { ProductosComponent } from './comprador/catalogo/productos/productos.component';
 import { DetallesProductoComponent } from './comprador/detalles-producto/detalles-producto.component';
 import { MensajeErrorComponent } from './comprador/mensaje-error/mensaje-error.component';
+import { ProductoBusquedaComponent } from './comprador/catalogo/producto-busqueda/producto-busqueda.component';
+
 
 
 const routes: Routes = [

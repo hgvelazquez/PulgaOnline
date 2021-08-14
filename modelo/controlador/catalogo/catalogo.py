@@ -1,3 +1,4 @@
+from os import name
 from flask import Blueprint, request, jsonify, abort, send_file
 
 from os.path import splitext
@@ -28,3 +29,10 @@ def get_producto(id_prod):
     if producto is None:
         abort(404)
     return jsonify(producto.to_dict())
+
+@bp.route('/productos/search/<nombre>')
+def busca_productos(nombre):
+    productos = Producto.query.filter(Producto.nombre.ilike(f"%{nombre}%")).all()
+    
+    # serializing as JSON
+    return jsonify([p.to_dict() for p in productos])

@@ -31,19 +31,6 @@ export class ProductoService {
     );
   }
 
-  getProductoNo404<Data>(id_producto: number): Observable<Producto> {
-    const url = `${this.productosUrl}/?id_producto=${id_producto}`;
-    return this.http.get<Producto[]>(url)
-      .pipe(
-        map(productos => productos[0]), // returns a {0|1} element array
-        tap(h => {
-          const outcome = h ? `fetched` : `did not find`;
-        }),
-        catchError(this.handleError<Producto>(`getProducto id_producto=${id_producto}`))
-      );
-  }
-
-
 
   getProducto(id: number): Observable<Producto> {
     const url = `${this.productosUrl}/${id}`;
@@ -55,10 +42,7 @@ export class ProductoService {
     if (!term.trim()) {
       return of([]);
     }
-    return this.http.get<Producto[]>(`${this.productosUrl}/?nombre=${term}`).pipe(
-      tap(x => x.length ?
-         console.log(`Se encontraron productos que coinciden con "${term}"`) :
-         console.log(`No hay productos que coincidan con "${term}"`)),
+    return this.http.get<Producto[]>(`${this.productosUrl}/search/${term}`).pipe(
       catchError(this.handleError<Producto[]>('buscaProductos', []))
     );
   }
@@ -72,3 +56,7 @@ export class ProductoService {
       };
     }
 }
+
+
+
+
