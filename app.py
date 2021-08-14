@@ -1,4 +1,5 @@
 from flask.globals import session
+from flask.helpers import make_response
 from modelo.usuario import Usuario
 from flask import Flask, request, jsonify
 from modelo.conexion_bd import db, ma
@@ -16,7 +17,7 @@ app = Flask(__name__)
 CORS(app)
 
 
-
+#configuracion para mandar correo
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = 'onlinepulga@gmail.com'
@@ -61,12 +62,16 @@ def agrega_producto():
 
 @app.route("/send")
 def send():
-    user = session.get('user')
-    producto = session.get('producto')
-    msg = Message('Gracias por tu compra', sender = app.config.get('MAIL_USERNAME'), recipients = [user['email']])
-    msg.body = "Gracias por realizar la compra del producto {}".format(producto.nombre)
+    '''
+    Eviar un correo 
+    '''
+    #user = session.get('user')
+    #producto = session.get('producto')
+    email = 'correo_@usuario.com'
+    msg = Message('Gracias por tu compra', sender = app.config.get('MAIL_USERNAME'), recipients = [email])
+    msg.body = "Gracias por realizar la compra del producto"
     mail.send(msg)
-    return "Sent"
+    return make_response(jsonify('sent'),200)
 
 #agrega las rutas de comprar
 app.register_blueprint(compra_rutas.bp)

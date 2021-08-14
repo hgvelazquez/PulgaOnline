@@ -42,6 +42,9 @@ export class PagoComponent implements OnInit {
     this.router.navigateByUrl('direccion');
   }
   goBegin(): void {
+    if(this.validar == 1){//evia correo si la compra fue exitosa
+      this.enviar_correo() 
+    }
     this.router.navigateByUrl('');
   }
   validad_compra():void{    
@@ -78,6 +81,8 @@ export class PagoComponent implements OnInit {
     else
       return false;
   }
+
+  /** envia correo de compra exitosa */
   enviar_correo():void{
     this.comprarService.enviar_correo().subscribe(
       exito=>{console.log(exito)},

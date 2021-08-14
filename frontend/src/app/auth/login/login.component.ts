@@ -11,6 +11,8 @@ import {FormControl,Validators, FormGroup} from '@angular/forms' /**sirve para c
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
+  title = "login"
   redirect = 0
   mensaje = ""
   user = new FormGroup({
@@ -46,7 +48,8 @@ export class LoginComponent implements OnInit {
         console.log(dir)},
       err => {console.error(err)
         this.redirect = 2
-        this.mensaje = err
+        this.mensaje = err.error
+        
     });
       
   }

@@ -14,9 +14,7 @@ export class AuthService {
 
   ingresa_datos(Observable:any){
     const url = `${this.BASE_URL}/signin`;
-    return this.http.post<any>(url,Observable).pipe(
-      catchError(this.handleError)
-    )
+    return this.http.post<any>(url,Observable)
 } 
 
 login(Observable:any){
@@ -28,10 +26,6 @@ login(Observable:any){
 
 
 
-private handleError(error =HttpErrorResponse) {
-  console.log(error);
-  return throwError("algo salio mal")
-}
 
 
 

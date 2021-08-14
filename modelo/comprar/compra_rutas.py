@@ -19,7 +19,6 @@ def producto_id(id):
     '''
     Obtiene los campos del producto mediante su id
     '''
-    session.clear()
     try:
         consulta = db.session.query(Producto).get(id)
         nombre = consulta.nombre
@@ -33,12 +32,6 @@ def producto_id(id):
         producto_nuevo = Producto(nombre, descripcion, disponible, precio,
                                     imagen, categoria, id_vendedor)
         
-        g.user = {'id_usuario':1,
-                        'email': 'moncho.jcp1@gmail.com'}
-        g.producto = {'nombre':nombre,
-                                'id_producto': id}
-        #print(session.get('user'))
-        print(g.user)
         return producto_esquema.jsonify(producto_nuevo)
     except:
         return 'error',503
@@ -62,10 +55,7 @@ def ingresa_direccion():
     Obtiene el id del usuario en session y modifica la direccionen la Base de Datos
     '''
     params = request.get_json(force=True,silent=False)
-    user = g.user
-    print('*'*64)
-    print(user)
-    id_usuario = user['id_usuario']
+    id_usuario = 1# user['id_usuario']
   
     try:
         #id_usuario = params['id_usuario']
@@ -95,7 +85,7 @@ def validar_compra():
     Valida que de elimine el producto en la Base de datos obtiene el id de session
     '''
    # producto = session.get('producto')
-    id_producto =  producto['id_producto']
+    id_producto =  4#producto['id_producto']
     try:
         consulta = db.session.query(Producto).get(id_producto)
         if(int(consulta.disponible) == 0 ):

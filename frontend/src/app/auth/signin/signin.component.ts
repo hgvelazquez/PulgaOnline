@@ -12,6 +12,7 @@ export class SigninComponent implements OnInit {
 
   tipos = ["vendedor", "comprador" ]
   redirect = 0
+  mensaje = ""
   user = new FormGroup({
     nombre : new FormControl('',[
       Validators.required,
@@ -55,6 +56,8 @@ export class SigninComponent implements OnInit {
           this.redirect = 1
           console.log(dir)},
         err => {console.error(err)
+          this.mensaje = err.error
+          
           this.redirect = 2
       });
   }
