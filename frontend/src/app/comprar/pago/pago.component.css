@@ -1,6 +1,6 @@
 .component-container {
-    width: 90vw;
-    min-width: 720px;
+    width: 40%;
+    min-width: 420px;
     padding: 1rem;
     margin: 0 auto;
     margin-top: max(70px, 15vh);
@@ -20,6 +20,7 @@
   }
   button {
     margin-top: 20px;
+    margin-right: 20px;
     background-color: #eee;
     padding: 1rem;
     border-radius: 4px;
@@ -56,7 +57,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width:90%;
+    width:100%;
     margin: 0 auto;
   }
   
@@ -88,18 +89,12 @@
   
   .maker-cols {
     display: flex;
-    justify-content: space-between;
     width:100%;
   }
   
   .colu {
     min-width: 350px;
-    width:30vw;
-  }
-  
-  .colu2 {
-    width: 55vw;
-    min-width:350px;
+    width:100%;
   }
   
   .one-field{

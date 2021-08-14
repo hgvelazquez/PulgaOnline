@@ -14,7 +14,7 @@
                                           [class.valid]="valid('numero_tarjeta')" [class.invalid]="invalid('numero_tarjeta')">
                                           <div class="warn-cont">
                                                 <small class="error-text" *ngIf="invalid('numero_tarjeta')">
-                                                El nombre no puede ser vacío y debe tener al menos 16 numeros
+                                                El número de tarjeta debe tener 15 o 16 digitos.
                                                 </small>
                                           </div>
                                     </div>
@@ -27,7 +27,7 @@
                                           [class.valid]="valid('codigo')" [class.invalid]="invalid('codigo')">
                                           <div class="warn-cont">
                                                 <small class="error-text" *ngIf="invalid('codigo')">
-                                                El nombre no puede ser vacío, debe tener  3 numeros
+                                                El código de seguridad está compuesto por 3 numeros
                                                 </small>
                                           </div>
                                     </div>
@@ -52,7 +52,7 @@
                                     </div>
                                           <div class="buttons-div" *ngIf="validar ===0">
                                                 <div class="button-div">
-                                                <button class="act" type="submit" *ngIf="pago.valid" (click)="validad_compra()">Comprar Producto</button>
+                                                <button class="act" type="submit" [disabled]="!pago.valid" (click)="validad_compra()">Comprar Producto</button>
                                                 </div>
                                                 <div class="button-div"  >
                                                 <button (click)="goBack()">Regresar</button>
@@ -62,7 +62,7 @@
                                 <!--</div>-->
                                 <div class="buttons-div">
                                     <div class="button-div" *ngIf="validar === 2">
-                                          <h3>Ohh hay un error en la compra</h3>
+                                          <h3>¡Oh no! Ocurrió un error en la compra. Inténtelo más tarde.</h3>
                                     <button class="act" type="submit"  (click)="goBegin()">Regresar a inicio</button>
                                     </div>
                                     <div class="button-div"  *ngIf="validar === 1">

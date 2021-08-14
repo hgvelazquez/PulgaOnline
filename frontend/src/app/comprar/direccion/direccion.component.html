@@ -12,7 +12,7 @@
                                     [class.valid]="valid('calle')" [class.invalid]="invalid('calle')">
                                     <div class="warn-cont">
                                           <small class="error-text" *ngIf="invalid('calle')">
-                                          El calle no puede ser vacío.
+                                          La calle no puede ser vacío.
                                           </small>
                                     </div>
                               </div>
@@ -24,7 +24,7 @@
                                     [class.valid]="valid('numext')" [class.invalid]="invalid('numext')">
                                     <div class="warn-cont">
                                           <small class="error-text" *ngIf="invalid('numext')">
-                                          El numero no puede ser vacío y debe ser numero.
+                                          Debe ingresar ser numero.
                                           </small>
                                     </div>
                               </div>
@@ -36,7 +36,7 @@
                                     [class.valid]="valid('colonia')" [class.invalid]="invalid('colonia')">
                                     <div class="warn-cont">
                                           <small class="error-text" *ngIf="invalid('colonia')">
-                                          El colonia no puede ser vacío.
+                                          La colonia no puede ser vacío.
                                           </small>
                                     </div>
                               </div>
@@ -48,7 +48,7 @@
                                     [class.valid]="valid('ciudad')" [class.invalid]="invalid('ciudad')">
                                     <div class="warn-cont">
                                           <small class="error-text" *ngIf="invalid('ciudad')">
-                                          El ciudad no puede ser vacío.
+                                          La ciudad no puede ser vacío.
                                           </small>
                                     </div>
                               </div>
@@ -60,28 +60,23 @@
                                           <option *ngFor="let estado of estados" [ngValue]="estado"> {{estado}} </option>
                                           
                                     </select>		
-                                    <!-- <input id="estado" class="form-input-name"  formControlName="estado"  placeholder="estado"
-                                    [class.valid]="valid('estado')" [class.invalid]="invalid('estado')">-->
                                     <div class="warn-cont">
                                           <small class="error-text" *ngIf="invalid('estado')">
-                                          El estado no puede ser vacío.
+                                          Debe seleccionar un estado.
                                           </small>
                                     </div>
                               </div>
                               <div *ngIf="envio == 2"><h3>Ohoh hay un error en al guardar la direccion. <br>Intente de nuevo.</h3></div>
-                                    <div class="buttons-div">
-                                          <div class="button-div">
-                                          <button class="act" type="submit" *ngIf="direccion.valid" (click)="enviar_direccion()" >Pagar</button>
-                                          </div>
-                                          <div  *ngIf="envio===1" >{{goPago()}}</div>
-                                          <!--
-                                          <div class="button-div">
-                                                <button class="act" type="submit" *ngIf="envio" (click)="goPago()">Pagar</button>
-                                          </div>-->
-                                          <div class="button-div">
+                              <div class="buttons-div">
+                                    <div class="button-div">
+                                          <button class="act" type="submit" [disabled]="!direccion.valid" (click)="enviar_direccion()" >Pagar</button>
+                                    </div>
+
+                                    <div  *ngIf="envio===1" >{{goPago()}}</div>
+                                    <div class="button-div">
                                           <button (click)="goBack()">Regresar</button>
-                                          </div>
-                                  </div>
+                                    </div>
+                              </div>
                               
                         </div>
                   </form>

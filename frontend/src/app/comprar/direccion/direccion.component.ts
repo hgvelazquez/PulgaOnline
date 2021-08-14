@@ -1,9 +1,10 @@
-import { Component, OnInit , Input} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 
-import {FormControl,Validators, FormGroup} from '@angular/forms' /**sirve para controlar los formularios, add in app.module.ts */
+import {FormControl,Validators, FormGroup} from '@angular/forms'
 
 import {ComprarService} from '../comprar.service'
 import { Router , ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-direccion',
@@ -46,35 +47,36 @@ export class DireccionComponent implements OnInit {
     "Chihuahua",
     "Coahuila",
     "Colima",
-   "Durango",
-   "Guanajuato",
-   "Guerrero",
-   "Hidalgo",
-   "Jalisco",
-   "Mexico",
-   "Michoacan",
-   "Morelos",
-   "Nayarit",
-   "Nuevo Leon",
-   "Oaxaca",
-   "Puebla",
-   "Queretaro",
-   "Quintana Roo",
-   "San Luis Potosil;",
-   "Sinaloa",
-   "Sonora",
-   "Tabasco",
-   "Tamaulipas",
-   "Tlaxcala",
-   "Veracruz",
-   "Yucatan",
-   "Zacatecas"
+    "Durango",
+    "Guanajuato",
+    "Guerrero",
+    "Hidalgo",
+    "Jalisco",
+    "Mexico",
+    "Michoacan",
+    "Morelos",
+    "Nayarit",
+    "Nuevo Leon",
+    "Oaxaca",
+    "Puebla",
+    "Queretaro",
+    "Quintana Roo",
+    "San Luis Potosil;",
+    "Sinaloa",
+    "Sonora",
+    "Tabasco",
+    "Tamaulipas",
+    "Tlaxcala",
+    "Veracruz",
+    "Yucatan",
+    "Zacatecas"
   ]
 
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private loc: Location,
     private comprarService: ComprarService
     ) {}
 
@@ -103,10 +105,12 @@ export class DireccionComponent implements OnInit {
         }
       });
   }
+
   onSubmit() {
     // TODO: Use EventEmitter with form value
     console.warn(this.direccion.value);
   }
+
   valid(field: string): boolean {
     var x = this.direccion.get(field)
     if (x)
@@ -122,9 +126,11 @@ export class DireccionComponent implements OnInit {
     else
       return false;
   }
+
   goBack(): void {
-    this.router.navigateByUrl('/');
+    this.loc.back();
   }
+
   goPago(): void {
     this.router.navigateByUrl('pago');
   }

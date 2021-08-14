@@ -12,38 +12,40 @@ import { Router , ActivatedRoute } from '@angular/router';
 export class PagoComponent implements OnInit {
 
   validar = 0;  
-  //myGroup = new FormGroup({ /* con my group resolvi el error formgroup */
-    pago = new FormGroup({
-      numero_tarjeta : new FormControl('',[
-        Validators.required,
-        Validators.pattern("^[0-9]*$"),
-        Validators.minLength(15),
-        Validators.maxLength(16)]),
-      codigo : new FormControl('',[
-        Validators.required,
-        Validators.pattern("^[0-9]*$"),
-        Validators.minLength(3),
-        Validators.maxLength(3)]),
-      nombre_titular : new FormControl('',[
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(20)])
-      });
-  // });
+  pago = new FormGroup({
+    numero_tarjeta : new FormControl('',[
+      Validators.required,
+      Validators.pattern("^[0-9]*$"),
+      Validators.minLength(15),
+      Validators.maxLength(16)]),
+    codigo : new FormControl('',[
+      Validators.required,
+      Validators.pattern("^[0-9]*$"),
+      Validators.minLength(3),
+      Validators.maxLength(3)]),
+    nombre_titular : new FormControl('',[
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(20)])
+  });
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private comprarService: ComprarService) { }
+    private comprarService: ComprarService
+  ) { }
 
   ngOnInit(): void {
   }
+  
   goBack(): void {
     this.router.navigateByUrl('direccion');
   }
+  
   goBegin(): void {
     this.router.navigateByUrl('');
   }
+  
   validad_compra():void{    
     this.comprarService.validar_compra()
     .subscribe(
@@ -63,6 +65,7 @@ export class PagoComponent implements OnInit {
     // TODO: Use EventEmitter with form value
     console.warn(this.pago.value);
   }
+
   valid(field: string): boolean {
     var x = this.pago.get(field)
     if (x)
