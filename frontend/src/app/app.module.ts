@@ -12,12 +12,12 @@ import { DireccionComponent } from './comprador/comprar/direccion/direccion.comp
 import { PagoComponent } from './comprador/comprar/pago/pago.component';
 
 /* Comprador*/
-import { ProductosVendedorComponent } from './productos-vendedor/productos-vendedor.component';
-import { DetallesProductoVendedorComponent } from './detalles-producto-vendedor/detalles-producto-vendedor.component';
-import { AgregaProductoComponent } from './agrega-producto/agrega-producto.component';
-import { ActualizaProductoComponent } from './actualiza-producto/actualiza-producto.component';
-import { EliminaProductoComponent } from './elimina-producto/elimina-producto.component';
-import { MensajeComponent } from './mensaje/mensaje.component';
+import { ProductosVendedorComponent } from './vendedor/productos-vendedor/productos-vendedor.component';
+import { DetallesProductoVendedorComponent } from './vendedor/detalles-producto-vendedor/detalles-producto-vendedor.component';
+import { AgregaProductoComponent } from './vendedor/agrega-producto/agrega-producto.component';
+import { ActualizaProductoComponent } from './vendedor/actualiza-producto/actualiza-producto.component';
+import { EliminaProductoComponent } from './vendedor/elimina-producto/elimina-producto.component';
+import { MensajeComponent } from './vendedor/mensaje/mensaje.component';
 
 @NgModule({
   declarations: [

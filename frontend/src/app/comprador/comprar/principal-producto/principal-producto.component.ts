@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 /** importo servcio de comprar y el producto */
 import {ComprarService} from '../comprar.service'
-import {Producto} from '../../../producto';
+import { Producto } from '../../../models/producto';
 import { Router , ActivatedRoute } from '@angular/router';
 
 @Component({

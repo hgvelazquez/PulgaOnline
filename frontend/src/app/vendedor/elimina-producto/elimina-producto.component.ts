@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { ProductoVendedorService } from '../producto-vendedor.service';
-import { API_URL } from '../env'
+import { API_URL } from '../../env'
 
 @Component({
   selector: 'app-elimina-producto',

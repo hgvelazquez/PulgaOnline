@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 /** Importacion para recibir del back */
 import { Observable, throwError} from 'rxjs';
-import {  HttpClient, HttpErrorResponse  } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({

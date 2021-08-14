@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
-import { Producto } from './models/producto';
+import { Producto } from '../models/producto';
 
-import {API_URL} from './env';
+import {API_URL} from '../env';
 
 @Injectable({
   providedIn: 'root'
