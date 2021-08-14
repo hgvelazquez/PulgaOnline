@@ -21,6 +21,7 @@ class Producto(db.Model):
         self.categoria = categoria
         self.id_vendedor = id_vendedor
 
+        
 class ProductoEsquema(ma.Schema):
     class Meta:
         fields = ('id_producto', 'nombre', 'descripcion', 

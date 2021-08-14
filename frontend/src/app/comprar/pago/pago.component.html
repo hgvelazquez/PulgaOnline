@@ -1,0 +1,77 @@
+
+<div class="component-container">
+      <h2>Pago</h2>
+      <div class="form-container">
+            <div class="maker-cols">
+                  <form [formGroup]="pago" (ngSubmit)="onSubmit()">
+                        <div class="colu">
+                              <!--<div formGroupName="pago">-->
+                                    <div class="one-field">
+                                          <div class="label-cont">
+                                                <label for="numero_tarjeta">Numero tarjeta: </label>
+                                          </div>
+                                          <input id="numero_tarjeta" class="form-input-name"  formControlName="numero_tarjeta"  placeholder="numero tarjeta"
+                                          [class.valid]="valid('numero_tarjeta')" [class.invalid]="invalid('numero_tarjeta')">
+                                          <div class="warn-cont">
+                                                <small class="error-text" *ngIf="invalid('numero_tarjeta')">
+                                                El nombre no puede ser vacío y debe tener al menos 16 numeros
+                                                </small>
+                                          </div>
+                                    </div>
+                  
+                                    <div class="one-field">
+                                          <div class="label-cont">
+                                                <label for="codigo">Codigo </label>
+                                          </div>
+                                          <input id="codigo" class="form-input-name"  formControlName="codigo"  placeholder="codigo"
+                                          [class.valid]="valid('codigo')" [class.invalid]="invalid('codigo')">
+                                          <div class="warn-cont">
+                                                <small class="error-text" *ngIf="invalid('codigo')">
+                                                El nombre no puede ser vacío, debe tener  3 numeros
+                                                </small>
+                                          </div>
+                                    </div>
+                                    <div class="one-field">
+                                          <div class="label-cont">
+                                                <label for="nombre_titular">Nombre titular </label>
+                                          </div>
+                                          <input id="nombre_titular" class="form-input-name"  formControlName="nombre_titular"  placeholder="nombre titular">
+                                          <div class="warn-cont">
+                                                <small class="error-text" *ngIf="invalid('nombre_titular')">
+                                                El nombre no puede ser vacío
+                                                </small>
+                                          </div>
+                                    </div>
+                                    <div class="one-field">
+                                          <div class="label-cont">
+                                                <label for="fecha">fecha de vencimiento </label>
+                                          </div>
+                                                <input type="date" id="fecha" name="trip-start"
+                                                      value="2021-08-10"
+                                                      min="2021-08-10" max="2030-12-31">
+                                    </div>
+                                          <div class="buttons-div" *ngIf="validar ===0">
+                                                <div class="button-div">
+                                                <button class="act" type="submit" *ngIf="pago.valid" (click)="validad_compra()">Comprar Producto</button>
+                                                </div>
+                                                <div class="button-div"  >
+                                                <button (click)="goBack()">Regresar</button>
+                                                </div>
+                                        </div>
+                                          
+                                <!--</div>-->
+                                <div class="buttons-div">
+                                    <div class="button-div" *ngIf="validar === 2">
+                                          <h3>Ohh hay un error en la compra</h3>
+                                    <button class="act" type="submit"  (click)="goBegin()">Regresar a inicio</button>
+                                    </div>
+                                    <div class="button-div"  *ngIf="validar === 1">
+                                          <h3>"Compra exitosa"</h3>
+                                    <button (click)="goBegin()">Regresar a inicio</button>
+                                    </div>
+                            </div>
+                        </div>
+                  </form>
+            </div>
+      </div>
+</div>
