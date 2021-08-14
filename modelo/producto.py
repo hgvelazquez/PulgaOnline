@@ -20,6 +20,19 @@ class Producto(db.Model):
         self.imagen = imagen
         self.categoria = categoria
         self.id_vendedor = id_vendedor
+        
+    def to_dict(self):
+        ret_dict = {
+        'id_producto': self.id_producto,
+        'nombre': self.nombre, 
+        'descripcion': self.descripcion, 
+        'disponible': self.disponible, 
+        'precio': self.precio, 
+        'imagen': self.imagen, 
+        'categoria': self.categoria, 
+        'id_vendedor': self.id_vendedor
+        }
+        return ret_dict
 
         
 class ProductoEsquema(ma.Schema):
