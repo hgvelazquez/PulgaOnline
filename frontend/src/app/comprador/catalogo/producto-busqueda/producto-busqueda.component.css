@@ -1,52 +1,81 @@
+.search-component {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  top:0;
+  left:0;
+  width: 100%;
+  height:54px;
+  min-width: 715px;
+}
+
+.title-space {
+  display: block;
+  width: 305px;
+  height: 1px;
+  padding-right: 0px;
+}
+
+.sb-comp{
+  min-width: 415px;
+  width:50%;
+  height: 54px;
+  background-color: #7d4231;
+  align-items: center;
+  padding-top:10px;
+  padding-right: 70px;
+}
+
 label {
-    display: block;
-    font-weight: bold;
-    font-size: 1.2rem;
-    margin-top: 1rem;
-    margin-bottom: .5rem;
-  
-  }
-  input {
-    padding: .5rem;
-    width: 100%;
-    max-width: 600px;
-    box-sizing: border-box;
-    display: block;
-  }
-  
-  input:focus {
-    outline: #ffffff auto 1px;
-  }
-  
-  li {
-    list-style-type: none;
-  }
-  .search-result li a {
-    border-bottom: 1px solid gray;
-    border-left: 1px solid gray;
-    border-right: 1px solid gray;
-    display: inline-block;
-    width: 100%;
-    max-width: 600px;
-    padding: .5rem;
-    box-sizing: border-box;
-    text-decoration: none;
-    color: black;
-  }
-  
-  .search-result li a:hover {
-    background-color: #435A60;
-    color: white;
-  }
-  
-  ul.search-result {
-    margin-top: 0;
-    padding-left: 0;
-  }
-  
-  
-  /*
-  Copyright Google LLC. All Rights Reserved.
-  Use of this source code is governed by an MIT-style license that
-  can be found in the LICENSE file at https://angular.io/license
-  */
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #fff;
+  padding-right: 10px;
+}
+
+input {
+  width: 50%;
+  min-width: 100px;
+  max-width: 250px;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+input:focus {
+  outline: #ffcff7 auto 1px;
+}
+
+li {
+  list-style-type: none;
+}
+
+.search-result li a {
+  border-bottom: 1px solid gray;
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
+  display: inline-block;
+  width: 100%;
+  max-width: 600px;
+  padding: .5rem;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: black;
+}
+
+.search-result li a:hover {
+  background-color: #435A60;
+  color: white;
+}
+
+ul.search-result {
+  margin-top: 0;
+  padding-left: 0;
+}
+
+
+/*
+Copyright Google LLC. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at https://angular.io/license
+*/
