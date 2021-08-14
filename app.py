@@ -10,8 +10,11 @@ from modelo.comprar import auth
 from flask_cors import CORS
 from flask_mail import Mail, Message
 
+
+
 app = Flask(__name__)
 CORS(app)
+
 
 
 app.config['MAIL_SERVER']='smtp.gmail.com'

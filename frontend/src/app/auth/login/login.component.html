@@ -1,1 +1,51 @@
-<p>login works!</p>
+<div class="component-container">
+    <h2>Iniciar Sesion</h2>
+    <div class="form-container">
+          <div class="maker-cols">
+                <form [formGroup]="user" (ngSubmit)="onSubmit()">
+                      <div class="colu">
+                            <div class="one-field">
+                                  <div class="label-cont">
+                                        <label for="correo">Correo </label>
+                                  </div>
+                                  <input id="correo" class="form-input-name"  formControlName="correo"  placeholder="numero"
+                                  [class.valid]="valid('correo')" [class.invalid]="invalid('correo')">
+                                  <div class="warn-cont">
+                                        <small class="error-text" *ngIf="invalid('correo')">
+                                        El correo no puede ser vacío
+                                        </small>
+                                  </div>
+                            </div>
+                            <div class="one-field">
+                                  <div class="label-cont">
+                                        <label for="contrasena">Contrasena: </label>
+                                  </div>
+                                  <input type= "password" id="contrasena" class="form-input-name"  formControlName="contrasena"  placeholder="contrasena"
+                                  [class.valid]="valid('contrasena')" [class.invalid]="invalid('contrasena')">
+                                  <div class="warn-cont">
+                                        <small class="error-text" *ngIf="invalid('contrasena')">
+                                        La contrasena no puede ser vacía.
+                                        </small>
+                                  </div>
+                            </div>  
+                            <div *ngIf="redirect == 2"><h3>{{mensaje}} <br>Intente de nuevo.</h3></div>                         
+                                  <div class="buttons-div">
+                                        <div class="button-div">
+                                             <button class="act" type="submit" *ngIf="user.valid" (click)="validar_datos()" >Enviar</button>
+                                        </div>
+                                        <div  *ngIf="redirect===1" ><h3>{{mensaje}}</h3> {{goPrincipal()}}</div>
+                                        <!--
+                                        <div class="button-div">
+                                              <button class="act" type="submit" *ngIf="envio" (click)="goPago()">Pagar</button>
+                                        </div>-->
+                                        <div class="button-div">
+                                        <button (click)="goBack()">Regresar</button>
+                                        </div>
+                                </div>
+                            
+                      </div>
+                </form>
+
+           </div>
+    </div>
+</div>

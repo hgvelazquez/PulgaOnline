@@ -50,13 +50,21 @@ def login():
     params = request.get_json(force=True,silent=False)
     correo = params['correo']
     contrasena = params['contrasena']
-    
-    user = Usuario.query.filter_by(correo=correo).first()
+    print(correo)
+    print(contrasena)
+    try:
+        user = Usuario.query.filter_by(correo=correo).first()
+    except:
+        return 'todo mal en base de datos',500
+    print("1"*64)
     if user is None:
+            print("2"*64)
             return 'Correo incorecto.',401
     elif  user.contrasena != contrasena:
+            print("3"*64)
             return 'constrasena incorrecta',401
     else:
+        print("4"*64)
         nombre= user.nombre
         correo= user.correo
         tipo_usuario= user.tipo_usuario
@@ -68,7 +76,8 @@ def login():
 
         usuario_nuevo= Usuario(nombre, correo, contrasena, tipo_usuario,calle, 
                 numext, colonia, ciudad ,estado)
-        session.clear()
+        print("5"*64)
+       # session.clear() #error alguar en session
         session[user] = usuario_nuevo
         return usuario_esquema.jsonify(usuario_nuevo),200
 

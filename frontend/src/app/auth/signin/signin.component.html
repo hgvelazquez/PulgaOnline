@@ -68,12 +68,12 @@
                                   </small>
                             </div>
                       </div>
-                           
+                      <div *ngIf="redirect == 2"><h3>Ohoh hay un error en al guardar los datos. <br>Intente de nuevo.</h3></div>
                                   <div class="buttons-div">
                                         <div class="button-div" *ngIf="esIgual()" >
                                              <button class="act" type="submit" *ngIf="user.valid" (click)="enviar_datos()" >Enviar</button>
                                         </div>
-                                       
+                                        <div  *ngIf="redirect===1" >{{goPrincipal()}}</div>
                                         <!--
                                         <div class="button-div">
                                               <button class="act" type="submit" *ngIf="envio" (click)="goPago()">Pagar</button>

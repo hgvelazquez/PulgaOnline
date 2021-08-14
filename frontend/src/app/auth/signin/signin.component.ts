@@ -11,7 +11,7 @@ import {FormControl,Validators, FormGroup} from '@angular/forms' /**sirve para c
 export class SigninComponent implements OnInit {
 
   tipos = ["vendedor", "comprador" ]
-
+  redirect = 0
   user = new FormGroup({
     nombre : new FormControl('',[
       Validators.required,
@@ -52,9 +52,10 @@ export class SigninComponent implements OnInit {
     this.authService.ingresa_datos(us)
     .subscribe(
          dir =>{
+          this.redirect = 1
           console.log(dir)},
         err => {console.error(err)
-        
+          this.redirect = 2
       });
   }
 
@@ -84,7 +85,7 @@ goBack(): void {
   this.router.navigateByUrl('/');
 }
 goPrincipal(): void {
-  this.router.navigateByUrl('principal');
+  this.router.navigateByUrl('login');
 }
 
 }

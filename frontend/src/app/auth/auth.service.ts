@@ -19,6 +19,10 @@ export class AuthService {
     )
 } 
 
+login(Observable:any){
+  const url = `${this.BASE_URL}/login`;
+  return this.http.post<any>(url,Observable)
+} 
 
 
 

@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify,  session ,make_response,redirect,url_for
+from flask import Blueprint, request, jsonify, g ,current_app,session ,make_response,redirect,url_for
 bp = Blueprint('comprar', __name__, url_prefix='/comprar')
 
 
@@ -7,21 +7,19 @@ from modelo.usuario import Usuario, UsuarioEsquema
 from flask_mail import Mail, Message #para envio de email
 
 
-
 from modelo.conexion_bd import db, ma
 
 
 producto_esquema = ProductoEsquema()
 productos_esquema = ProductoEsquema(many=True)
 
-user= {}
-producto ={}
 
 @bp.route('/<id>')
 def producto_id(id):
     '''
     Obtiene los campos del producto mediante su id
     '''
+    session.clear()
     try:
         consulta = db.session.query(Producto).get(id)
         nombre = consulta.nombre
@@ -35,11 +33,12 @@ def producto_id(id):
         producto_nuevo = Producto(nombre, descripcion, disponible, precio,
                                     imagen, categoria, id_vendedor)
         
-        user = {'id_usuario':1,
+        g.user = {'id_usuario':1,
                         'email': 'moncho.jcp1@gmail.com'}
-        producto = {'nombre':nombre,
+        g.producto = {'nombre':nombre,
                                 'id_producto': id}
-        
+        #print(session.get('user'))
+        print(g.user)
         return producto_esquema.jsonify(producto_nuevo)
     except:
         return 'error',503
@@ -63,7 +62,7 @@ def ingresa_direccion():
     Obtiene el id del usuario en session y modifica la direccionen la Base de Datos
     '''
     params = request.get_json(force=True,silent=False)
-    #user = session.get('user')
+    user = g.user
     print('*'*64)
     print(user)
     id_usuario = user['id_usuario']
