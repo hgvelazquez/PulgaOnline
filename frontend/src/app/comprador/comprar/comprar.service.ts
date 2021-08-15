@@ -12,9 +12,7 @@ export class ComprarService {
 
   private BASE_URL = 'http://localhost:5000/comprar'
 
-  constructor(
-    private http: HttpClient
-      ) {}
+  constructor(private http: HttpClient) {}
 
   getProducto(id: string): Observable<any> {
       const url = `${this.BASE_URL}/${id}`;
@@ -39,10 +37,18 @@ export class ComprarService {
       catchError(this.handleError)
     )
   }
-
-
+  
+ 
   private handleError(error =HttpErrorResponse) {
     console.log(error);
     return throwError("algo salio mal")
   }
+  
+ 
+  enviar_correo():Observable<any>{    
+   return this.http.get<any>('http://localhost:5000/send').pipe(
+      catchError(this.handleError)
+    )
+  }
+
 } 

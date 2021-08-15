@@ -6,6 +6,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+/* Auth */
+import { LoginComponent } from './auth/login/login.component';
+import { SigninComponent } from './auth/signin/signin.component';
+
 /* Comprador */
 /* Catalogo */
 import { ProductosComponent } from './comprador/catalogo/productos/productos.component';
@@ -27,6 +31,9 @@ import { MensajeComponent } from './vendedor/mensaje/mensaje.component';
 @NgModule({
   declarations: [
     AppComponent,
+    /* Auth */
+    LoginComponent,
+    SigninComponent,
     /* Vendedor*/
     ProductosVendedorComponent,
     DetallesProductoVendedorComponent,

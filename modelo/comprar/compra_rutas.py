@@ -1,12 +1,10 @@
-from flask import Blueprint, request, jsonify,  session ,make_response,redirect,url_for
-
+from flask import Blueprint, request, jsonify, g ,current_app,session ,make_response,redirect,url_for
 bp = Blueprint('comprar', __name__, url_prefix='/comprar')
 
 
 from modelo.producto import Producto, ProductoEsquema
 from modelo.usuario import Usuario, UsuarioEsquema
-
-from modelo.comprar.pago import Pago
+from flask_mail import Mail, Message #para envio de email
 
 
 from modelo.conexion_bd import db, ma
@@ -14,7 +12,6 @@ from modelo.conexion_bd import db, ma
 
 producto_esquema = ProductoEsquema()
 productos_esquema = ProductoEsquema(many=True)
-usuario_esquema = Usuario()
 
 
 @bp.route('/<id>')
@@ -22,7 +19,6 @@ def producto_id(id):
     '''
     Obtiene los campos del producto mediante su id
     '''
-    session['id_producto'] = int(id)
     try:
         consulta = db.session.query(Producto).get(id)
         nombre = consulta.nombre
@@ -35,6 +31,7 @@ def producto_id(id):
         id_producto = int(id)
         producto_nuevo = Producto(nombre, descripcion, disponible, precio,
                                     imagen, categoria, id_vendedor)
+        
         return producto_esquema.jsonify(producto_nuevo)
     except:
         return 'error',503
@@ -58,8 +55,8 @@ def ingresa_direccion():
     Obtiene el id del usuario en session y modifica la direccionen la Base de Datos
     '''
     params = request.get_json(force=True,silent=False)
-    #user = session.get('user')
-    id_usuario = 4 #user['id_usuario']
+    id_usuario = 1# user['id_usuario']
+  
     try:
         #id_usuario = params['id_usuario']
         consulta = db.session.query(Usuario).get(id_usuario)
@@ -69,7 +66,7 @@ def ingresa_direccion():
         consulta.ciudad = params['ciudad']
         consulta.estado = params['estado']
     except:
-        return jsonify(
+        return  jsonify(
                     message="Error en la bases de datos.",
                     category="error",
                     status=500
@@ -87,8 +84,8 @@ def validar_compra():
     '''
     Valida que de elimine el producto en la Base de datos obtiene el id de session
     '''
-    id_producto = 4
-    #id_producto = session.get('id_producto')
+   # producto = session.get('producto')
+    id_producto =  4#producto['id_producto']
     try:
         consulta = db.session.query(Producto).get(id_producto)
         if(int(consulta.disponible) == 0 ):
