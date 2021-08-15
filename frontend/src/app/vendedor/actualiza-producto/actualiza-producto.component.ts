@@ -1,7 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router} from '@angular/router';
-import { Location } from '@angular/common';
 
 import { Producto } from '../../models/producto';
 import { ProductoVendedorService } from '../producto-vendedor.service';
@@ -40,7 +39,6 @@ export class ActualizaProductoComponent implements OnInit {
 
   constructor(
     private aroute: ActivatedRoute,
-    private location: Location,
     private router: Router,
     private prodService: ProductoVendedorService,
     private formService: FormsValidatorService
@@ -102,13 +100,13 @@ export class ActualizaProductoComponent implements OnInit {
   }
 
   goBack(reload: boolean): void {
+    const url = (this.producto) ? `/detail/${this.producto.id_producto}` : '/mis-productos';
     if (reload) {
-      const url = (this.producto) ? `/detail/${this.producto.id_producto}` : '/mis-productos';
       this.router.navigateByUrl(url).then(() => {
         window.location.reload();
       });
     } else {
-      this.location.back();
+      this.router.navigateByUrl(url);
     }
   }
 

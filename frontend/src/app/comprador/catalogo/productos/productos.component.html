@@ -7,7 +7,7 @@
 
     <ul class="productos">
         <li *ngFor="let producto of productos; let even=even">
-          <a routerLink="/detail/{{producto.id_producto}}" *ngIf="even">
+          <a routerLink="/producto/{{producto.id_producto}}" *ngIf="even">
             <div class="gray-l">
               <div class="badge1">
                 <img class="thumbnail" src="http://localhost:5000/static/{{producto.imagen}}">

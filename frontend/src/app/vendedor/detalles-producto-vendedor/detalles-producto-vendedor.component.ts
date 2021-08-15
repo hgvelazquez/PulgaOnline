@@ -45,6 +45,9 @@ export class DetallesProductoVendedorComponent implements OnInit {
   }
 
   navigate(url: string): void {
-    this.router.navigateByUrl(url);
+    if (this.producto)
+      this.router.navigateByUrl(`/${url}/${this.producto.id_producto}`);
+    else
+      this.router.navigateByUrl(`/mensaje/error`); 
   }
 }

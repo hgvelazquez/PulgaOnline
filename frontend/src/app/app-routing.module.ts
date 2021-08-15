@@ -17,8 +17,6 @@ import { PagoComponent} from './comprador/comprar/pago/pago.component'
 import { ProductosComponent } from './comprador/catalogo/productos/productos.component';
 import { DetallesProductoComponent } from './comprador/detalles-producto/detalles-producto.component';
 import { MensajeErrorComponent } from './comprador/mensaje-error/mensaje-error.component';
-import { ProductoBusquedaComponent } from './comprador/catalogo/producto-busqueda/producto-busqueda.component';
-
 
 
 const routes: Routes = [
@@ -26,8 +24,8 @@ const routes: Routes = [
   { path: 'mis-productos', component: ProductosVendedorComponent },
   { path: 'detail/:id_producto', component: DetallesProductoVendedorComponent },
   { path: 'agregar-producto', component: AgregaProductoComponent },
-  { path: 'eliminar-producto/:id_producto', component: EliminaProductoComponent },
-  { path: 'actualizar-producto/:id_producto', component: ActualizaProductoComponent },
+  { path: 'eliminar/:id_producto', component: EliminaProductoComponent },
+  { path: 'actualizar/:id_producto', component: ActualizaProductoComponent },
   { path: 'mensaje/:operation', component: MensajeComponent },
   /* Rutas de Comprar*/
   { path: 'pago', component: PagoComponent},
