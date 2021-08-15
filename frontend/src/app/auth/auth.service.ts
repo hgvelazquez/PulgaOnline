@@ -13,7 +13,7 @@ export class AuthService {
 
 
   ingresa_datos(Observable:any){
-    const url = `${this.BASE_URL}/signin`;
+    const url = `${this.BASE_URL}/signup`;
     return this.http.post<any>(url,Observable)
 } 
 

@@ -4,7 +4,7 @@ class Usuario(db.Model):
 
     id_usuario = db.Column(db.Integer, primary_key=True, unique=True, nullable=False)
     nombre = db.Column(db.Unicode, nullable=False)
-    correo = db.Column(db.Unicode, nullable=False)
+    correo = db.Column(db.Unicode, nullable=False, unique=True)
     contrasena = db.Column(db.Unicode, nullable=False)
     tipo_usuario = db.Column(db.Boolean, nullable=False)
     calle = db.Column(db.Unicode, nullable=True)
@@ -13,8 +13,8 @@ class Usuario(db.Model):
     ciudad = db.Column(db.Unicode, nullable=True)
     estado = db.Column(db.Unicode, nullable=True)
 
-    def __init__(self, nombre, correo,contrasena, tipo_usuario, calle, 
-                numext, colonia, ciudad ,estado):
+    def __init__(self, nombre, correo, contrasena, tipo_usuario, 
+                calle=None, numext=None, colonia=None, ciudad=None, estado=None):
         self.nombre = nombre
         self.correo = correo
         self.contrasena = contrasena

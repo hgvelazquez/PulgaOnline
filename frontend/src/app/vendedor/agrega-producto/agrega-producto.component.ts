@@ -5,7 +5,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Producto } from '../../models/producto';
 import { ProductoVendedorService } from '../producto-vendedor.service';
 
-import { FormsValidatorService } from '../forms-validator.service';
+import { FormsValidatorService } from '../../forms-validator.service';
 
 @Component({
   selector: 'app-agrega-producto',

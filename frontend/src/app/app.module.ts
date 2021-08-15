@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 
 /* Auth */
 import { LoginComponent } from './auth/login/login.component';
-import { SigninComponent } from './auth/signin/signin.component';
+import { SignupComponent } from './auth/signup/signup.component';
 
 /* Comprador */
 /* Catalogo */
@@ -33,7 +33,7 @@ import { MensajeComponent } from './vendedor/mensaje/mensaje.component';
     AppComponent,
     /* Auth */
     LoginComponent,
-    SigninComponent,
+    SignupComponent,
     /* Vendedor*/
     ProductosVendedorComponent,
     DetallesProductoVendedorComponent,

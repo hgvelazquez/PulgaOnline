@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 /* Componentes de Auth */
 import {LoginComponent} from './auth/login/login.component'
-import {SigninComponent} from './auth/signin/signin.component'
+import {SignupComponent} from './auth/signup/signup.component'
 
 /* Componentes del vendedor */
 import { ProductosVendedorComponent } from './vendedor/productos-vendedor/productos-vendedor.component';
@@ -23,9 +23,9 @@ import { MensajeErrorComponent } from './comprador/mensaje-error/mensaje-error.c
 
 
 const routes: Routes = [
-  /* Rutas de Login y Signin */
+  /* Rutas de Login y Signup */
   { path: 'login', component: LoginComponent },
-  { path: 'signin', component: SigninComponent },
+  { path: 'signup', component: SignupComponent },
   /* Rutas del vendedor*/
   { path: 'mis-productos', component: ProductosVendedorComponent },
   { path: 'detail/:id_producto', component: DetallesProductoVendedorComponent },

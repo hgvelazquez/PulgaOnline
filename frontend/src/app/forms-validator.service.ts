@@ -26,6 +26,28 @@ export class FormsValidatorService {
     return true;
   }
 
+  validateLengthString(min: number, max: number) : ValidatorFn {
+    return (control: AbstractControl) : ValidationErrors | null => {
+      const ok = this.rangeString(control.value, min, max);
+      return ok ? null : {Length: {'outOfRange': ok}};
+    }
+  }
+
+  private rangeString(str: string, min: number, max: number): boolean {
+    var trimmed = str.trim();
+    
+    if (!trimmed){
+      return false;
+    } 
+    var range = true;
+    if (min != -1) {
+      range = (trimmed.length >= min);
+    }
+    if (max != -1)
+      range = range && (trimmed.length<=max);
+    return range;
+  }
+
   validateIntegerString() : ValidatorFn {
     return (control: AbstractControl) : ValidationErrors | null => {
       const ok = this.integerString(control.value);

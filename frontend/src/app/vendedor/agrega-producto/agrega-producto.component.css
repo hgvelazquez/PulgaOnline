@@ -37,11 +37,11 @@ button:disabled {
   cursor: auto;
 }
 
-.form-input.valid{
+input.valid{
   border-color: #44dd99;
 }
 
-.form-input.invalid{
+input.invalid{
   border-color: #dd4499;
 }
 
