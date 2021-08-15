@@ -35,33 +35,26 @@ def signup():
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
-    '''
-    recibe correo y contra y verifica que este en la base y coincidan
-    '''
+    """
+    Recibe un correo y contraseña y verifica que los datos 
+    enviados estén en la base de datos.
+    """
     params = request.get_json(force=True,silent=False)
     correo = params['correo']
     contrasena = params['contrasena']
+    
     try:
         user = Usuario.query.filter_by(correo=correo).first()
     except:
         return make_response(jsonify('Error en el servidor'),500)
+    
     if user is None:
-            return  make_response(jsonify('Correo incorecto.'),401)
+        return  make_response(jsonify('Correo incorrecto.'),401)
     elif  user.contrasena != contrasena:
-            return  make_response(jsonify( 'constrasena incorrecta'),401)
+        return  make_response(jsonify( 'Constraseña incorrecta'),401)
     else:
-        nombre= user.nombre
-        correo= user.correo
-        tipo_usuario= user.tipo_usuario
-        calle=user.calle 
-        numext= user.numext
-        colonia= user.colonia
-        ciudad = user.ciudad
-        estado= user.estado
-
-        usuario_nuevo= Usuario(nombre, correo, contrasena, tipo_usuario,calle, 
-                numext, colonia, ciudad ,estado)
-        return  make_response(usuario_esquema.jsonify(usuario_nuevo),200)
+        user.contrasena = 'not_sent'
+        return  make_response(usuario_esquema.jsonify(user),200)
 
 
 @bp.route('/logout')

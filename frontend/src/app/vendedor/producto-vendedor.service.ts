@@ -8,6 +8,8 @@ import { Producto } from '../models/producto';
 
 import {API_URL} from '../env';
 
+import { CookieService } from 'ngx-cookie-service';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -24,41 +26,67 @@ export class ProductoVendedorService {
   private actualizaUrl = API_URL + '/actualizar-producto';
 
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private cookies: CookieService
+  ) { }
 
   getProductos(): Observable<Producto[]> {
-    return this.http.get<Producto[]>(this.productosUrl).pipe(
-      catchError(this.handleError<Producto[]>('getProductos', []))
-    );
+    const usr = {
+      'id_usuario': this.cookies.get('id_usuario'),
+      'tipo_usuario': this.cookies.get('tipo_usuario')
+    };
+    return this.http.post<Producto[]>(this.productosUrl, usr, this.httpOptions)
+      .pipe(
+        catchError(this.handleError<Producto[]>('getProductos', []))
+      );
   }
 
   getProducto(id: number): Observable<Producto> {
+    const usr = {'id_usuario': this.cookies.get('id_usuario')};
     const url = `${this.productosUrl}/${id}`;
-    return this.http.get<Producto>(url);
+    return this.http.post<Producto>(url, usr, this.httpOptions);
   }
 
   agregaProducto(prod: Producto, img: File): Observable<Producto> {
+    const usr = {'id_usuario': this.cookies.get('id_usuario')};
     const prdjson = JSON.stringify(prod);
     const upLoadData = new FormData();
     const blobOverrides = new Blob([JSON.stringify(prdjson)], {
       type: 'application/json',
     });
+    const blobOverridesUsr = new Blob([JSON.stringify(usr)], {
+      type: 'application/json',
+    });
+    upLoadData.append('usuario', blobOverridesUsr);
     upLoadData.append('producto', blobOverrides);
     upLoadData.append('imageUpload', img, img.name);
     return this.http.post<Producto>(this.agregaUrl, upLoadData);
   }
 
   eliminaProducto(idProd: number): Observable<Producto> {
+    const usr = JSON.stringify({'id_usuario': this.cookies.get('id_usuario')});
+    const usrHttpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      body: usr
+    }
+    
     const url = `${this.eliminaUrl}/${idProd}`;
-    return this.http.delete<Producto>(url, this.httpOptions);
+    return this.http.delete<Producto>(url, usrHttpOptions);
   }
 
   actualizaProducto(prod: Producto, img: File | null): Observable<Producto> {
+    const usr = {'id_usuario': this.cookies.get('id_usuario')};
     const prdjson = JSON.stringify(prod);
     const upLoadData = new FormData();
     const blobOverrides = new Blob([JSON.stringify(prdjson)], {
       type: 'application/json',
     });
+    const blobOverridesUsr = new Blob([JSON.stringify(usr)], {
+      type: 'application/json',
+    });
+
+    upLoadData.append('usuario', blobOverridesUsr);
     upLoadData.append('producto', blobOverrides);
     if (img)
       upLoadData.append('imageUpload', img, img.name);
@@ -67,7 +95,8 @@ export class ProductoVendedorService {
   }
 
   getCats(): Observable<string[]> {
-    return this.http.get<string[]>(API_URL+'/get-cats');
+    const usr = {'tipo_usuario': this.cookies.get('tipo_usuario')};
+    return this.http.post<string[]>(API_URL+'/get-cats', usr);
   }
 
 

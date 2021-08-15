@@ -5,6 +5,8 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+/* For login */
+import { CookieService } from 'ngx-cookie-service';
 
 /* Auth */
 import { LoginComponent } from './auth/login/login.component';
@@ -58,7 +60,7 @@ import { MensajeComponent } from './vendedor/mensaje/mensaje.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

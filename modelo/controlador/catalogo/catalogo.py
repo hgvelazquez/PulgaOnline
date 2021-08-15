@@ -1,5 +1,5 @@
 from os import name
-from flask import Blueprint, request, jsonify, abort, send_file
+from flask import Blueprint, jsonify, abort, session
 
 from os.path import splitext
 from datetime import datetime
@@ -16,6 +16,8 @@ productos_esquema = ProductoEsquema(many=True)
 
 @bp.route('/productos')
 def get_productos(): 
+    id = session['id_usuario']
+    print(f"\n\nCatalogo: {id}\n\n")
 
     productos = Producto.query.all()
     # serializing as JSON

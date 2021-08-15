@@ -8,8 +8,8 @@
   background-color: #fdebf6;
 }
 
-.h2 {
-  color: #000;
+h2 {
+  color: #444;
 }
 
 .form-title {
@@ -45,10 +45,6 @@
 
 .form-input-name {
   width: 100%;
-}
-
-.form-input-num {
-  width: 8em;
 }
 
 .select {
@@ -110,12 +106,6 @@ button:hover {
   cursor: pointer;
 }
 
-button:disabled {
-  background-color: #eee;
-  color: #ccc;
-  cursor: auto;
-}
-
 button.send {
   background-color: #7d4231;
   color: #fff;
@@ -127,6 +117,6 @@ button.send:hover {
 
 button:disabled {
   background-color: #ccc;
-  color: #aaa;
+  color: #999;
   cursor: auto;
 }

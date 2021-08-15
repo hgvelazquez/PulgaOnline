@@ -1,13 +1,12 @@
-from flask import Flask, request, jsonify, abort, send_file
+from flask import Flask, jsonify, session
 from flask_cors import CORS
 from flask_mail import Mail, Message
 # Para el login
-from flask.globals import session
 from flask.helpers import make_response
+from datetime import timedelta
 
 from modelo.conexion_bd import db, ma
-from modelo.producto import Producto, ProductoEsquema
-from modelo.categoria import Categoria
+from modelo.producto import ProductoEsquema
 
 # agrega el blueprint de vendedor a app
 from modelo.controlador.crud_producto import crud_prod
@@ -51,7 +50,9 @@ app.register_blueprint(compra_rutas.bp)
 app.register_blueprint(auth.bp)
 
 # Agregamos llave para la creacion de sessions
-app.config['SECRET_KEY'] = 'LLAVE SECRETA'
+app.config['SECRET_KEY'] = 'LLAVE_SECRETA_20212'
+# Configuración para el tiempo de vida de las sessions
+app.permanent_session_lifetime = timedelta(hours=2)
 
 producto_esquema = ProductoEsquema()
 productos_esquema = ProductoEsquema(many=True)

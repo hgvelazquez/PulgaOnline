@@ -1,6 +1,6 @@
 <div class="component-container">
   <div class="form-title">
-    <h2>Registro</h2>
+    <h2>Crear una cuenta</h2>
   </div>
   <div class="form-container">
     <div class="maker-cols">
@@ -32,9 +32,9 @@
           </div>
           <div class="one-field">
             <div class="label-cont">
-              <label for="contrasena">Contrasena: </label>
+              <label for="contrasena">Contraseña: </label>
             </div>
-            <input type="password" id="contrasena" class="form-input-name" formControlName="contrasena" placeholder="contrasena" 
+            <input type="password" id="contrasena" class="form-input-name" formControlName="contrasena" placeholder="contraseña" 
                 [class.valid]="valid('contrasena')" [class.invalid]="invalid('contrasena')">
             <div class="warn-cont">
               <small class="error-text" *ngIf="invalid('contrasena')">
@@ -75,7 +75,7 @@
           <div class="buttons-div">
             <div class="button-div">
               <button class="send" type="submit" [disabled]="!user.valid || !esIgual()" (click)="enviar_datos()">
-                Enviar
+                Registrarse
               </button>
             </div>
             <div class="button-div">
