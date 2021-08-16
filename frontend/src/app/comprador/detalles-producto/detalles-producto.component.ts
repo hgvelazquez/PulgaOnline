@@ -5,6 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
 
 import { Producto } from '../../models/producto';
 import { ProductoService } from '../producto.service';
+import { AuthCheckService } from '../../auth-check.service';
 
 @Component({
   selector: 'app-detalles-producto',
@@ -21,10 +22,15 @@ export class DetallesProductoComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private prodService: ProductoService,
-    private cookies: CookieService
+    private cookies: CookieService,
+    private authCheck: AuthCheckService,
   ) { }
 
   ngOnInit(): void {
+    if (! this.authCheck.isLoggedComprador()){
+      this.router.navigateByUrl('/');
+      return;
+    }
     this.getProd();
   }
 

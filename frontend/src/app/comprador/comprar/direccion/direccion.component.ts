@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { CookieService } from 'ngx-cookie-service';
+import { AuthCheckService } from '../../../auth-check.service';
 
 @Component({
   selector: 'app-direccion',
@@ -83,10 +84,15 @@ export class DireccionComponent implements OnInit {
     private loc: Location,
     private comprarService: ComprarService,
     private formService: FormsValidatorService,
-    private cookies: CookieService
+    private cookies: CookieService,
+    private authCheck: AuthCheckService
   ) {}
 
   ngOnInit(): void {
+    if (! this.authCheck.isLoggedComprador()){
+      this.router.navigateByUrl('/');
+      return;
+    }
   }
 
   enviar_direccion(): void{

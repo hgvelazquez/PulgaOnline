@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ProductoVendedorService } from '../producto-vendedor.service';
 import { API_URL } from '../../env'
 
+import { CookieService } from 'ngx-cookie-service';
 import { AuthCheckService } from '../../auth-check.service';
 
 @Component({
@@ -24,6 +25,7 @@ export class EliminaProductoComponent implements OnInit {
     private router: Router,
     private prodServ: ProductoVendedorService,
     private auth: AuthCheckService,
+    private cookies: CookieService,
   ) { }
 
   ngOnInit(): void {

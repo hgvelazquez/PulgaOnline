@@ -51,6 +51,7 @@ export class AgregaProductoComponent implements OnInit {
 
   ngOnInit(): void {
     /* Si no es vendedor, regresamos al inicio*/
+    console.log(this.auth.isLoggedVendedor());
     if (!this.auth.isLoggedVendedor()){
       this.router.navigateByUrl('/');
       return;

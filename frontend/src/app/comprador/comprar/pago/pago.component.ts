@@ -5,6 +5,7 @@ import { ComprarService } from '../comprar.service'
 import { Router } from '@angular/router';
 
 import { FormsValidatorService } from '../../../forms-validator.service';
+import { AuthCheckService } from '../../../auth-check.service';
 
 @Component({
   selector: 'app-pago',
@@ -44,10 +45,15 @@ export class PagoComponent implements OnInit {
   constructor(
     private router: Router,
     private comprarService: ComprarService,
-    private formService: FormsValidatorService
+    private formService: FormsValidatorService,
+    private authCheck: AuthCheckService,
   ) { }
 
   ngOnInit(): void {
+    if (! this.authCheck.isLoggedComprador()){
+      this.router.navigateByUrl('/');
+      return;
+    }  
     var month = this.date.getMonth()+1
     var monthDisp = (month < 10) ? `0${month}` : month.toString();
     this.today = this.date.getFullYear() + '-' + monthDisp  + '-' + this.date.getDate();

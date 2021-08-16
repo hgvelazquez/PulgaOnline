@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Router } from '@angular/router';
 import { Producto } from '../../../models/producto';
 import { ProductoService } from '../../producto.service';
+import { AuthCheckService } from '../../../auth-check.service';
 
 @Component({
   selector: 'app-productos',
@@ -13,10 +15,16 @@ export class ProductosComponent implements OnInit {
   productos: Producto[] = [];
 
   constructor(
-    private prodService: ProductoService
+    private router: Router,
+    private prodService: ProductoService,
+    private authCheck: AuthCheckService,
   ) { }
 
   ngOnInit(): void {
+    if (! this.authCheck.isLoggedComprador()){
+      this.router.navigateByUrl('/');
+      return;
+    }
     this.getProductos();
   }
 
