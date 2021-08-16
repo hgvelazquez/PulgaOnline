@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, session
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_mail import Mail, Message
 # Para el login
@@ -57,16 +57,16 @@ app.permanent_session_lifetime = timedelta(hours=2)
 producto_esquema = ProductoEsquema()
 productos_esquema = ProductoEsquema(many=True)
 
-@app.route("/send")
+@app.route("/send", methods=["GET", "POST"])
 def send():
     """
     Eviar un correo 
     """
-    #user = session.get('user')
-    #producto = session.get('producto')
-    email = 'correo_@usuario.com'
+    email = request.json.get('correo')
+    producto = request.json.get('id_producto')
+    prod = compra_rutas.getProd(producto)
     msg = Message('Gracias por tu compra', sender = app.config.get('MAIL_USERNAME'), recipients = [email])
-    msg.body = "Gracias por realizar la compra del producto"
+    msg.body = f"¡Gracias por realizar su compra en la PulgaOnline! \n\n Producto:{prod.nombre} \n Cargo Realizado: {prod.precio}"
     mail.send(msg)
     return make_response(jsonify('sent'),200)
 

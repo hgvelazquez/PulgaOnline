@@ -77,6 +77,7 @@ export class PagoComponent implements OnInit {
       compra =>{
         this.validar = 1;
         console.log(compra);
+        this.enviar_correo();
       },
       err => {
         this.validar = 2;

@@ -48,8 +48,17 @@ export class ComprarService {
     return throwError("algo salio mal")
   }
   
-  enviar_correo():Observable<any>{    
-   return this.http.get<any>('http://localhost:5000/send').pipe(
+  enviar_correo():Observable<any>{
+    const id_prod = Number(this.cookies.get('id_producto'));
+    const correo = Number(this.cookies.get('correo'));
+    const prod = {
+      'id_producto': id_prod,
+      'correo': correo
+    };
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+    return this.http.post<any>('http://localhost:5000/send', prod, httpOptions).pipe(
       catchError(this.handleError)
     )
   }

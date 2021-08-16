@@ -76,3 +76,11 @@ def validar_compra():
 
     db.session.commit()
     return make_response(jsonify("Compra realizada con éxito"), 200)
+
+def getProd(id_producto):
+    """
+    Obtiene el nombre del producto con el id correspondiente
+    """
+    producto = Producto.query.filter_by(id_producto=id_producto).first()
+    return producto
+
