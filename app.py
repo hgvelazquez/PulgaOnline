@@ -11,7 +11,7 @@ from modelo.producto import ProductoEsquema
 # agrega el blueprint de vendedor a app
 from modelo.controlador.crud_producto import crud_prod
 #agrega el blueprint de comprar a app
-from modelo.comprar import compra_rutas
+from modelo.controlador.comprar import compra_rutas
 # agrega el blueprint de catalogo a app
 from modelo.controlador.catalogo import catalogo
 # agrega el blueprint de auth

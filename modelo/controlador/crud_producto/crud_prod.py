@@ -156,7 +156,7 @@ def get_producto_vendedor(id_prod):
     producto = Producto.query.filter_by(id_producto=id_prod, id_vendedor=id).first()
     
     if producto is None:
-        abort(404)
+        return make_response(jsonify("El usuario no es el dueño del producto"), 403)
     return jsonify(producto.to_dict())
 
 
