@@ -47,7 +47,12 @@ export class EliminaProductoComponent implements OnInit {
     
     this.prodServ.eliminaProducto(this.prodID).subscribe(
       _ =>  {this.router.navigate(['/mensaje/eliminar']);}, 
-      _error => {this.router.navigate(['/mensaje/error']);}
+      error => {
+        if (error.status == 403)
+        this.router.navigate(['/acceso-denegado']);       
+        else
+          this.router.navigate(['/mensaje/error']);
+      }
     );
   }
 

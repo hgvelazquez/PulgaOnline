@@ -37,9 +37,9 @@ export class DetallesProductoVendedorComponent implements OnInit {
       .subscribe(
         (prod) => {this.producto = prod},
         (error) => {
-          if (error.status === 404) {
-            /* TODO: Replace with 404 page*/
-            this.router.navigateByUrl('/mensaje/error');
+          if (error.status == 403) {
+            /* No queremos que sepa que el producto existe y no es de él*/
+            this.router.navigateByUrl('/404-not-found');
           } else {
             this.router.navigateByUrl('/mensaje/error');
           }

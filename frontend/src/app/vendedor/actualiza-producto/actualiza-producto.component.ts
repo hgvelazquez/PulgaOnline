@@ -76,7 +76,13 @@ export class ActualizaProductoComponent implements OnInit {
         this.productForm.controls['categoria'].disable();
         this.imageUrl = 'http://localhost:5000/static/' + this.producto.imagen;
       }, 
-      _error => {this.router.navigateByUrl('/mensaje/error');}
+      error => {
+        if (error.status == 403) {
+          this.router.navigateByUrl('/acceso-denegado');
+        } else { 
+        this.router.navigateByUrl('/mensaje/error');
+        }
+      }
     );
   }
 
