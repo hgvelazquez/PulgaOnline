@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, g ,current_app,session ,make_response,redirect,url_for
+from flask import Blueprint, request, jsonify,make_response
 bp = Blueprint('comprar', __name__, url_prefix='/comprar')
 
 
@@ -13,123 +13,66 @@ from modelo.conexion_bd import db, ma
 producto_esquema = ProductoEsquema()
 productos_esquema = ProductoEsquema(many=True)
 
-
-@bp.route('/<id>')
-def producto_id(id):
-    '''
-    Obtiene los campos del producto mediante su id
-    '''
-    try:
-        consulta = db.session.query(Producto).get(id)
-        nombre = consulta.nombre
-        descripcion = consulta.descripcion
-        categoria = consulta.categoria
-        disponible = consulta.disponible
-        precio = consulta.precio
-        imagen = consulta.imagen
-        id_vendedor = consulta.id_vendedor
-        id_producto = int(id)
-        producto_nuevo = Producto(nombre, descripcion, disponible, precio,
-                                    imagen, categoria, id_vendedor)
-        
-        return producto_esquema.jsonify(producto_nuevo)
-    except:
-        return 'error',503
-    
-
-
-
-@bp.route('/existe_producto-<id>', methods=['GET','POST'])
-def existe_producto(id):
-    '''
-    Verifica la existencia del producto in la Base de datos
-    '''
-    producto = id
-    consulta = db.session.query(Producto).get(id)
-    response = True if (consulta.disponible) == 1 else False
-    return '{}'.format(response)
+usuario_esquema = UsuarioEsquema()
+usuarios_esquema = UsuarioEsquema(many=True)
 
 @bp.route('/ingresa_direccion', methods = ['GET','POST'])
 def ingresa_direccion():
-    '''
+    """
     Obtiene el id del usuario en session y modifica la direccionen la Base de Datos
-    '''
+    """
     params = request.get_json(force=True,silent=False)
-    id_usuario = 1# user['id_usuario']
-  
+    
     try:
-        #id_usuario = params['id_usuario']
-        consulta = db.session.query(Usuario).get(id_usuario)
+        id_usuario = params['id_usuario']
+        consulta = Usuario.query.filter_by(id_usuario=id_usuario).first()
+        if consulta is None:
+            return make_response(jsonify("Error en la base de datos"), 500)
+
         consulta.calle = params['calle']
         consulta.numext = params['numeroExt']
         consulta.colonia = params['colonia']
         consulta.ciudad = params['ciudad']
         consulta.estado = params['estado']
+        db.session.commit()
     except:
-        return  jsonify(
-                    message="Error en la bases de datos.",
-                    category="error",
-                    status=500
-                )
-
-    db.session.commit()
+        return make_response(jsonify("Error en la base de datos"), 500)
+    
     return jsonify(
                 message='Se a cambiado la direccion',
                 category="success",
                 status=200
             )
 
-@bp.route('/validar_compra')
+@bp.route('/validar_compra', methods=['GET', 'POST'])
 def validar_compra():
-    '''
-    Valida que de elimine el producto en la Base de datos obtiene el id de session
-    '''
-   # producto = session.get('producto')
-    id_producto =  4#producto['id_producto']
+    """
+    Realiza la compra, restando 1 a los disponibles en la base
+    de datos.
+    """
+    
     try:
-        consulta = db.session.query(Producto).get(id_producto)
+        # Validamos el usuario
+        id_usuario = request.json['id_usuario']
+        user = Usuario.query.filter_by(id_usuario=id_usuario).first()
+        if (user is None) or (user.tipo_usuario):
+            return make_response(jsonify("Usuario no es comprador"), 403)
+        
+        # Realizamos la compra
+
+        id_producto =  request.json['id_producto']
+        consulta = Producto.query.filter_by(id_producto=id_producto).first()
+        
+        if consulta is None:
+            return make_response(jsonify("Error en la base de datos"), 500)
         if(int(consulta.disponible) == 0 ):
-            return jsonify(
-                    message="Producto sin existencias",
-                    category="error",
-                    status=500
-                )
+            return make_response(jsonify("No hay productos disponibles"), 400)
+        
         consulta.disponible = int(consulta.disponible) - 1 
+    
     except:
-        return jsonify(
-                    message="Error en la bases de datos.",
-                    category="error",
-                    status=500
-                )
+        print("\n\nEXCEPT\n\n")
+        return make_response(jsonify("Error en la base de datos"), 500)
 
     db.session.commit()
-    return jsonify(
-                message='Compra valida',
-                category="success",
-                status=200
-            )
-
-
-@bp.route('/add')
-def add():
-    '''
-    add producto a la base datos, SOLO ES DE PRUEBA
-    '''
-    id_producto = 4
-
-    try:
-        consulta = db.session.query(Producto).get(id_producto)
-        consulta.disponible = 1
-    except:
-        return jsonify(
-                    message="Error en la bases de datos.",
-                    category="error",
-                    status=500
-                )
-
-    db.session.commit()
-    return jsonify(
-                message='Compra valida',
-                category="success",
-                status=200
-            )
+    return make_response(jsonify("Compra realizada con éxito"), 200)

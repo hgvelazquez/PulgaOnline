@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-/** importo servcio de comprar y el producto */
+/* Para la memoria del producto*/
+import { CookieService } from 'ngx-cookie-service';
 
 import { Producto } from '../../models/producto';
 import { ProductoService } from '../producto.service';
@@ -19,8 +20,8 @@ export class DetallesProductoComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private prodService: ProductoService
-
+    private prodService: ProductoService,
+    private cookies: CookieService
   ) { }
 
   ngOnInit(): void {
@@ -38,6 +39,7 @@ export class DetallesProductoComponent implements OnInit {
         (prod) => {
           this.producto = prod;
           this.disponible = prod.disponible;
+          this.cookies.set('id_producto', prod.id_producto.toString(), 1);
         },
         (error) => {
           console.log(error);

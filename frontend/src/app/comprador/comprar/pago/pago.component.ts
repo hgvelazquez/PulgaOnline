@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl,Validators, FormGroup} from '@angular/forms' /**sirve para controlar los formularios, add in app.module.ts */
 
 import { ComprarService } from '../comprar.service'
-import { Router , ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+
+import { FormsValidatorService } from '../../../forms-validator.service';
 
 @Component({
   selector: 'app-pago',
@@ -11,31 +13,45 @@ import { Router , ActivatedRoute } from '@angular/router';
 })
 export class PagoComponent implements OnInit {
 
-  validar = 0;  
+  validar = 0;
+  private date = new Date();
+  today = "";
+  mensaje=""; 
+  
   pago = new FormGroup({
     numero_tarjeta : new FormControl('',[
       Validators.required,
       Validators.pattern("^[0-9]*$"),
       Validators.minLength(15),
-      Validators.maxLength(16)]),
+      Validators.maxLength(16)
+    ]),
     codigo : new FormControl('',[
       Validators.required,
       Validators.pattern("^[0-9]*$"),
       Validators.minLength(3),
-      Validators.maxLength(3)]),
+      Validators.maxLength(3)
+    ]),
     nombre_titular : new FormControl('',[
       Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(20)])
+      this.formService.validateLengthString(4, 30)
+    ]),
+    fecha: new FormControl('', [
+      Validators.required,
+      this.formService.validateLaterDate()
+    ])
   });
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
-    private comprarService: ComprarService
+    private comprarService: ComprarService,
+    private formService: FormsValidatorService
   ) { }
 
   ngOnInit(): void {
+    var month = this.date.getMonth()+1
+    var monthDisp = (month < 10) ? `0${month}` : month.toString();
+    this.today = this.date.getFullYear() + '-' + monthDisp  + '-' + this.date.getDate();
+    this.pago.controls['fecha'].setValue(this.today);
   }
   
   goBack(): void {
@@ -43,30 +59,26 @@ export class PagoComponent implements OnInit {
   }
   
   goBegin(): void {
-    if(this.validar == 1){//evia correo si la compra fue exitosa
+    if(this.validar == 1){
       this.enviar_correo() 
     }
-    this.router.navigateByUrl('');
+    this.router.navigateByUrl('catalogo');
   }
   
   validad_compra():void{    
     this.comprarService.validar_compra()
     .subscribe(
       compra =>{
-        if(compra.category == "error"){
-          this.validar = 2;
-          console.log(compra.message)
-        }
-        if(compra.category == "success"){
-          this.validar = 1;
-          console.log(compra)
-        }
+        this.validar = 1;
+        console.log(compra);
+      },
+      err => {
+        this.validar = 2;
+        if (err.status == 400)
+          this.mensaje = "¡Oh no! Ya no hay productos disponibles.";
+        else
+          this.mensaje = "¡Oh no! Ocurrió un error en la compra.\n Inténtelo más tarde."
       });
-  }
-
-  onSubmit() {
-    // TODO: Use EventEmitter with form value
-    console.warn(this.pago.value);
   }
 
   valid(field: string): boolean {

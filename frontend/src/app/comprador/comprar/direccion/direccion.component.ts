@@ -2,9 +2,13 @@ import { Component, OnInit} from '@angular/core';
 
 import {FormControl,Validators, FormGroup} from '@angular/forms'
 
-import {ComprarService} from '../comprar.service'
-import { Router , ActivatedRoute } from '@angular/router';
+import { ComprarService } from '../comprar.service'
+import { FormsValidatorService } from '../../../forms-validator.service'; 
+
+import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-direccion',
@@ -18,21 +22,22 @@ export class DireccionComponent implements OnInit {
     direccion = new FormGroup({
       calle : new FormControl('',[
         Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(15)]),
+        this.formService.validateLengthString(4, 30)  
+      ]),
       numext : new FormControl('',[
         Validators.required,
         Validators.pattern("^[0-9]*$"),
         Validators.minLength(1),
-        Validators.maxLength(5)]),
+        Validators.maxLength(5)
+      ]),
       colonia : new FormControl('',[
         Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(25)]),
+        this.formService.validateLengthString(4, 30)
+      ]),
       ciudad : new FormControl('',[
         Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(20)]),
+        this.formService.validateLengthString(4, 30)
+      ]),
       estado : new FormControl('',
         [Validators.required])
       });
@@ -75,40 +80,36 @@ export class DireccionComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private loc: Location,
-    private comprarService: ComprarService
-    ) {}
+    private comprarService: ComprarService,
+    private formService: FormsValidatorService,
+    private cookies: CookieService
+  ) {}
 
   ngOnInit(): void {
   }
 
   enviar_direccion(): void{
-    const direc={
-    "calle":this.direccion.controls["calle"].value,
-    "numeroExt":this.direccion.controls["numext"].value, /* error con el nombre en la bases de datos*/
-    "colonia": this.direccion.controls["colonia"].value,
-    "ciudad": this.direccion.controls["ciudad"].value,
-    "estado":this.direccion.controls["estado"].value
-   };
+    const direc = {
+      "id_usuario": this.cookies.get('id_usuario'),
+      "calle": this.direccion.controls["calle"].value,
+      "numeroExt": this.direccion.controls["numext"].value, /* error con el nombre en la bases de datos*/
+      "colonia": this.direccion.controls["colonia"].value,
+      "ciudad": this.direccion.controls["ciudad"].value,
+      "estado":this.direccion.controls["estado"].value
+    };
     
     this.comprarService.ingresa_direccion(direc)
     .subscribe(
       dir =>{
-        if(dir.category == "error"){
-          this.envio = 2;
-          console.log(dir.message)
-        }
-        if(dir.category == "success"){
-          this.envio = 1;
-          console.log(dir)
-        }
-      });
-  }
-
-  onSubmit() {
-    // TODO: Use EventEmitter with form value
-    console.warn(this.direccion.value);
+        console.log(dir.message);
+        this.envio = 1;
+        this.goPago();
+      },
+      _err => {
+        this.envio = 2;
+      }
+    );
   }
 
   valid(field: string): boolean {

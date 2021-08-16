@@ -41,6 +41,13 @@ input.valid{
 input.invalid{
   border-color: #dd4499;
 }
+textarea.valid{
+  border-color: #44dd99;
+}
+
+textarea.invalid{
+  border-color: #dd4499;
+}
 
 .error-text{
   display:inline;

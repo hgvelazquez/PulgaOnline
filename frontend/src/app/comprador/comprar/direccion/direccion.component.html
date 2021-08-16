@@ -1,86 +1,92 @@
 <div class="component-container">
-      <h2>Direccion</h2>
-      <div class="form-container">
-            <div class="maker-cols">
-                  <form [formGroup]="direccion" (ngSubmit)="onSubmit()">
-                        <div class="colu">
-                              <div class="one-field">
-                                    <div class="label-cont">
-                                          <label for="calle">Calle: </label>
-                                    </div>
-                                    <input id="calle" class="form-input-name"  formControlName="calle"  placeholder="calle"
-                                    [class.valid]="valid('calle')" [class.invalid]="invalid('calle')">
-                                    <div class="warn-cont">
-                                          <small class="error-text" *ngIf="invalid('calle')">
-                                          La calle no puede ser vacío.
-                                          </small>
-                                    </div>
-                              </div>
-                              <div class="one-field">
-                                    <div class="label-cont">
-                                          <label for="numext">Numero exterior: </label>
-                                    </div>
-                                    <input id="numext" class="form-input-name"  formControlName="numext"  placeholder="numero"
-                                    [class.valid]="valid('numext')" [class.invalid]="invalid('numext')">
-                                    <div class="warn-cont">
-                                          <small class="error-text" *ngIf="invalid('numext')">
-                                          Debe ingresar ser numero.
-                                          </small>
-                                    </div>
-                              </div>
-                              <div class="one-field">
-                                    <div class="label-cont">
-                                          <label for="colonia">Colonia: </label>
-                                    </div>
-                                    <input id="colonia" class="form-input-name"  formControlName="colonia"  placeholder="colonia"
-                                    [class.valid]="valid('colonia')" [class.invalid]="invalid('colonia')">
-                                    <div class="warn-cont">
-                                          <small class="error-text" *ngIf="invalid('colonia')">
-                                          La colonia no puede ser vacío.
-                                          </small>
-                                    </div>
-                              </div>
-                              <div class="one-field">
-                                    <div class="label-cont">
-                                          <label for="ciudad">Ciudad: </label>
-                                    </div>
-                                    <input id="ciudad" class="form-input-name"  formControlName="ciudad"  placeholder="ciudad"
-                                    [class.valid]="valid('ciudad')" [class.invalid]="invalid('ciudad')">
-                                    <div class="warn-cont">
-                                          <small class="error-text" *ngIf="invalid('ciudad')">
-                                          La ciudad no puede ser vacío.
-                                          </small>
-                                    </div>
-                              </div>
-                              <div class="one-field">
-                                    <div class="label-cont">
-                                          <label for="estado">Estado: </label>
-                                    </div>
-                                    <select id="estado" class="form-input-name"  formControlName="estado">
-                                          <option *ngFor="let estado of estados" [ngValue]="estado"> {{estado}} </option>
-                                          
-                                    </select>		
-                                    <div class="warn-cont">
-                                          <small class="error-text" *ngIf="invalid('estado')">
-                                          Debe seleccionar un estado.
-                                          </small>
-                                    </div>
-                              </div>
-                              <div *ngIf="envio == 2"><h3>Ohoh hay un error en al guardar la direccion. <br>Intente de nuevo.</h3></div>
-                              <div class="buttons-div">
-                                    <div class="button-div">
-                                          <button class="act" type="submit" [disabled]="!direccion.valid" (click)="enviar_direccion()" >Pagar</button>
-                                    </div>
+  <div class="form-title">
+    <h2>Direccion</h2>
+  </div>
+  <div class="form-container">
+    <div class="maker-cols">
+      <form [formGroup]="direccion">
+        <div class="colu">
+          <div class="one-field">
+            <div class="label-cont">
+              <label for="calle">Calle: </label>
+            </div>
+            <input id="calle" class="form-input-name" formControlName="calle" placeholder="calle"
+              [class.valid]="valid('calle')" [class.invalid]="invalid('calle')">
+            <div class="warn-cont">
+              <small class="error-text" *ngIf="invalid('calle')">
+                Debe ingresar una calle (entre 4 y 30 caracteres).
+              </small>
+            </div>
+          </div>
+          <div class="one-field">
+            <div class="label-cont">
+              <label for="numext">Numero exterior: </label>
+            </div>
+            <input id="numext" class="form-input-name" formControlName="numext" placeholder="numero"
+              [class.valid]="valid('numext')" [class.invalid]="invalid('numext')">
+            <div class="warn-cont">
+              <small class="error-text" *ngIf="invalid('numext')">
+                Debe ingresar un numero.
+              </small>
+            </div>
+          </div>
+          <div class="one-field">
+            <div class="label-cont">
+              <label for="colonia">Colonia: </label>
+            </div>
+            <input id="colonia" class="form-input-name" formControlName="colonia" placeholder="colonia"
+              [class.valid]="valid('colonia')" [class.invalid]="invalid('colonia')">
+            <div class="warn-cont">
+              <small class="error-text" *ngIf="invalid('colonia')">
+                Debe ingresar una colonia (Debe ingresar una calle (entre 4 y 30 caracteres).
+              </small>
+            </div>
+          </div>
+          <div class="one-field">
+            <div class="label-cont">
+              <label for="ciudad">Ciudad: </label>
+            </div>
+            <input id="ciudad" class="form-input-name" formControlName="ciudad" placeholder="ciudad"
+              [class.valid]="valid('ciudad')" [class.invalid]="invalid('ciudad')">
+            <div class="warn-cont">
+              <small class="error-text" *ngIf="invalid('ciudad')">
+                Debe ingresar una ciudad Debe ingresar una calle (entre 4 y 30 caracteres).
+              </small>
+            </div>
+          </div>
+          <div class="one-field">
+            <div class="label-cont">
+              <label for="estado">Estado: </label>
+            </div>
+            <select id="estado" class="form-input-name" formControlName="estado">
+              <option *ngFor="let estado of estados" [ngValue]="estado"> {{estado}} </option>
 
-                                    <div  *ngIf="envio===1" >{{goPago()}}</div>
-                                    <div class="button-div">
-                                          <button (click)="goBack()">Regresar</button>
-                                    </div>
-                              </div>
-                              
-                        </div>
-                  </form>
+            </select>
+            <div class="warn-cont">
+              <small class="error-text" *ngIf="invalid('estado')">
+                Debe seleccionar un estado.
+              </small>
+            </div>
+          </div>
+          <div *ngIf="envio == 2">
+            <div class="resp-err">
+              ¡Lo sentimos! <br> Hubo un error en al guardar la direccion. <br>Intente de nuevo más tarde.
+            </div>
+          </div>
+          <div class="buttons-div">
+            <div class="button-div">
+              <button class="act" type="submit" [disabled]="!direccion.valid"
+                (click)="enviar_direccion()">Pagar</button>
+            </div>
 
-             </div>
-      </div>
+            <div class="button-div">
+              <button (click)="goBack()">Regresar</button>
+            </div>
+          </div>
+
+        </div>
+      </form>
+
+    </div>
+  </div>
 </div>

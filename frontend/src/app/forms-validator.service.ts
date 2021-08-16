@@ -104,4 +104,16 @@ export class FormsValidatorService {
       return ok ? null : {FileValidator: {'notImage': ok}};
     }
   }
+
+  validateLaterDate() : ValidatorFn {
+    return (control: AbstractControl) : ValidationErrors | null => {
+      const dateInput = control.value;
+      var date = new Date();
+      var month = date.getMonth()+1;
+      var monthDisp = (month < 10) ? `0${month}` : month.toString();
+      const today = date.getFullYear() + '-' + monthDisp  + '-' + date.getDate();
+      const ok = dateInput >= today;
+      return ok ? null : {DateValidator: {'Earlier Date': ok}};
+    }
+  }
 }

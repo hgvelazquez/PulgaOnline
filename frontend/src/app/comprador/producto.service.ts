@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
+
+import { CookieService } from 'ngx-cookie-service';
 
 import { Producto } from '../models/producto';
 
@@ -21,20 +23,23 @@ export class ProductoService {
   private productosUrl = API_URL + '/productos';
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private cookies: CookieService
   ) { }
 
 
   getProductos(): Observable<Producto[]> {
-    return this.http.get<Producto[]>(this.productosUrl).pipe(
+    const usr = {'id_usuario': this.cookies.get('id_usuario')};
+    return this.http.post<Producto[]>(this.productosUrl, usr).pipe(
       catchError(this.handleError<Producto[]>('getProductos', []))
     );
   }
 
 
   getProducto(id: number): Observable<Producto> {
+    const usr = {'id_usuario': this.cookies.get('id_usuario')};
     const url = `${this.productosUrl}/${id}`;
-    return this.http.get<Producto>(url);
+    return this.http.post<Producto>(url, usr);
   }
 
 
