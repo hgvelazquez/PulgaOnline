@@ -31,6 +31,8 @@ import { AgregaProductoComponent } from './vendedor/agrega-producto/agrega-produ
 import { ActualizaProductoComponent } from './vendedor/actualiza-producto/actualiza-producto.component';
 import { EliminaProductoComponent } from './vendedor/elimina-producto/elimina-producto.component';
 import { MensajeComponent } from './vendedor/mensaje/mensaje.component';
+import { AccessDeniedComponent } from './auth/access-denied/access-denied.component';
+import { NotFoundComponent } from './auth/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,9 @@ import { MensajeComponent } from './vendedor/mensaje/mensaje.component';
     ProductoBusquedaComponent,
     MensajeErrorComponent,
     LogoutComponent,
-    PaginaPrincipalComponent
+    PaginaPrincipalComponent,
+    AccessDeniedComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
