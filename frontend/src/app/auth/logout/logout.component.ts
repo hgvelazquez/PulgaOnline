@@ -19,6 +19,7 @@ export class LogoutComponent implements OnInit {
   }
 
   logout(): void{
+    console.log("Logging Out");
     this.cookies.deleteAll();
     this.router.navigateByUrl('/');
   }

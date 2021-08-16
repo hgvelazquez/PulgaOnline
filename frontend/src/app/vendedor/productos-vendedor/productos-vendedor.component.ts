@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { Producto } from '../../models/producto';
 import { ProductoVendedorService } from '../producto-vendedor.service';
 
+import { CookieService } from 'ngx-cookie-service';
+
 @Component({
   selector: 'app-productos-vendedor',
   templateUrl: './productos-vendedor.component.html',
@@ -16,10 +18,15 @@ export class ProductosVendedorComponent implements OnInit {
 
   constructor(
     private prodService: ProductoVendedorService,
-    private router: Router
+    private router: Router,
+    private cookies: CookieService,
   ) { }
 
   ngOnInit(): void {
+    const logged = this.cookies.check('loggedIn');
+    if (! logged) {
+      this.router.navigateByUrl('/');
+    }
     this.getProductos();
   }
   
