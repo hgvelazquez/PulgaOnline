@@ -5,7 +5,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Producto } from '../../models/producto';
 import { ProductoVendedorService } from '../producto-vendedor.service';
 
-import { FormsValidatorService } from '../forms-validator.service';
+import { FormsValidatorService } from '../../forms-validator.service';
+
+import { AuthCheckService } from '../../auth-check.service';
 
 @Component({
   selector: 'app-agrega-producto',
@@ -42,11 +44,18 @@ export class AgregaProductoComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private auth: AuthCheckService,
     private prodService: ProductoVendedorService,
     private formService: FormsValidatorService
   ) { }
 
   ngOnInit(): void {
+    /* Si no es vendedor, regresamos al inicio*/
+    console.log(this.auth.isLoggedVendedor());
+    if (!this.auth.isLoggedVendedor()){
+      this.router.navigateByUrl('/');
+      return;
+    }
     this.prodService.getCats().subscribe(
       (cs) => {this.cats =cs;},
       (_error) => {this.router.navigateByUrl('mensaje/error');}

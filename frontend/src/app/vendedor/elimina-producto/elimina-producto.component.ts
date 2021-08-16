@@ -5,6 +5,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ProductoVendedorService } from '../producto-vendedor.service';
 import { API_URL } from '../../env'
 
+import { CookieService } from 'ngx-cookie-service';
+import { AuthCheckService } from '../../auth-check.service';
+
 @Component({
   selector: 'app-elimina-producto',
   templateUrl: './elimina-producto.component.html',
@@ -20,10 +23,17 @@ export class EliminaProductoComponent implements OnInit {
     private location: Location,
     private aroute: ActivatedRoute,
     private router: Router,
-    private prodServ: ProductoVendedorService
+    private prodServ: ProductoVendedorService,
+    private auth: AuthCheckService,
+    private cookies: CookieService,
   ) { }
 
   ngOnInit(): void {
+    /* Si no es vendedor, regresamos al inicio*/
+    if (!this.auth.isLoggedVendedor()){
+      this.router.navigateByUrl('/');
+      return;
+    }
     var id = this.aroute.snapshot.paramMap.get('id_producto');
     if (id)
       this.prodID = parseInt(id); 
@@ -37,7 +47,12 @@ export class EliminaProductoComponent implements OnInit {
     
     this.prodServ.eliminaProducto(this.prodID).subscribe(
       _ =>  {this.router.navigate(['/mensaje/eliminar']);}, 
-      _error => {this.router.navigate(['/mensaje/error']);}
+      error => {
+        if (error.status == 403)
+        this.router.navigate(['/acceso-denegado']);       
+        else
+          this.router.navigate(['/mensaje/error']);
+      }
     );
   }
 

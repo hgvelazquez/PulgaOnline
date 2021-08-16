@@ -1,0 +1,13 @@
+img {
+  height: 40px;
+  width: 40px;
+}
+
+logout-button {
+  height:40px;
+  width: 40px;
+  top: 0px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+}

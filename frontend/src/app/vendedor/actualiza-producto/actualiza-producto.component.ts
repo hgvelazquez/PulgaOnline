@@ -4,7 +4,9 @@ import { ActivatedRoute, Router} from '@angular/router';
 
 import { Producto } from '../../models/producto';
 import { ProductoVendedorService } from '../producto-vendedor.service';
-import { FormsValidatorService } from '../forms-validator.service';
+import { FormsValidatorService } from '../../forms-validator.service';
+
+import { AuthCheckService } from '../../auth-check.service';
 
 @Component({
   selector: 'app-actualiza-producto',
@@ -40,11 +42,17 @@ export class ActualizaProductoComponent implements OnInit {
   constructor(
     private aroute: ActivatedRoute,
     private router: Router,
+    private auth: AuthCheckService,
     private prodService: ProductoVendedorService,
     private formService: FormsValidatorService
   ) { }
 
   ngOnInit(): void {
+    /* Si no es vendedor, regresamos al inicio*/
+    if (!this.auth.isLoggedVendedor()){
+      this.router.navigateByUrl('/');
+      return;
+    }
     const id = this.aroute.snapshot.paramMap.get('id_producto')
     if (id)
       this.id = id;
@@ -68,7 +76,13 @@ export class ActualizaProductoComponent implements OnInit {
         this.productForm.controls['categoria'].disable();
         this.imageUrl = 'http://localhost:5000/static/' + this.producto.imagen;
       }, 
-      _error => {this.router.navigateByUrl('/mensaje/error');}
+      error => {
+        if (error.status == 403) {
+          this.router.navigateByUrl('/acceso-denegado');
+        } else { 
+        this.router.navigateByUrl('/mensaje/error');
+        }
+      }
     );
   }
 

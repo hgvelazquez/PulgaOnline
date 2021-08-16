@@ -26,6 +26,28 @@ export class FormsValidatorService {
     return true;
   }
 
+  validateLengthString(min: number, max: number) : ValidatorFn {
+    return (control: AbstractControl) : ValidationErrors | null => {
+      const ok = this.rangeString(control.value, min, max);
+      return ok ? null : {Length: {'outOfRange': ok}};
+    }
+  }
+
+  private rangeString(str: string, min: number, max: number): boolean {
+    var trimmed = str.trim();
+    
+    if (!trimmed){
+      return false;
+    } 
+    var range = true;
+    if (min != -1) {
+      range = (trimmed.length >= min);
+    }
+    if (max != -1)
+      range = range && (trimmed.length<=max);
+    return range;
+  }
+
   validateIntegerString() : ValidatorFn {
     return (control: AbstractControl) : ValidationErrors | null => {
       const ok = this.integerString(control.value);
@@ -80,6 +102,18 @@ export class FormsValidatorService {
       const file = control.value;
       const ok = this.validateFileImage(file);
       return ok ? null : {FileValidator: {'notImage': ok}};
+    }
+  }
+
+  validateLaterDate() : ValidatorFn {
+    return (control: AbstractControl) : ValidationErrors | null => {
+      const dateInput = control.value;
+      var date = new Date();
+      var month = date.getMonth()+1;
+      var monthDisp = (month < 10) ? `0${month}` : month.toString();
+      const today = date.getFullYear() + '-' + monthDisp  + '-' + date.getDate();
+      const ok = dateInput >= today;
+      return ok ? null : {DateValidator: {'Earlier Date': ok}};
     }
   }
 }

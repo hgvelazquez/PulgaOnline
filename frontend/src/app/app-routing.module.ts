@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core'; 
 import { RouterModule, Routes } from '@angular/router';
+/* Componentes de Auth */
+import { PaginaPrincipalComponent } from './auth/pagina-principal/pagina-principal.component';
+import { LoginComponent } from './auth/login/login.component'
+import { SignupComponent } from './auth/signup/signup.component'
 
 /* Componentes del vendedor */
 import { ProductosVendedorComponent } from './vendedor/productos-vendedor/productos-vendedor.component';
@@ -18,8 +22,15 @@ import { ProductosComponent } from './comprador/catalogo/productos/productos.com
 import { DetallesProductoComponent } from './comprador/detalles-producto/detalles-producto.component';
 import { MensajeErrorComponent } from './comprador/mensaje-error/mensaje-error.component';
 
+/* Componentes de Error */
+import { AccessDeniedComponent } from './auth/access-denied/access-denied.component';
+import { NotFoundComponent } from './auth/not-found/not-found.component';
 
 const routes: Routes = [
+  /* Rutas de Login y Signup */
+  { path: '', component: PaginaPrincipalComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
   /* Rutas del vendedor*/
   { path: 'mis-productos', component: ProductosVendedorComponent },
   { path: 'detail/:id_producto', component: DetallesProductoVendedorComponent },
@@ -33,7 +44,10 @@ const routes: Routes = [
   /* Rutas del Catalogo */
   { path: 'catalogo', component: ProductosComponent },
   { path: 'producto/:id_producto', component: DetallesProductoComponent },
-  { path: 'error', component: MensajeErrorComponent }
+  { path: 'error', component: MensajeErrorComponent },
+  /* Rutas de Error*/
+  { path: 'acceso-denegado', component: AccessDeniedComponent },
+  { path: '**', component: NotFoundComponent } 
 ];
 
 @NgModule({

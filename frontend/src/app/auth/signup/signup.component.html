@@ -1,0 +1,96 @@
+<div class="full-container">
+  <div class="top-bar-space"></div>
+  <div class="component-super">
+    <div class="component-container">
+      <div class="form-title">
+        <h2>Crear una cuenta</h2>
+      </div>
+      <div class="form-container">
+        <div class="maker-cols">
+          <form [formGroup]="user">
+            <div class="colu">
+              <div class="one-field">
+                <div class="label-cont">
+                  <label for="nombre">Nombre: </label>
+                </div>
+                <input id="nombre" class="form-input-name" formControlName="nombre" placeholder="nombre"
+                  [class.valid]="valid('nombre')" [class.invalid]="invalid('nombre')">
+                <div class="warn-cont">
+                  <small class="error-text" *ngIf="invalid('nombre')">
+                    Debe elegir un nombre de usuario.
+                  </small>
+                </div>
+              </div>
+              <div class="one-field">
+                <div class="label-cont">
+                  <label for="correo">Correo: </label>
+                </div>
+                <input id="correo" class="form-input-name" formControlName="correo" placeholder="correo"
+                  [class.valid]="valid('correo')" [class.invalid]="invalid('correo')">
+                <div class="warn-cont">
+                  <small class="error-text" *ngIf="invalid('correo')">
+                    Debe ingresar un correo electrónico válido.
+                  </small>
+                </div>
+              </div>
+              <div class="one-field">
+                <div class="label-cont">
+                  <label for="contrasena">Contraseña: </label>
+                </div>
+                <input type="password" id="contrasena" class="form-input-name" formControlName="contrasena"
+                  placeholder="contraseña" [class.valid]="valid('contrasena')" [class.invalid]="invalid('contrasena')">
+                <div class="warn-cont">
+                  <small class="error-text" *ngIf="invalid('contrasena')">
+                    La contraseña debe tener al menos 6 caracteres.
+                  </small>
+                </div>
+              </div>
+              <div class="one-field">
+                <div class="label-cont">
+                  <label for="confirmar">Confirmar: </label>
+                </div>
+                <input type="password" id="confirmar" class="form-input-name" formControlName="confirmar"
+                  placeholder="confirmar" [class.valid]="valid('confirmar') && (esIgual() && touched('confirmar'))"
+                  [class.invalid]="invalid('confirmar') || (!esIgual() && touched('confirmar'))">
+                <div class="warn-cont">
+                  <small class="error-text" *ngIf="invalid('confirmar') || (!esIgual() && touched('confirmar'))">
+                    No coincide con la contraseña ingresada.
+                  </small>
+                </div>
+              </div>
+              <div class="one-field">
+                <div class="label-cont">
+                  <label for="tipo">Tipo de Usuario: </label>
+                </div>
+                <select id="tipo" class="form-input-name" formControlName="tipo_usuario">
+                  <option *ngFor="let tipo of tipos" [ngValue]="tipo"> {{tipo}} </option>
+                </select>
+
+                <div class="warn-cont">
+                  <small class="error-text" *ngIf="invalid('tipo')">
+                    Debe Elegir un tipo de usuario.
+                  </small>
+                </div>
+              </div>
+              <div *ngIf="redirect == 2">
+                <div class="resp-err"> {{mensaje}} </div>
+              </div>
+              <div class="buttons-div">
+                <div class="button-div">
+                  <button class="send" type="submit" [disabled]="!user.valid || !esIgual()" (click)="enviar_datos()">
+                    Registrarse
+                  </button>
+                </div>
+                <div class="button-div">
+                  <button (click)="goBack()">Regresar</button>
+                </div>
+              </div>
+
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -5,6 +5,14 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+/* For login */
+import { CookieService } from 'ngx-cookie-service';
+
+/* Auth */
+import { PaginaPrincipalComponent } from './auth/pagina-principal/pagina-principal.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { LogoutComponent } from './auth/logout/logout.component';
 
 /* Comprador */
 /* Catalogo */
@@ -23,10 +31,15 @@ import { AgregaProductoComponent } from './vendedor/agrega-producto/agrega-produ
 import { ActualizaProductoComponent } from './vendedor/actualiza-producto/actualiza-producto.component';
 import { EliminaProductoComponent } from './vendedor/elimina-producto/elimina-producto.component';
 import { MensajeComponent } from './vendedor/mensaje/mensaje.component';
+import { AccessDeniedComponent } from './auth/access-denied/access-denied.component';
+import { NotFoundComponent } from './auth/not-found/not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    /* Auth */
+    LoginComponent,
+    SignupComponent,
     /* Vendedor*/
     ProductosVendedorComponent,
     DetallesProductoVendedorComponent,
@@ -41,7 +54,11 @@ import { MensajeComponent } from './vendedor/mensaje/mensaje.component';
     ProductosComponent,
     DetallesProductoComponent,
     ProductoBusquedaComponent,
-    MensajeErrorComponent
+    MensajeErrorComponent,
+    LogoutComponent,
+    PaginaPrincipalComponent,
+    AccessDeniedComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +68,7 @@ import { MensajeComponent } from './vendedor/mensaje/mensaje.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

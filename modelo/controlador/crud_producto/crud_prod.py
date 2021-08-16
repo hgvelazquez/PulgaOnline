@@ -1,4 +1,5 @@
-from flask import Blueprint, request, jsonify, abort, send_file
+from flask import Blueprint, request, jsonify, abort, send_file, session
+from flask.helpers import make_response
 
 from os.path import splitext
 from datetime import datetime
@@ -7,6 +8,7 @@ import json
 from modelo.conexion_bd import db, ma
 from modelo.producto import Producto, ProductoEsquema
 from modelo.categoria import Categoria
+from modelo.usuario import Usuario
 
 """
 Modulo con la funcionalidad del controlador del CRUD del 
@@ -29,16 +31,24 @@ def agregar_producto():
     petición HTTP, siempre y cuando haya un vendedor con 
     sesión iniciada.
     En caso contrario, manda un 404.
-    TODO: Obtener id_vendedor de la sesión 
     """
 
     imFile = request.files['imageUpload']
     prodFile = request.files['producto']
-    
+    usFile = request.files['usuario']
+
     # Parse json from file to dict
     prod_json = json.load(prodFile)
     prod_json = json.loads(prod_json)
-    
+
+    # Parse user json from file to dict
+    us_json = json.load(usFile)
+    id = us_json['id_usuario']
+
+    user = Usuario.query.filter_by(id_usuario=id).first()
+    if (user is None) or (not user.tipo_usuario):
+        return make_response(jsonify("El usuario no es vendedor"), 403)
+
     nombre = prod_json['nombre']
     descripcion = prod_json['descripcion']
     categoria = prod_json['categoria']
@@ -52,8 +62,7 @@ def agregar_producto():
 
     imFile.save(f"data/imagenesProducto/{imagen}")
 
-    
-    producto_nuevo = Producto(nombre, descripcion, precio, disponible, 
+    producto_nuevo = Producto(nombre, descripcion, disponible, precio,
                                 imagen, categoria, id_vendedor)
     
     db.session.add(producto_nuevo)
@@ -67,13 +76,12 @@ def eliminar_producto(id_prod):
     Elimina el producto correspondiente, siempre y cuando el 
     vendedor dueño del producto tenga la sesión iniciada.
     En caso contrario, manda un 404.
-    TODO: Obtener id_vendedor de la sesión
     """
-
-    producto = Producto.query.filter_by(id_producto=id_prod, id_vendedor=1).first()
+    id = request.json['id_usuario']
+    producto = Producto.query.filter_by(id_producto=id_prod, id_vendedor=id).first()
     
     if producto is None:
-        abort(404)
+        return make_response(jsonify("El usuario no es el dueño del producto"), 403)
     else:
         db.session.delete(producto)
         db.session.commit()
@@ -87,13 +95,17 @@ def actualizar_producto(id_prod):
     petición HTTP, siempre y cuando el vendedor dueño del producto
     tenga la sesión iniciada.
     En caso contrario, manda un 404.
-    TODO: Obtener id_vendedor de la sesión
     """
+    # Autenticación de Usuario
+    usFile = request.files['usuario']
+    # Parse user json from file to dict
+    us_json = json.load(usFile)
+    id = us_json['id_usuario']
 
-    producto = Producto.query.filter_by(id_producto=id_prod, id_vendedor=1).first()
+    producto = Producto.query.filter_by(id_producto=id_prod, id_vendedor=id).first()
     
     if producto is None:
-        abort(404)
+        return make_response(jsonify("El usuario no es el dueño del producto"), 403)
     else:
         # Puede no ser enviada
         imFile = request.files.get('imageUpload')
@@ -116,38 +128,47 @@ def actualizar_producto(id_prod):
     return jsonify(producto.to_dict())
     
     
-@bp.route('/productos-vendedor')
+@bp.route('/productos-vendedor', methods=['GET', 'POST'])
 def get_productos_vendedor():
     """
     Manda la lista de los productos del vendedor que está en sesión.
-    TODO: Obtener el id del usuario de la sesión de login.
     """
-    productos = Producto.query.filter_by(id_vendedor=1).all()
+
+    id = request.json['id_usuario']
+    tipo = request.json['tipo_usuario']
+    if not (tipo == 'true'):
+        return make_response(jsonify("El usuario no es vendedor"), 403)
+    
+    # El usuario si es vendedor
+    productos = Producto.query.filter_by(id_vendedor=id).all()
     # serializing as JSON
     return jsonify([p.to_dict() for p in productos])
 
 
 
-@bp.route('/productos-vendedor/<id_prod>')
+@bp.route('/productos-vendedor/<id_prod>', methods=['GET', 'POST'])
 def get_producto_vendedor(id_prod):
     """
     Manda los detalles de un cuyo id es id_prod, si el vendedor
     que lo solicita es quien lo agregó, un 404 en caso contrario.
-    TODO: Obtener el id del usuario de la sesión de login.
     """
-    producto = Producto.query.filter_by(id_producto=id_prod, id_vendedor=1).first()
+    id = request.json['id_usuario']
+    producto = Producto.query.filter_by(id_producto=id_prod, id_vendedor=id).first()
     
     if producto is None:
-        abort(404)
+        return make_response(jsonify("El usuario no es el dueño del producto"), 403)
     return jsonify(producto.to_dict())
 
 
 
-@bp.route('/get-cats')
+@bp.route('/get-cats', methods=['GET', 'POST'])
 def get_cats():
     """
     Manda la lista de categorías de nuestra base de datos.
     """
+    tipo = request.json['tipo_usuario']
+    if not (tipo == "true"):
+        return make_response(jsonify("El usuario no es vendedor"), 403)
     cats = Categoria.query.all()
     # serializing as JSON
     return jsonify([c.nombre for c in cats])

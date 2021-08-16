@@ -1,40 +1,43 @@
-<div align=right><app-producto-busqueda></app-producto-busqueda></div>
 <div class="component-container">
 
-    <div class="title-container">
-      <h2>Catálogo</h2>
-    </div>
+  <div class="title-container">
+    <h2>Catálogo</h2>
+  </div>
 
-    <ul class="productos">
-        <li *ngFor="let producto of productos; let even=even">
-          <a routerLink="/producto/{{producto.id_producto}}" *ngIf="even">
-            <div class="gray-l">
-              <div class="badge1">
-                <img class="thumbnail" src="http://localhost:5000/static/{{producto.imagen}}">
-              </div>
-              <div class="text-prod">
-                <p class="text-title">{{producto.nombre}}</p>
-                <p class="text-desc">{{producto.descripcion}}</p>
-                <p class="text-price">$ {{producto.precio}} MXN</p>
-                <p class="text-desc">Haga clic en el recuadro para ver los detalles.</p>
-              </div>
-            </div>
-          </a>
-          <a routerLink="/detail/{{producto.id_producto}}" *ngIf="!even">
-            <div class="pink-l">
-              <div class="badge1">
-                <img class="thumbnail" src="http://localhost:5000/static/{{producto.imagen}}">
-              </div>
-              <div class="text-prod">
-                <p class="text-title">{{producto.nombre}}</p>
-                <p class="text-desc">{{producto.descripcion}}</p>
-                <p class="text-price">$ {{producto.precio}} MXN</p>
-                <p class="text-desc">Haga clic en el recuadro para ver los detalles.</p>
-              </div>
-            </div>
-          </a>
-        </li>
-      </ul>
-    </div>
+  <ul class="productos">
+    <li *ngFor="let producto of productos; let even=even">
+      <a routerLink="/producto/{{producto.id_producto}}" *ngIf="even">
+        <div class="gray-l">
+          <div class="text-title">
+            {{producto.nombre | uppercase }}
+          </div>
+          <div class="badge1">
+            <img class="thumbnail" src="http://localhost:5000/static/{{producto.imagen}}">
+          </div>
+          <div class="text-prod">
+            <p class="text-price">$ {{producto.precio}} MXN</p>
+            <p class="text-desc">Haga clic en el recuadro para ver los detalles.</p>
+          </div>
+        </div>
+      </a>
+      <a routerLink="/producto/{{producto.id_producto}}" *ngIf="!even">
+        <div class="pink-l">
+          <div class="text-title">
+            {{producto.nombre | uppercase }}
+          </div>
+          <div class="badge1">
+            <img class="thumbnail" src="http://localhost:5000/static/{{producto.imagen}}">
+          </div>
+          <div class="text-prod">
+            <p class="text-price">$ {{producto.precio}} MXN</p>
+            <p class="text-desc">Haga clic en el recuadro para ver los detalles.</p>
+          </div>
+        </div>
+      </a>
+    </li>
+  </ul>
+</div>
 
-
+<div align=right>
+  <app-producto-busqueda></app-producto-busqueda>
+</div>

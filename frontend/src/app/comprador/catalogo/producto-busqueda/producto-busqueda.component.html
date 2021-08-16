@@ -1,15 +1,17 @@
 <div class="search-component">
   <div class="title-space"></div>
-  <div class="sb-comp">
-  <label for="search-box">Buscar Producto: </label>
-  <input #searchBox id_producto="search-box" (input)="search(searchBox.value)" />
-
-  <ul class="search-result">
-    <li *ngFor="let producto of productos$ | async">
-      <a routerLink="/detail/{{producto.id_producto}}">
-        {{producto.nombre}}
-      </a>
-    </li>
-  </ul>
-</div>
+  <div class="sb-and-logout">
+    <div class="sb-comp">
+      <label for="search-box">Buscar Producto: </label>
+      <input #searchBox id_producto="search-box" (input)="search(searchBox.value)" />
+      <ul class="search-result">
+        <li *ngFor="let producto of productos$ | async">
+          <a routerLink="/detail/{{producto.id_producto}}">
+            {{producto.nombre}}
+          </a>
+        </li>
+      </ul>
+    </div>
+    <app-logout></app-logout>
+  </div>
 </div>
