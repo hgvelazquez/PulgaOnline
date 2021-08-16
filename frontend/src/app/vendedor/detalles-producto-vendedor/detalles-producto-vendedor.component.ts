@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Producto } from '../../models/producto';
 import { ProductoVendedorService } from '../producto-vendedor.service';
 
+import { AuthCheckService } from '../../auth-check.service';
+
 @Component({
   selector: 'app-detalles-producto-vendedor',
   templateUrl: './detalles-producto-vendedor.component.html',
@@ -16,10 +18,16 @@ export class DetallesProductoVendedorComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private auth: AuthCheckService,
     private prodService: ProductoVendedorService,
   ) { }
 
   ngOnInit(): void {
+    /* Si no es vendedor, regresamos al inicio*/
+    if (!this.auth.isLoggedVendedor()){
+      this.router.navigateByUrl('/');
+      return;
+    }
     this.getProd();
   }
 

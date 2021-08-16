@@ -6,6 +6,8 @@ import { Producto } from '../../models/producto';
 import { ProductoVendedorService } from '../producto-vendedor.service';
 import { FormsValidatorService } from '../../forms-validator.service';
 
+import { AuthCheckService } from '../../auth-check.service';
+
 @Component({
   selector: 'app-actualiza-producto',
   templateUrl: './actualiza-producto.component.html',
@@ -40,11 +42,17 @@ export class ActualizaProductoComponent implements OnInit {
   constructor(
     private aroute: ActivatedRoute,
     private router: Router,
+    private auth: AuthCheckService,
     private prodService: ProductoVendedorService,
     private formService: FormsValidatorService
   ) { }
 
   ngOnInit(): void {
+    /* Si no es vendedor, regresamos al inicio*/
+    if (!this.auth.isLoggedVendedor()){
+      this.router.navigateByUrl('/');
+      return;
+    }
     const id = this.aroute.snapshot.paramMap.get('id_producto')
     if (id)
       this.id = id;

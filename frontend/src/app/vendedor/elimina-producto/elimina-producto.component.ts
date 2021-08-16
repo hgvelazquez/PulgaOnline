@@ -5,6 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ProductoVendedorService } from '../producto-vendedor.service';
 import { API_URL } from '../../env'
 
+import { AuthCheckService } from '../../auth-check.service';
+
 @Component({
   selector: 'app-elimina-producto',
   templateUrl: './elimina-producto.component.html',
@@ -20,10 +22,16 @@ export class EliminaProductoComponent implements OnInit {
     private location: Location,
     private aroute: ActivatedRoute,
     private router: Router,
-    private prodServ: ProductoVendedorService
+    private prodServ: ProductoVendedorService,
+    private auth: AuthCheckService,
   ) { }
 
   ngOnInit(): void {
+    /* Si no es vendedor, regresamos al inicio*/
+    if (!this.auth.isLoggedVendedor()){
+      this.router.navigateByUrl('/');
+      return;
+    }
     var id = this.aroute.snapshot.paramMap.get('id_producto');
     if (id)
       this.prodID = parseInt(id); 

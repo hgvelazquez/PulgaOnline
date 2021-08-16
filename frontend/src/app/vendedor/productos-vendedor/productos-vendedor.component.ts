@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Producto } from '../../models/producto';
 import { ProductoVendedorService } from '../producto-vendedor.service';
 
-import { CookieService } from 'ngx-cookie-service';
+import { AuthCheckService } from '../../auth-check.service';
 
 @Component({
   selector: 'app-productos-vendedor',
@@ -19,13 +19,14 @@ export class ProductosVendedorComponent implements OnInit {
   constructor(
     private prodService: ProductoVendedorService,
     private router: Router,
-    private cookies: CookieService,
+    private auth: AuthCheckService,
   ) { }
 
   ngOnInit(): void {
-    const logged = this.cookies.check('loggedIn');
-    if (! logged) {
+    /* Si no es vendedor, regresamos al inicio*/
+    if (!this.auth.isLoggedVendedor()){
       this.router.navigateByUrl('/');
+      return;
     }
     this.getProductos();
   }
