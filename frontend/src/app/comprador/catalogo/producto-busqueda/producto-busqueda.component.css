@@ -17,13 +17,24 @@
   padding-right: 0px;
 }
 
+.sb-and-logout {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 10px;
+  align-items: top;
+  width: 100%;
+  flex-grow: 1;
+  padding-top: 3px;
+}
+
 .sb-comp{
   min-width: 415px;
-  width:50%;
+  width:60%;
   align-items: top;
   padding-top:10px;
-  padding-right: 70px;
+  padding-right: 20px;
   flex-grow: 1;
+  justify-content: space-between;
 }
 
 label {
@@ -34,7 +45,7 @@ label {
 }
 
 input {
-  width: 50%;
+  width: 60%;
   min-width: 100px;
   max-width: 250px;
   box-sizing: border-box;

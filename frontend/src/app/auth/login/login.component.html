@@ -1,49 +1,54 @@
-<div class="component-container">
-  <div class="form-title">
-    <h2>Iniciar Sesion</h2>
-  </div>
-  <div class="form-container">
-    <div class="maker-cols">
-      <form [formGroup]="user">
-        <div class="colu">
-          <div class="one-field">
-            <div class="label-cont">
-              <label for="correo">Correo: </label>
-            </div>
-            <input id="correo" class="form-input-name" formControlName="correo" placeholder="correo"
-              [class.valid]="valid('correo')" [class.invalid]="invalid('correo')">
-            <div class="warn-cont">
-              <small class="error-text" *ngIf="invalid('correo')">
-                Debe ingresar un correo.
-              </small>
-            </div>
-          </div>
-          <div class="one-field">
-            <div class="label-cont">
-              <label for="contrasena">Contraseña: </label>
-            </div>
-            <input type="password" id="contrasena" class="form-input-name" formControlName="contrasena"
-              placeholder="contraseña" [class.valid]="valid('contrasena')" [class.invalid]="invalid('contrasena')">
-            <div class="warn-cont">
-              <small class="error-text" *ngIf="invalid('contrasena')">
-                Debe ingresar su contraseña.
-              </small>
-            </div>
-          </div>
-          <div *ngIf="redirect == 2">
-            <div class="resp-err">{{mensaje}}</div>
-          </div>
-            <div class="button-div">
-              <button class="send" type="submit" [disabled]="!user.valid" (click)="validar_datos()">
-                Enviar
-              </button>
-            </div>
-            <div class="button-div">
-              <button (click)="goBack()">Regresar</button>
-            </div>
+<div class="full-container">
+  <div class="top-bar-space"></div>
+  <div class="component-super">
+    <div class="component-container">
+      <div class="form-title">
+        <h2>Iniciar Sesion</h2>
+      </div>
+      <div class="form-container">
+        <div class="maker-cols">
+          <form [formGroup]="user">
+            <div class="colu">
+              <div class="one-field">
+                <div class="label-cont">
+                  <label for="correo">Correo: </label>
+                </div>
+                <input id="correo" class="form-input-name" formControlName="correo" placeholder="correo"
+                  [class.valid]="valid('correo')" [class.invalid]="invalid('correo')">
+                <div class="warn-cont">
+                  <small class="error-text" *ngIf="invalid('correo')">
+                    Debe ingresar un correo.
+                  </small>
+                </div>
+              </div>
+              <div class="one-field">
+                <div class="label-cont">
+                  <label for="contrasena">Contraseña: </label>
+                </div>
+                <input type="password" id="contrasena" class="form-input-name" formControlName="contrasena"
+                  placeholder="contraseña" [class.valid]="valid('contrasena')" [class.invalid]="invalid('contrasena')">
+                <div class="warn-cont">
+                  <small class="error-text" *ngIf="invalid('contrasena')">
+                    Debe ingresar su contraseña.
+                  </small>
+                </div>
+              </div>
+              <div *ngIf="redirect == 2">
+                <div class="resp-err">{{mensaje}}</div>
+              </div>
+              <div class="button-div">
+                <button class="send" type="submit" [disabled]="!user.valid" (click)="validar_datos()">
+                  Enviar
+                </button>
+              </div>
+              <div class="button-div">
+                <button (click)="goBack()">Regresar</button>
+              </div>
 
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </div>

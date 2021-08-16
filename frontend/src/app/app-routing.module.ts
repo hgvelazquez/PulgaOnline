@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'; 
 import { RouterModule, Routes } from '@angular/router';
 /* Componentes de Auth */
+import { PaginaPrincipalComponent } from './auth/pagina-principal/pagina-principal.component';
 import {LoginComponent} from './auth/login/login.component'
 import {SignupComponent} from './auth/signup/signup.component'
 
@@ -24,6 +25,7 @@ import { MensajeErrorComponent } from './comprador/mensaje-error/mensaje-error.c
 
 const routes: Routes = [
   /* Rutas de Login y Signup */
+  { path: '', component: PaginaPrincipalComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   /* Rutas del vendedor*/

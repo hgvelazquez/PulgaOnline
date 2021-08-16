@@ -9,8 +9,10 @@ import { AppComponent } from './app.component';
 import { CookieService } from 'ngx-cookie-service';
 
 /* Auth */
+import { PaginaPrincipalComponent } from './auth/pagina-principal/pagina-principal.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { LogoutComponent } from './auth/logout/logout.component';
 
 /* Comprador */
 /* Catalogo */
@@ -50,7 +52,9 @@ import { MensajeComponent } from './vendedor/mensaje/mensaje.component';
     ProductosComponent,
     DetallesProductoComponent,
     ProductoBusquedaComponent,
-    MensajeErrorComponent
+    MensajeErrorComponent,
+    LogoutComponent,
+    PaginaPrincipalComponent
   ],
   imports: [
     BrowserModule,

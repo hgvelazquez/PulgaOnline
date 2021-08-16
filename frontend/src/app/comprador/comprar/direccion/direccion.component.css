@@ -115,7 +115,14 @@ button:disabled {
   align-items: center;
 }
 
-.select {
+select {
   font-size: 1em;
-  padding: .5rem;
+  padding: .25rem;
+}
+
+.logout-button{
+  display: flex;
+  position: absolute;
+  top: 3px;
+  right: 35px;
 }
