@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthCheckService } from '../../auth-check.service';
 
 @Component({
   selector: 'app-pagina-principal',
@@ -10,9 +11,11 @@ export class PaginaPrincipalComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private authCheck: AuthCheckService,
   ) { }
 
   ngOnInit(): void {
+    this.authCheck.isNotLogged(this.router);
   }
 
   goLogin(): void {

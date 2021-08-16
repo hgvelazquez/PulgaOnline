@@ -7,6 +7,7 @@ import {FormControl,Validators, FormGroup } from '@angular/forms' /**sirve para 
 import { FormsValidatorService } from '../../forms-validator.service'
 
 import { CookieService } from 'ngx-cookie-service';
+import { AuthCheckService } from '../../auth-check.service';
 
 @Component({
   selector: 'app-login',
@@ -33,11 +34,13 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
+    private authCheck: AuthCheckService,
     private formService: FormsValidatorService,
     private cookies: CookieService
   ) { }
   
   ngOnInit(): void {
+    this.authCheck.isNotLogged(this.router);
   }
 
   validar_datos(): void{

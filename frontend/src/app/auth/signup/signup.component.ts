@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import {FormControl,Validators, FormGroup} from '@angular/forms'
 
 import { FormsValidatorService } from '../../forms-validator.service';
+import { AuthCheckService } from '../../auth-check.service';
 
 @Component({
   selector: 'app-signup',
@@ -38,10 +39,12 @@ export class SignupComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
+    private authCheck: AuthCheckService,
     private formService: FormsValidatorService
   ) { }
 
   ngOnInit(): void {
+    this.authCheck.isNotLogged(this.router);
   }
 
   enviar_datos(): void{
