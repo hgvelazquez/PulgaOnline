@@ -4,6 +4,8 @@ from flask_mail import Mail, Message
 # Para el login
 from flask.helpers import make_response
 from datetime import timedelta
+# Para almacenar imágenes
+from os import makedirs, path
 
 from modelo.conexion_bd import db, ma
 from modelo.producto import ProductoEsquema
@@ -56,6 +58,13 @@ app.permanent_session_lifetime = timedelta(hours=2)
 
 producto_esquema = ProductoEsquema()
 productos_esquema = ProductoEsquema(many=True)
+
+images_url="data/imagenesProducto/"
+if not(path.exists(images_url)):
+    try:
+        makedirs(images_url)
+    except:
+        print("Error al crear el directorio de imágenes")
 
 @app.route("/send", methods=["GET", "POST"])
 def send():
