@@ -19,8 +19,18 @@ export class LogoutComponent implements OnInit {
   }
 
   logout(): void{
-    console.log("Logging Out");
+    this.cookies.deleteAll('');
+    this.cookies.deleteAll('login');
+    this.cookies.deleteAll('signup');
+    this.cookies.deleteAll('mis-productos');
+    this.cookies.deleteAll('agregar-producto');
+    this.cookies.deleteAll('pago');
+    this.cookies.deleteAll('direccion');
+    this.cookies.deleteAll('catalogo');
+    this.cookies.deleteAll('error');
+    this.cookies.deleteAll('acceso-denegado');
     this.cookies.deleteAll('/');
+    console.log("Logging Out");
     this.router.navigateByUrl('/');
   }
 
