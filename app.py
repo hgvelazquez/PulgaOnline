@@ -66,7 +66,7 @@ def send():
     producto = request.json.get('id_producto')
     prod = compra_rutas.getProd(producto)
     msg = Message('Gracias por tu compra', sender = app.config.get('MAIL_USERNAME'), recipients = [email])
-    msg.body = f"¡Gracias por realizar su compra en la PulgaOnline! \n\n Producto:{prod.nombre} \n Cargo Realizado: {prod.precio}"
+    msg.body = f"¡Gracias por realizar su compra en la PulgaOnline! \n\n Producto:{prod.nombre} \n Cargo Realizado: $ {prod.precio} mxn"
     mail.send(msg)
     return make_response(jsonify('sent'),200)
 

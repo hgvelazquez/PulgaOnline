@@ -50,7 +50,7 @@ export class ComprarService {
   
   enviar_correo():Observable<any>{
     const id_prod = Number(this.cookies.get('id_producto'));
-    const correo = Number(this.cookies.get('correo'));
+    const correo = this.cookies.get('correo');
     const prod = {
       'id_producto': id_prod,
       'correo': correo
